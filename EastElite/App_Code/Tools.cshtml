@@ -1,0 +1,134 @@
+﻿@helper Pager(int maxNum, int count)
+{
+    //最大页数
+    var maxPage = maxNum % 20 > 0 || maxNum == 0 ? maxNum / count + 1 : maxNum / count;
+    string q;
+    if (string.IsNullOrEmpty(Request.Url.Query)) { q = "?"; }
+    else
+    {
+        if (string.IsNullOrEmpty(Request.QueryString["p"])) { q = Request.Url.Query + "&"; }
+        else { q = Request.Url.Query.Replace(Request.Url.Query.Split('?').Last().Split('&').Last(), string.Empty); }
+    }
+    //重构的Url
+    var urlp = Request.Url.AbsolutePath + q;
+    //前一页数
+    int prev = string.IsNullOrEmpty(Request.QueryString["p"]) ? 1 : int.Parse(Request.QueryString["p"]) - 1;
+    prev = prev < 1 ? 1 : prev;
+    //下一页数
+    int next = string.IsNullOrEmpty(Request.QueryString["p"]) ? 2 : int.Parse(Request.QueryString["p"]) + 1;
+    next = next > maxPage ? maxPage : next;
+            //html
+    <div id="dyntable_info" class="dataTables_info">
+        @{int pageindex = 1;}
+        @if (Request.QueryString["p"] != null)
+        {
+            pageindex = int.Parse(Request.QueryString["p"].ToString());
+        }
+        &nbsp; 
+         <ul class="dataTables_paginate paging_full_numbers">
+             <!--  当访问第一页时，首页按钮置灰-->
+             @if (pageindex == 1 || pageindex == 0)
+             {
+
+                 <li class="NoNothink"><a class="first paginate_button paginate_button_disabled NoNothink2">首页</a></li>
+
+                 <li class="NoNothink"><a class="previous paginate_button paginate_button_disabled NoNothink2">上一页</a></li>
+             }
+             else
+             {
+                 <li class="NoNothink"><a  href="@(urlp + "p=1")" class="first paginate_button NoNothink2">首页</a></li>
+                 <li class="NoNothink"><a  href="@(urlp + "p=" + prev)" class= "first paginate_button NoNothink2">上一页</a></li>
+             }
+             <!--  加载中间页码 -->
+
+             @if (maxPage >= 10)
+             {
+                 <!-- 太多中间页码 -->
+                 <!-- Dot1 Dot2 判断页面是否 加 省略号-->                 
+                 bool Dot1 = false, Dot2 = false;
+                 for (int i = 1; i <= maxPage; i++)
+                 {
+                     if (i == pageindex)
+                     {
+                 <li class="active "><a class="paginate_active ">@pageindex</a></li>
+                         continue;
+                     }
+                     if (i <= 3)
+                     {
+                 <li><a class= "paginate_active "  href="@(urlp + "p=" + i)">@(i)</a></li>
+                         continue;
+                     }
+                     if (pageindex > 7)
+                     {
+                         if (!Dot1)
+                         {
+                 <li><a class="paginate_active ">…</a></li>
+                             Dot1 = true;
+                         }
+                     }
+                     if (i == pageindex - 3)
+                     {
+                 <li><a class= "paginate_active "  href="@(urlp + "p=" + i)">@(i)</a></li>
+                         continue;
+                     }
+                     if (i == pageindex - 2)
+                     {
+                 <li><a class= "paginate_active "  href="@(urlp + "p=" + i)">@(i)</a></li>
+                         continue;
+                     }
+                     if (i == pageindex - 1)
+                     {
+                 <li><a class= "paginate_active "  href="@(urlp + "p=" + i)">@(i)</a></li>
+                         continue;
+                     }
+                     if (i == pageindex + 1)
+                     {
+                 <li><a class= "paginate_active "  href="@(urlp + "p=" + i)">@(i)</a></li>
+                         continue;
+                     }
+                     if (i == pageindex + 2)
+                     {
+                 <li><a class= "paginate_active "  href="@(urlp + "p=" + i)">@(i)</a></li>
+                         continue;
+                     }
+                     if (i == pageindex + 3)
+                     {
+                 <li><a class= "paginate_active "  href="@(urlp + "p=" + i)">@(i)</a></li>
+                         continue;
+                     }
+                     if ((maxPage - pageindex) > 6 && i > pageindex + 3)
+                     {
+                         if (!Dot2)
+                         {
+                 <li><a class="paginate_active ">…</a></li>
+                             Dot2 = true;
+                         }
+                     }
+                     if (i > maxPage - 3)
+                     {
+                 <li><a class= "paginate_active "  href="@(urlp + "p=" + i)">@(i)</a></li>
+                         continue;
+                     }
+                 }
+             }
+
+             <!--  当访问最后一页时，末页按钮置灰-->
+             @if (pageindex == maxPage || maxPage == 0)
+             {
+                 <li class="NoNothink"><a class="next paginate_button paginate_button_disabled NoNothink2">下一页</a></li>
+                 <li class="NoNothink"><a class="last paginate_button paginate_button_disabled NoNothink2">末页</a></li>
+             }
+             else
+             {
+                 <li class="NoNothink"><a class="next paginate_button NoNothink2"  href="@(urlp + "p=" + next)">下一页</a></li>
+                 <li class="NoNothink"><a class="next paginate_button NoNothink2" href="@(urlp + "p=" + maxPage)">尾页</a></li>
+             }
+         </ul>
+    </div>
+}
+
+<script>
+
+
+
+</script>

@@ -1,0 +1,19 @@
+﻿@{
+    ViewBag.Title = "ShareList";
+    Layout = "~/Views/Shared/MP.cshtml";
+}
+
+<div class="ui-draggable" style=" min-width: 650px; " id="ReNameId">
+    <h1 style="cursor: move;" class="widgettitle YIdong" id="popup_title">分享文件</h1>
+    <span class="icon-fullscreen1" onclick="$.closezhezhao('popup_container2','popup_overlay2')">
+    </span>
+    <div class="widgetcontent" id="popup_content2">
+
+        <input type="button" value="好友分享" onclick="DFBGFlie.Flie.FlieOperation.ShareMethod('','1006','')">
+        <input type="button" value="密钥分享" onclick="DFBGFlie.Flie.FlieOperation.ShareMethod('','1004','')">
+        <input type="button" value="用户组分享" onclick="DFBGFlie.Flie.FlieOperation.ShareMethod('','1003','')">
+        <input type="button" value="部门共享" onclick="DFBGFlie.Flie.FlieOperation.SchoolShare('','1002')">
+        <input type="button" value="全校共享" onclick="DFBGFlie.Flie.FlieOperation.SchoolShare('','1001')">
+
+    </div>
+</div>

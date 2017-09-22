@@ -1,0 +1,182 @@
+﻿@model List<Model.YUN_FileInfo>
+@{
+    ViewBag.Title = "MyShare";
+    Layout = "~/Views/Shared/YunMp.cshtml";
+
+}
+@section Head{
+    <script src="~/Scripts/Yun/List-view.js"></script>
+}
+<body>
+    <div class="oh module-toolbar">
+        <div class="Linkshare">
+            我的分享
+            <a href="javascript:void(0);" onclick="SearchFile('MyShare')" class="g-button" style="display: inline-block; margin-left:0px; margin-right: 20px; float: right;">
+                <span class="g-button-right">
+                    搜索
+                </span>
+            </a><span class="g-button" style="display: inline-block; float:right;  padding-left:0px; margin-right:0px;">
+                <span class="g-button-right" style="padding-right:1px;">
+                    <input id="SearchId" type="text" style="border:0px; height:21px;width :200px; padding:2px 5px; margin-top:1px;" />
+                </span>
+            </span>
+        </div>
+
+    </div>
+    <div style="padding-left: 10px;">
+        @if( Model.Count > 0 )
+        {
+            <div style="height: 30px; line-height: 30px; padding-left: 10px; position: relative;">
+                <span style="float: left; margin-left: 20px;" id="SumNum">已加载 @Model.Count 个</span>
+            </div>
+            <div class="list-view-header">
+                <div class="list-header">
+                    <ul class="list-cols" style="display: block;">
+                        <li style="width: 39%;position:relative;" class="col first-col descend">
+                            <div class="col-item check"><input type="checkbox" class="check-icon" onclick="AllCheck()" id="checkAll" /></div>
+                            <span class="text">文件名</span><span class="order-icon"></span>
+                            <div id="Qushare">
+                                <a href="#" onclick="DFBGFlie.Flie.FlieOperation.NotShare()" class="g-button"><span class="g-button-right"><em title="取消分享" class="icon  icon-share  icon-share-cancel"></em><span class="text" style="width: auto;">取消分享</span></span></a>
+                            </div>
+                        </li>
+                        <li style="width: 16%;" class="col"><span class="text">大小</span><span class="order-icon"></span></li>
+                        <li style="width: 9.5%;" class="col"><span class="text">状态</span><span class="order-icon"></span></li>
+                        <li style="width: 10%;" class="col"><span class="text">添加人/分享人</span><span class="order-icon"></span></li>
+                        <li style="width: 10%;" class="col last-col"><span class="text">分享位置</span><span class="order-icon"></span></li>
+                        <li style="width: 13%;" class="col last-col"><span class="text">分享日期</span><span class="order-icon"></span></li>
+                    </ul>
+                </div>
+            </div>
+            <div style="display: block; overflow-y: scroll; height:300px;" class="list-view-container2">
+                <div class="module-list-view">
+                    @for( int i = 0; i < Model.Count; i++ )
+                    {
+                        <dd class="g-clearfix list-view-item open-enable">
+                            <input class="checkbox1" type="checkbox" name="cheName" value="@Model[i].FileId" onclick="YzCheAll()" />
+                            @if( (bool) Model[i].IsFolder )
+                            {
+                                <div class="fileicon dir-small"></div>
+                            }
+                            else
+                            {
+                                switch( Model[i].FileExtName )
+                                {
+                                    case ".jpg":
+                                    case ".png":
+                                    case ".jpeg":
+                                    case ".gif":
+                                    case ".bmp":
+                                        <div class="fileicon fileicon-small-pic"></div>
+                                        break;
+                                    case ".docx":
+                                    case ".doc":
+                                    <div class="fileicon fileicon-small-doc"></div>
+                                        break;
+                                    case ".xls":
+                                    case ".xlsx":
+                                    <div class="fileicon fileicon-small-xls"></div>
+                                        break;
+                                    case ".txt":
+                                    <div class="fileicon fileicon-small-txt"></div>
+                                        break;
+                                    case ".rar":
+                                    <div class="fileicon fileicon-small-rar"></div>
+                                        break;
+                                    case ".zip":
+                                    <div class="fileicon fileicon-small-zip"></div>
+                                        break;
+                                    case ".pdf":
+                                    <div class="fileicon fileicon-small-pdf"></div>
+                                        break;
+                                    case ".flv":
+                                    case ".mp4":
+                                    case ".mkv":
+                                    case ".rmvb":
+                                    case ".avi":
+                                    case ".swf":
+                                    case ".wmv":
+                                    case ".3gp":
+                                    <div class="fileicon fileicon-small-video"></div>
+                                        break;
+                                    case ".exe":
+                                    <div class="fileicon fileicon-small-exe"></div>
+                                        break;
+                                    case ".psd":
+                                    <div class="fileicon fileicon-small-psd"></div>
+                                        break;
+                                    case ".mp3":
+                                    case ".wma":
+                                    case ".wav":
+                                    <div class="fileicon fileicon-small-mp3"></div>
+                                        break;
+                                    case ".ppt":
+                                    case ".pptx":
+                                    <div class="fileicon fileicon-small-ppt"></div>
+                                        break;
+                                    case ".xmind":
+                                    <div class="fileicon fileicon-small-xmind"></div>
+                                        break;
+                                    default:
+                                    <div class="fileicon fileicon-small"></div>
+                                        break;
+                                }
+                            }
+
+
+                            <div style="width: 40%" class="file-name">
+                                @if( (bool) Model[i].IsFolder )
+                                {
+                                    <div class="text"><a class="filename" href="/MyFile/MyFile??FileId=@Model[i].FileId" title="@Model[i].FileName">@Model[i].FileName</a></div>
+                                }
+                                else
+                                {
+                                    <div class="text"><a class="filename" onclick="DFBGFlie.Flie.FlieOperation.FileShowControl('@Model[i].FileExtName', '@Model[i].FileId')" href="#" title="@Model[i].FileName">@Model[i].FileName</a></div>
+                                }
+                                <div class="operate" style=" width:40px;">
+                                    <div style="position: absolute; top: 0px; padding-top: 0px; line-height: normal;">
+                                        @if( Model[i].CreateId == ViewBag.CreateId )
+                                        {
+                                            if( (bool) Model[i].IsShare )
+                                            {
+                                                <a onclick="DFBGFlie.Flie.FlieOperation.NotShare('@Model[i].FileId','')" class="g-button" style="">
+                                                    <span class="g-button-right">
+                                                        <em title="取消分享" class="icon icon-share-cancel"></em>
+                                                    </span>
+                                                </a>
+
+                                            }
+                                            else
+                                            {
+                                                <a onclick="DFBGFlie.Flie.FlieOperation.ShareMethod('@Model[i].FileId')" class="g-button" style="">
+                                                    <span class="g-button-right">
+                                                        <em title="分享" class="icon icon-share-blue"></em>
+                                                    </span>
+                                                </a>
+                                            }
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                            <div style="width: 16%" class="file-size">
+                                @(Model[i].FileSizeKb > 1024 ? ( Model[i].FileSizeKb > 1048576 ? Math.Round( ( (decimal) Model[i].FileSizeKb / (decimal) 1024 / (decimal) 1024 ), 2, MidpointRounding.AwayFromZero ).ToString() + "G" : Math.Round( ( (decimal) Model[i].FileSizeKb / (decimal) 1024 ), 2, MidpointRounding.AwayFromZero ).ToString() + "MB" ) : Model[i].FileSizeKb.ToString() + "KB")
+                            </div>
+                            <div style="width: 10%" class="file-size">@((bool) Model[i].IsShare ? "已分享" : "未分享")</div>
+                            <div style="width: 10%" class="file-size">@Model[i].CreateName</div>
+                            <div style="width: 10%" class="file-size">@Model[i].ShareTypeName</div>
+                            <div style="width: 13%" class="ctime">@(Convert.ToDateTime( Model[i].ShareTime ).ToString( "yyyy-MM-dd HH:mm" ))</div>
+                        </dd>
+                    }
+
+
+                </div>
+            </div>
+            @Tools.Pager( ViewBag.max, 20 )
+        }
+        else
+        {
+            <div style="width: 100%; text-align:center;">
+                <img src="~/Content/Img/NODel.png" />
+            </div>
+        }
+    </div>
+</body>

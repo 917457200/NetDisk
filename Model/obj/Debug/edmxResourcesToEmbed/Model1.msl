@@ -1,0 +1,106 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="NETDISKDBModelStoreContainer" CdmEntityContainer="NETDISKDBEntities">
+    <EntitySetMapping Name="MenuInfo">
+      <EntityTypeMapping TypeName="IsTypeOf(NETDISKDBModel.MenuInfo)">
+        <MappingFragment StoreEntitySet="MenuInfo">
+          <ScalarProperty Name="MenuCode" ColumnName="MenuCode" />
+          <ScalarProperty Name="MenuName" ColumnName="MenuName" />
+          <ScalarProperty Name="MenuUrl" ColumnName="MenuUrl" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="YUN_FileInfo">
+      <EntityTypeMapping TypeName="IsTypeOf(NETDISKDBModel.YUN_FileInfo)">
+        <MappingFragment StoreEntitySet="YUN_FileInfo">
+          <ScalarProperty Name="ShareGroupId" ColumnName="ShareGroupId" />
+          <ScalarProperty Name="ShareTime" ColumnName="ShareTime" />
+          <ScalarProperty Name="ShareFileID" ColumnName="ShareFileID" />
+          <ScalarProperty Name="CreateUnitCode" ColumnName="CreateUnitCode" />
+          <ScalarProperty Name="FileId" ColumnName="FileId" />
+          <ScalarProperty Name="FileName" ColumnName="FileName" />
+          <ScalarProperty Name="FileSizeKb" ColumnName="FileSizeKb" />
+          <ScalarProperty Name="FileCreateTime" ColumnName="FileCreateTime" />
+          <ScalarProperty Name="FileExtName" ColumnName="FileExtName" />
+          <ScalarProperty Name="IsFolder" ColumnName="IsFolder" />
+          <ScalarProperty Name="IsShare" ColumnName="IsShare" />
+          <ScalarProperty Name="ShareTypeId" ColumnName="ShareTypeId" />
+          <ScalarProperty Name="FileUrl" ColumnName="FileUrl" />
+          <ScalarProperty Name="CreateId" ColumnName="CreateId" />
+          <ScalarProperty Name="ParentFileId" ColumnName="ParentFileId" />
+          <ScalarProperty Name="FileState" ColumnName="FileState" />
+          <ScalarProperty Name="FileDeleteTime" ColumnName="FileDeleteTime" />
+          <ScalarProperty Name="CreateName" ColumnName="CreateName" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="SpFileCreateAxis" FunctionName="NETDISKDBModel.Store.SpFileCreateAxis" />
+    <EntitySetMapping Name="RoleInfo">
+      <EntityTypeMapping TypeName="NETDISKDBModel.RoleInfo">
+        <MappingFragment StoreEntitySet="RoleInfo">
+          <ScalarProperty Name="Note" ColumnName="Note" />
+          <ScalarProperty Name="RoleName" ColumnName="RoleName" />
+          <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="UserRoleInfo">
+      <EntityTypeMapping TypeName="NETDISKDBModel.UserRoleInfo">
+        <MappingFragment StoreEntitySet="UserRoleInfo">
+          <ScalarProperty Name="DiskSize" ColumnName="DiskSize" />
+          <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ShareInfo">
+      <EntityTypeMapping TypeName="NETDISKDBModel.ShareInfo">
+        <MappingFragment StoreEntitySet="ShareInfo">
+          <ScalarProperty Name="ShareTypeName" ColumnName="ShareTypeName" />
+          <ScalarProperty Name="ShareTypeId" ColumnName="ShareTypeId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="UserGroupInfo">
+      <EntityTypeMapping TypeName="NETDISKDBModel.UserGroupInfo">
+        <MappingFragment StoreEntitySet="UserGroupInfo">
+          <ScalarProperty Name="Examine" ColumnName="Examine" />
+          <ScalarProperty Name="UserName" ColumnName="UserName" />
+          <ScalarProperty Name="ExamineTime" ColumnName="ExamineTime" />
+          <ScalarProperty Name="GroupId" ColumnName="GroupId" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="GroupInfo">
+      <EntityTypeMapping TypeName="NETDISKDBModel.GroupInfo">
+        <MappingFragment StoreEntitySet="GroupInfo">
+          <ScalarProperty Name="CreateUserId" ColumnName="CreateUserId" />
+          <ScalarProperty Name="CreateUserName" ColumnName="CreateUserName" />
+          <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+          <ScalarProperty Name="GroupNote" ColumnName="GroupNote" />
+          <ScalarProperty Name="GroupName" ColumnName="GroupName" />
+          <ScalarProperty Name="GroupId" ColumnName="GroupId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="MassgeInfo">
+      <EntityTypeMapping TypeName="NETDISKDBModel.MassgeInfo">
+        <MappingFragment StoreEntitySet="MassgeInfo">
+          <ScalarProperty Name="MassgeExamineState" ColumnName="MassgeExamineState" />
+          <ScalarProperty Name="MassgeCreateTime" ColumnName="MassgeCreateTime" />
+          <ScalarProperty Name="GroupId" ColumnName="GroupId" />
+          <ScalarProperty Name="MassgeSendUserId" ColumnName="MassgeSendUserId" />
+          <ScalarProperty Name="MassgeToUserId" ColumnName="MassgeToUserId" />
+          <ScalarProperty Name="MassgeState" ColumnName="MassgeState" />
+          <ScalarProperty Name="MassgeType" ColumnName="MassgeType" />
+          <ScalarProperty Name="MassgeNote" ColumnName="MassgeNote" />
+          <ScalarProperty Name="MassgeName" ColumnName="MassgeName" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

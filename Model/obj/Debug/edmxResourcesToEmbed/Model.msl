@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="NETDISKDBModelStoreContainer" CdmEntityContainer="NETDISKDBEntities">
+    <EntitySetMapping Name="MenuInfo">
+      <EntityTypeMapping TypeName="NETDISKDBModel.MenuInfo">
+        <MappingFragment StoreEntitySet="MenuInfo">
+          <ScalarProperty Name="MenuUrl" ColumnName="MenuUrl" />
+          <ScalarProperty Name="MenuName" ColumnName="MenuName" />
+          <ScalarProperty Name="MenuCode" ColumnName="MenuCode" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="YUN_FileInfo">
+      <EntityTypeMapping TypeName="NETDISKDBModel.YUN_FileInfo">
+        <MappingFragment StoreEntitySet="YUN_FileInfo">
+          <ScalarProperty Name="ParentFileId" ColumnName="ParentFileId" />
+          <ScalarProperty Name="FileUpdateTime" ColumnName="FileUpdateTime" />
+          <ScalarProperty Name="CreateId" ColumnName="CreateId" />
+          <ScalarProperty Name="FileUrl" ColumnName="FileUrl" />
+          <ScalarProperty Name="ShareTypeId" ColumnName="ShareTypeId" />
+          <ScalarProperty Name="IsShare" ColumnName="IsShare" />
+          <ScalarProperty Name="IsFolder" ColumnName="IsFolder" />
+          <ScalarProperty Name="FileExtName" ColumnName="FileExtName" />
+          <ScalarProperty Name="FileCreateTime" ColumnName="FileCreateTime" />
+          <ScalarProperty Name="FileSizeKb" ColumnName="FileSizeKb" />
+          <ScalarProperty Name="FileName" ColumnName="FileName" />
+          <ScalarProperty Name="FileId" ColumnName="FileId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

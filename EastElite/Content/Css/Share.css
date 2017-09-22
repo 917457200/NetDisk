@@ -1,0 +1,257 @@
+﻿@font-face { font-family: yunfont; src: url(/Content/fonts/fontawesome/yunfont.eot?t=1496300303591?fo24w5); src: url(/Content/fonts/fontawesome/yunfont.eot?t=1496300303591?fo24w5#iefix) format('embedded-opentype'),url(/Content/fonts/fontawesome/yunfont.ttf) format('truetype'),url(/Content/fonts/fontawesome/yunfont.woff?t=1496300303591?fo24w5) format('woff'),url(/Content/fonts/fontawesome/yunfont.svg?t=1496300303591?fo24w5#yunfont) format('svg'); font-weight: 400; font-style: normal; }
+body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, code, form, textarea, select, optgroup, option, fieldset, legend, p, blockquote, th, td { margin: 0; padding: 0; }
+.body { overflow: auto; }
+
+body, button, input, select, textarea { color: #666; font: 12px/1.5 "Microsoft YaHei",arial,SimSun,"宋体"; }
+.frame-all {  height: 100%; }
+.module-header, .frame-main { margin: 0 auto; text-align: left; }
+#layoutApp .frame-main { background: #f3f8ff none repeat scroll 0 0; border: 1px solid #dfe7f1; border-radius: 5px; margin-top: 110px; position: relative; width: 980px; }
+.frame-content { background: #fff none repeat scroll 0 0; border-bottom-left-radius: 5px; border-top-left-radius: 5px; min-height: 500px; width: auto; }
+
+.module-share-header { border-bottom: 1px solid #f1f5fb; }
+a { color: #06c; outline: 0 none; text-decoration: none; }
+
+#layoutAside { margin: 0 5px; position: absolute; right: 2px; top: 0; width: 215px; }
+.module-share-header .slide-show-header { padding: 15px 10px; position: relative; }
+
+.module-share-file-main .share-file-viewer { margin-bottom: 10px; margin-top: 10px; padding: 0 10px; position: relative; }
+.module-share-file-main .picContainer { height: 400px; position: relative; width: 100%; }
+.poorRotaterBox { overflow: hidden; }
+.module-share-header .slide-show-header { padding: 15px 10px; position: relative; }
+    .module-share-header .slide-show-header .slide-show-left { float: left; margin: 10px 0; }
+.slide-show-header h2 { padding-top: 5px; width: 300px; }
+
+.module-share-header .slide-show-header h2 { color: #424e67; font-size: 14px; font-weight: 200; line-height: 32px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; width: 300px; }
+.module-comment-page { font-size: 14px; margin: 20px 0; padding: 0 10px; }
+.module-comment { background-color: #fff; }
+.module-share-header .slide-show-header h2 em { height: 26px; margin-right: 5px; margin-top: -4px; vertical-align: middle; width: 26px; }
+.file-name .global-icon-16 { background-repeat: no-repeat; display: inline-block; height: 28px; width: 28px; }
+.file-name .global-icon-16-jpg, .file-name .global-icon-16-jpeg, .file-name .global-icon-16-gif, .file-name .global-icon-16-bmp, .file-name .global-icon-16-png, .file-name .global-icon-16-jpe, .file-name .global-icon-16-cur, .file-name .global-icon-16-svg, .file-name .global-icon-16-svgz, .file-name .global-icon-16-tif, .file-name .global-icon-16-tiff, .file-name .global-icon-16-ico { background-repeat: no-repeat; }
+.file-name .global-icon-16-jpg, .file-name .global-icon-16-jpeg, .file-name .global-icon-16-gif, .file-name .global-icon-16-bmp, .file-name .global-icon-16-png, .file-name .global-icon-16-jpe, .file-name .global-icon-16-cur, .file-name .global-icon-16-svg, .file-name .global-icon-16-svgz, .file-name .global-icon-16-tif, .file-name .global-icon-16-tiff, .file-name .global-icon-16-ico { background-position: -2px -708px; }
+.file-name .global-icon-16-xmind, .file-name .global-icon-16-mm, .file-name .global-icon-16-numbers, .file-name .global-icon-16-pages, .file-name .global-icon-16-key, .file-name .global-icon-16-jpg, .file-name .global-icon-16-jpeg, .file-name .global-icon-16-gif, .file-name .global-icon-16-bmp, .file-name .global-icon-16-png, .file-name .global-icon-16-jpe, .file-name .global-icon-16-cur, .file-name .global-icon-16-svg, .file-name .global-icon-16-svgz, .file-name .global-icon-16-tif, .file-name .global-icon-16-tiff, .file-name .global-icon-16-ico, .file-name .global-icon-16-wma, .file-name .global-icon-16-wav, .file-name .global-icon-16-mp3, .file-name .global-icon-16-aac, .file-name .global-icon-16-ra, .file-name .global-icon-16-ram, .file-name .global-icon-16-mp2, .file-name .global-icon-16-ogg, .file-name .global-icon-16-aif, .file-name .global-icon-16-mpeg, .file-name .global-icon-16-amr, .file-name .global-icon-16-mid, .file-name .global-icon-16-midi, .file-name .global-icon-16-rmvb , .file-name .global-icon-16-zip, .file-name .global-icon-16-doc, .file-name .global-icon-16-docx, .file-name .global-icon-16-xls{ background-image: url("/Content/Img/page-ui_z_e5c9fbb.png"); }
+.file-name .global-icon-16-xlsx,.file-name .global-icon-16-ppt,.file-name .global-icon-16-xmind,.file-name .global-icon-16-pptx,.file-name .global-icon-16-psd,.file-name .global-icon-16-dwg,.file-name .global-icon-16-7z,.file-name .global-icon-16-iso,.file-name .global-icon-16-rar,.file-name .global-icon-16-vsd,.file-name .global-icon-16-flv,.file-name .global-icon-16-mkv,.file-name .global-icon-16-swf,.file-name .global-icon-16-mp4,.file-name .global-icon-16-mpg,.file-name .global-icon-16-rm,.file-name .global-icon-16-txt,.file-name .global-icon-16-pdf{ background-image: url("/Content/Img/page-ui_z_e5c9fbb.png"); }
+
+.module-share-header .slide-show-right { float: right; margin: 10px 0; text-align: right; width: 370px; }
+
+.global-clearfix::after, .g-clearfix::after { clear: both; content: "."; display: block; font-size: 0; height: 0; line-height: 0; visibility: hidden; }
+.module-share-top-bar { margin-right: -3px; }
+    .module-share-top-bar .bar { padding-right: 5px; position: absolute; right: -5px; }
+    .module-share-top-bar .button-box-mark { display: none !important; }
+    .module-share-top-bar .button-box { height: 30px; position: relative !important; }
+.g-button { border: 1px solid #d4d4d4; border-radius: 2px; color: #666; display: inline-block; font-size: 12px; height: 30px; line-height: 30px; margin: 0 5px; outline: 0 none; padding-left: 15px; position: relative; text-decoration: none; vertical-align: top; white-space: nowrap; }
+    .g-button:link, .g-button:visited { color: #3b8cff; }
+.g-button-right { cursor: pointer; display: block; height: 29px; line-height: 29px; padding-right: 15px; position: relative; right: -1px; text-align: center; }
+.g-button .g-button-right { cursor: pointer; height: 32px; line-height: 32px; padding-right: 10px; text-align: center; }
+.g-button { border: 1px solid #c0d9fe; border-radius: 4px; color: #3b8cff; height: 32px; line-height: 32px; padding-left: 10px; text-decoration: none; }
+.icon { font-family: yunfont !important; font-style: normal; font-variant: normal; font-weight: 400; line-height: 1; text-transform: none; }
+.g-button .icon { display: inline-block; height: 24px; margin-right: 4px; vertical-align: middle; width: 20px; }
+.g-button .icon { font-size: 16px; height: 31px; line-height: 28px; margin-right: 0; }
+.icon-share-cancel:before { content: "\e91b"; }
+.icon-download:before { content: "\e907"; }
+.icon-qrcode:before { content: "\e91c"; }
+.g-button .text { display: inline-block; vertical-align: middle; }
+.g-button .text { font-size: 13px; margin-left: 2px; margin-right: 2px; vertical-align: baseline; }
+.cb { clear: both; height: 0; width: 0; }
+.module-share-header .slide-show-other-infos { margin-top: 5px; position: relative; text-align: right; z-index: 40; }
+    .module-share-header .slide-show-other-infos .share-file-info { background: rgba(0, 0, 0, 0) url("/Content/Img/timer_eaf54a8.png") no-repeat scroll left center; float: left; padding-left: 20px; }
+.g-button:hover { border: 1px solid #c0d9fe; color: #77afff !important; }
+.module-share-header .slide-show-other-cns { float: right; margin-left: 10px; text-align: left; }
+.slide-show-other-infos .slide-show-other-cns { color: #a2a2a2; }
+.slide-show-other-infos .title-funcs { color: #a2a2a2; float: right; position: relative; }
+.module-share-header .slide-show-other-infos a { color: #3d88fc; }
+.title-funcs .funcs-tui { position: relative; }
+.title-funcs a { text-decoration: none; }
+
+.tui_icon { display: block; height: 20px; left: -16px; position: absolute; top: -3px; width: 20px; }
+
+.title-funcs .funcs-tui b { font-weight: 400; }
+.funcs-tui .tui-number { display: inline-block; font-size: 15px; font-weight: 700; position: absolute; right: 3px; top: -20px; }
+.share-operate-seprate { border-right: 1px solid #c5d8f3; color: #c5d8f3; display: inline-block; height: 12px; margin-bottom: -2px; margin-right: 8px; padding: 0 0 0 7px; }
+.comment-container { display: inline-block; position: relative; z-index: 10; }
+.share-operate-seprate { border-right: 1px solid #c5d8f3; color: #c5d8f3; display: inline-block; height: 12px; margin-bottom: -2px; margin-right: 8px; padding: 0 0 0 7px; }
+.funcs-share { color: #3d88fc; cursor: pointer; display: inline; padding-right: 10px; position: relative; z-index: 20; }
+
+.title-funcs .funcs-share { padding-right: 10px; }
+
+.funcs-share span { padding-right: 3px; }
+
+.funcs-share .more-icon { background: rgba(0, 0, 0, 0) url("/Content/Img/btn_icon.gif") no-repeat scroll -66px -589px; font-size: 0; height: 6px; left: auto; line-height: 0; position: absolute; right: 0; top: 5px; width: 9px; }
+.module-share-file-main .share-file-viewer { margin-bottom: 10px; margin-top: 10px; padding: 0 10px; position: relative; }
+
+.ad-single-bottom { display: block; height: auto; margin: 0 auto; overflow: hidden; padding-bottom: 10px; position: relative; text-decoration: none; width: 730px; }
+
+.module-share-file-main .share-file-viewer { margin-bottom: 10px; margin-top: 10px; padding: 0 10px; position: relative; }
+
+.module-share-file-main .picture-file-detail { height: 400px; position: relative; width: 100%; }
+.module-comment .title { color: #333; font-size: 16px; padding-left: 5px; height: 20px; font-weight: bold; }
+.module-comment .description { margin: 10px 0; position: relative; }
+    .module-comment .description .area { background: #f8f8f8 none repeat scroll 0 0; border: 0 none; font-size: 14px; height: 90px; overflow: auto; padding: 10px; resize: none; width: 100%; word-break: break-all; }
+
+    .module-comment .description .placeholder { color: #999; cursor: text; font-size: 14px; left: 10px; position: absolute; text-align: left; top: 10px; width: 200px; }
+.module-comment .fn-block { display: block; }
+.clearfix::after { clear: both; content: "."; display: block; height: 0; visibility: hidden; }
+.module-comment .deal { overflow: hidden; }
+
+.module-comment-page .vcode { margin-top: 5px; }
+.module-comment .vcode { margin-top: 3px; }
+.module-comment .fn-block { display: block; }
+.module-comment-page .vcode { margin-top: 5px; }
+.module-comment .fn-fl { float: left; }
+.module-comment .vcode .verify-body1 { padding: 0; text-align: right; }
+
+.module-comment-page .vcode .input-code { padding: 3px; width: 50px; }
+.module-comment .vcode .input-code { background-color: #fff; border: 1px solid #c6c6c6; height: 24px; line-height: 24px; vertical-align: middle; }
+.module-comment .vcode .img-code, .module-comment .vcode .img-txt { display: inline-block; vertical-align: middle; }
+.module-comment-page .vcode .img-code, .module-comment-page .vcode .img-txt { height: 24px; line-height: 24px; margin-left: 5px; width: 80px; }
+.module-comment-page .vcode .underline { margin-left: 5px; vertical-align: middle; }
+
+.module-comment .operation { text-align: right; }
+.module-comment .fn-fr { float: right; }
+.module-comment .btn-comment { color: #fff; display: inline-block; font-family: "Microsoft Yahei"; text-align: center; }
+.module-comment .btn-comment { background: #4389ed none repeat scroll 0 0; border-radius: 5px; color: #fff; display: inline-block; font-size: 14px; text-align: center; }
+.module-comment-page .btn-comment { font-size: 16px; height: 36px; line-height: 36px; width: 126px; }
+.module-comment .error-message { color: #e24c37; height: 24px; line-height: 24px; margin-right: 5px; text-align: right; }
+.module-comment .total { border-bottom: 1px solid #f0f0f0; color: #666; padding: 5px 0; }
+
+ul, li, ol { list-style: outside none none; }
+
+.module-comment .item { border-bottom: 1px solid #f0f0f0; padding: 15px 0 10px; }
+
+.module-comment .fn-fl { float: left; }
+
+.module-comment .item .item-info { line-height: 1.8; margin-left: 70px; }
+.module-comment-page .talk, .module-comment-page .talk-to { font-weight: 600; }
+
+.module-comment-page .item .Textbody { word-break: break-all; }
+.module-comment .item .item-info .foot { margin-top: 15px; }
+.module-comment .item .foot { overflow: hidden; }
+.module-comment .item .break, .module-comment .item .time { color: #999; }
+.page { margin: 40px 0 35px; }
+.module-share-file-main .rotateBar { bottom: 0; display: none; height: 51px; left: 0; position: absolute; text-align: center; width: 100%; }
+.module-share-file-main .border { border-bottom: 1px solid #a7a5a6; border-top: 1px solid #6a6869; }
+.module-share-file-main .bgMask { background: #000 none repeat scroll 0 0; bottom: 0; height: 49px; left: 0; margin-top: 2px; opacity: 0.6; position: absolute; right: 0; top: 0; width: 100%; z-index: 2; }
+.module-share-file-main .rotateButtons { bottom: 0; height: 31px; left: 0; margin: 10px 0; position: absolute; right: 0; top: 0; width: 100%; z-index: 3; }
+
+.module-share-file-main .leftRotaterBtn { background: rgba(0, 0, 0, 0) url("/Content/Img/ic_rotate_left_2bed0fa.png") no-repeat scroll 0 0; cursor: pointer; margin-right: 10px; }
+
+.module-share-file-main .rightRotaterBtn { background: rgba(0, 0, 0, 0) url("/Content/Img/ic_rotate_right_1c38528.png") no-repeat scroll 0 0; cursor: pointer; margin-left: 10px; }
+.module-share-file-main .leftRotaterBtn, .module-share-file-main .rightRotaterBtn { display: inline-block; height: 25px; width: 27px; }
+.poorRotater-1 { transform: rotate(0deg); }
+
+.file-name .global-icon-16-wma, .file-name .global-icon-16-wav, .file-name .global-icon-16-mp3, .file-name .global-icon-16-aac, .file-name .global-icon-16-ra, .file-name .global-icon-16-ram, .file-name .global-icon-16-mp2, .file-name .global-icon-16-ogg, .file-name .global-icon-16-aif, .file-name .global-icon-16-mpega, .file-name .global-icon-16-amr, .file-name .global-icon-16-mid, .file-name .global-icon-16-midi, .file-name .global-icon-16-m4a {
+    background-position: -2px -735px;
+}
+.file-name .global-icon-16-wmv, .file-name .global-icon-16-rmvb, .file-name .global-icon-16-mpeg4, .file-name .global-icon-16-mpeg2, .file-name .global-icon-16-flv, .file-name .global-icon-16-avi, .file-name .global-icon-16-3gp, .file-name .global-icon-16-mpga, .file-name .global-icon-16-qt, .file-name .global-icon-16-rm, .file-name .global-icon-16-wmz, .file-name .global-icon-16-wmd, .file-name .global-icon-16-wvx, .file-name .global-icon-16-wmx, .file-name .global-icon-16-wm, .file-name .global-icon-16-swf, .file-name .global-icon-16-mpg, .file-name .global-icon-16-mp4, .file-name .global-icon-16-mkv, .file-name .global-icon-16-mpeg, .file-name .global-icon-16-mov, .file-name .global-icon-16-asf {
+    background-position: -2px -762px;
+}
+.file-name .global-icon-16-xmind {
+    background-position: -2px -573px;
+}
+.file-name .global-icon-16-dir {
+    background-position: 0 -517px;
+}
+
+.file-name .global-icon-16-multi {
+    background-position: -2px -27px;
+}
+.file-name .global-icon-16-shouchang {
+    background-position: 0 -54px;
+}
+.file-name .global-icon-16-yingyong_child, .file-name .global-icon-16-yingyong {
+    background-position: 0 -83px;
+}
+.file-name .global-icon-16-doc, .file-name .global-icon-16-docx {
+    background-position: -2px -112px;
+}
+.file-name .global-icon-16-xls, .file-name .global-icon-16-xlsx {
+    background-position: -2px -139px;
+}
+.file-name .global-icon-16-ppt, .file-name .global-icon-16-pptx {
+    background-position: -2px -166px;
+}
+.file-name .global-icon-16-vsd {
+    background-position: -2px -193px;
+}
+.file-name .global-icon-16-pdf {
+    background-position: -2px -220px;
+}
+.file-name .global-icon-16-apk {
+    background-position: -2px -247px;
+}
+.file-name .global-icon-16-dws, .file-name .global-icon-16-dwt, .file-name .global-icon-16-dxf, .file-name .global-icon-16-dwg {
+    background-position: -2px -274px;
+}
+.file-name .global-icon-16-exe, .file-name .global-icon-16-msi, .file-name .global-icon-16-dmg {
+    background-position: -2px -301px;
+}
+.file-name .global-icon-16-ipa {
+    background-position: -2px -328px;
+}
+.file-name .global-icon-16-zip {
+    background-position: -2px -355px;
+}
+.file-name .global-icon-16-rar {
+    background-position: -2px -382px;
+}
+.file-name .global-icon-16-psd {
+    background-position: -2px -409px;
+}
+.file-name .global-icon-16-ai {
+    background-position: -2px -436px;
+}
+.file-name .global-icon-16-txt {
+    background-position: -2px -463px;
+}
+.dialog_two_dimension_code {
+    cursor: pointer;
+    display: none;
+    left: 100px;
+    padding-top: 20px;
+    position: absolute;
+    top: 20px;
+    z-index: 9999;
+}
+
+.dialog_two_dimension_code .inner_two_dimension_code {
+    background-color: #fff;
+    border: 1px solid #e8e8e8;
+    border-radius: 4px;
+    cursor: default;
+    height: 185px;
+    line-height: 185px;
+    position: relative;
+    text-align: center;
+    width: 180px;
+    z-index: 101;
+}
+
+.dialog_two_dimension_code .two_dimension_code_top {
+    background: rgba(0, 0, 0, 0) url("/Content/img/qr-triangle_adecaa4.png") no-repeat scroll center center;
+    height: 9px;
+    left: 155px;
+    position: absolute;
+    top: -8px;
+    width: 18px;
+}
+
+.dialog_two_dimension_code .two_dimension_code_main {
+    background-position: 16px 10px;
+    background-repeat: no-repeat;
+    height: 160px;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.dialog_two_dimension_code .two_dimension_code_bottom {
+    color: #6c6c6c;
+    font: 12px/1.5 tahoma,arial,宋体;
+    padding-top: 2px;
+    text-align: center;
+}
+
+.dialog_two_dimension_code .two_dimension_code_bottom {
+    color: #6c6c6c;
+    font: 12px/1.5 tahoma,arial,宋体;
+    padding-top: 2px;
+    text-align: center;
+}
