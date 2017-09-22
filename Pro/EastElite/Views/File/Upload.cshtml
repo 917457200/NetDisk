@@ -1,0 +1,168 @@
+﻿@{
+    ViewBag.Title = "Upload";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" charset="utf-8" />
+    <title>FileUpload</title>
+    <link href="@Url.Content("~/Application/plupload/queue/css/jquery.plupload.queue.css" )" rel="stylesheet" />
+    <script src="@Url.Content("~/Scripts/jquery-1.10.2.min.js")"></script>
+    <script src="@Url.Content("~/Application/plupload/plupload.full.min.js" )"></script>
+    <script src="@Url.Content("~/Application/plupload/queue/queue.min.js")"></script>
+    <script src="@Url.Content("~/Application/plupload/i18n/zh_CN.js")"></script>
+
+    <style type="text/css">
+        * { font-size: 12px; }
+        .form-inline { display: inline-block; width: auto; vertical-align: middle; }
+
+        .form-group { display: inline-block; margin-bottom: 0; vertical-align: middle; }
+
+        .form-control { display: inline-block; width: auto; vertical-align: middle; }
+    </style>
+    <script type="text/javascript">
+        var files = [];
+
+        $(function () {
+            var Up = true;
+            var parentId = $("#HidFileId", parent.document.body).val();
+            var Share = $("#Share", parent.document.body).val();
+            if (Share != undefined) {
+                Share = "1001";
+            } else {
+                Share = "";
+            }
+            // Setup html5 version
+            $("#uploader").pluploadQueue({
+                // General settings
+                runtimes: 'html5,flash,html4',
+                url: '/File/UploadMethod',
+                chunk_size: '500kb',
+                unique_names: true, 	//是否自动生成唯一名称
+                multiple_queues:true,
+                dragdrop: true,
+                filters: {
+                    max_file_size: '5000mb',
+                    prevent_duplicates: true, //不允许选取重复文件
+                    mime_types: [
+				                    { title: '教育文件', extensions: "doc,docx,xls,xlsx,ppt,xmind,pptx,bmp,jpeg,jpg,gif,png,psd,tif,dwg,mp3,wma,wav,7z,iso,zip,rar,vsd,flv,mkv,rmvb,avi,swf,mp4,mpeg,mpg,rm,wmv,txt,pdf" }]
+
+                },
+
+                flash_swf_url: '/Application/Theme/Content/default/js/plupload/Moxie.swf',
+                init: {
+                    BeforeUpload: function (up, file) {
+                        up.settings.multipart_params = {
+                            uploadfilename: file.name,
+                            parentFileId: parentId,
+                            Share: Share
+                        };
+                        $.ajax({
+                            type: "POST",
+                            contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+                            url: "/File/IsOutFileSize",
+                            data: "FileSize=" + file.size,
+                            dataType: "html",
+                            async: false,
+                            success: function (data) {
+                                if (data == "True") {
+                                    Up = false;
+                                    close();
+                                    alert("个人空间已满，" + file.name + "上传中断！");
+                                    return;
+                                }
+                            },
+                            complete: function (XMLHttpRequest, textStatus) {
+                            },
+                        })
+                    },
+                    FileUploaded: function (up, file, info) {
+
+                        if (Up) {
+                            //一个文件上传成功
+                            file.url = unescape(info.response.split('|')[1]);
+                            filename = unescape(info.response.split('|')[2]);
+                            files.push({
+                                FileUrl: file.url,
+                                FileName: filename,
+                                //Size:file.Size
+                                FileSizeKb: parseFloat(file.size / 1024).toFixed(2),
+                                ShareTypeId: Share
+                            });
+                            if (up.total.queued == 0) {
+                                //判断文件大小是否超过个人空间大小，超过则不让上传
+                                if (file.url == "No") {
+                                    alert("个人空间已满，" + file.name + "上传中断！");
+                                    return;
+                                } else {
+                                    $.ajax({
+                                        type: "POST",
+                                        contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+                                        url: "/File/AddMyYunFiles",
+                                        data: "files=" + JSON.stringify(files) + "&parentFileId=" + parentId,
+                                        dataType: "json",
+                                        async: false,
+                                        success: function (data) {
+                                            if (data.s) {
+                                                alert("上传成功！");
+                                                //刷新页面
+                                                parent.window.location.reload();
+                                            } else {
+                                                close();
+                                                alert("上传失败，请重新上传！\n" + data.msg)
+                                            }
+                                        },
+                                        complete: function (XMLHttpRequest, textStatus) {
+
+                                        },
+                                        error: function (e, x) {
+                                            close();
+                                            alert("上传失败，请重新上传！\n" + data.msg)
+                                        }
+                                    })
+                                }
+                            }
+                        }
+                    },
+
+                    Error: function (up, args) {
+                        ////发生错误
+                        //if (args.file) {
+                        //    alert('[error] File:' + args.file);
+                        //} else {
+                        //    alert('[error]' + args);
+                        //}
+                        if (up.total.queued == 0) {
+                            close();
+                        }
+                    }
+                }
+            });
+        });
+
+        function close() {
+            $('#uploader').remove();
+            parent.closeUpPageHandler(files);
+        }
+
+    </script>
+</head>
+<body>
+    <div id="uploader">
+    </div>
+    <div style=" text-align:center;width:100%;font-weight:bold;"> 注意事项：</div>
+    <div style="width: 100%; word-wrap: break-word; word-break: keep-all; "> 1、允许上传文件类型：*.doc,*.docx,*.xls,*.xlsx,*.ppt,*.xmind,*.pptx,*.bmp,*.jpeg,*.jpg,*.gif,*.png,*.psd,*.tif,*.dwg,*.mp3,*.wma,*.wav,*.7z,*.iso,*.zip,*.rar,*.vsd,*.flv,*.mkv,*.rmvb,*.avi,*.swf,*.mp4,*.mpg,*.mpeg,*.rm,*.wmv,*.txt,*.pdf</div>
+    <div> 2、上传队列结束后自动关闭上传弹框</div>
+    <div> 3、最大上传单个文件大小为5G</div>
+    <script type="text/javascript">
+        $(function () {
+            parent.$(".xubox_main").css("height", "410px");
+            parent.$(".xubox_border").css("height", "415px");
+        })
+    </script>
+
+
+</body>
+</html>

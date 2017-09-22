@@ -1,0 +1,1144 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{29D55F75-A29C-418C-939D-AEEF7D5EE39C}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>EastElite</RootNamespace>
+    <AssemblyName>EastElite</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <MvcBuildViews>false</MvcBuildViews>
+    <UseIISExpress>true</UseIISExpress>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EastElite.SMS.Business, Version=3.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\BLL\bin\EastElite.SMS.Business.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\EntityFramework.6.0.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\EntityFramework.6.0.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="ICSharpCode.SharpZipLib, Version=0.86.0.518, Culture=neutral, PublicKeyToken=1b03e6acf1164f73, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\ICSharpCode.SharpZipLib.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Abstractions" />
+    <Reference Include="System.Web.Routing" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http">
+    </Reference>
+    <Reference Include="System.Net.Http.WebRequest">
+    </Reference>
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.0.0\lib\net45\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=5.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.0.0\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Optimization">
+      <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.1.1.1\lib\net40\System.Web.Optimization.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.0.0\lib\net45\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.0.0\lib\net45\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.0.0\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.0.0\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <Private>True</Private>
+      <HintPath>..\packages\Newtonsoft.Json.5.0.6\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="WebGrease">
+      <Private>True</Private>
+      <HintPath>..\packages\WebGrease.1.5.2\lib\WebGrease.dll</HintPath>
+    </Reference>
+    <Reference Include="Antlr3.Runtime">
+      <Private>True</Private>
+      <HintPath>..\packages\Antlr.3.4.1.9004\lib\Antlr3.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="ZipInfo, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\ZipInfo.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.AspNet.Identity.Core">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Core.1.0.0\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Owin">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Owin.1.0.0\lib\net45\Microsoft.AspNet.Identity.Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.EntityFramework">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.EntityFramework.1.0.0\lib\net45\Microsoft.AspNet.Identity.EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="Owin">
+      <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin">
+      <HintPath>..\packages\Microsoft.Owin.2.0.0\lib\net45\Microsoft.Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Host.SystemWeb">
+      <HintPath>..\packages\Microsoft.Owin.Host.SystemWeb.2.0.0\lib\net45\Microsoft.Owin.Host.SystemWeb.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security">
+      <HintPath>..\packages\Microsoft.Owin.Security.2.0.0\lib\net45\Microsoft.Owin.Security.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Facebook">
+      <HintPath>..\packages\Microsoft.Owin.Security.Facebook.2.0.0\lib\net45\Microsoft.Owin.Security.Facebook.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Cookies">
+      <HintPath>..\packages\Microsoft.Owin.Security.Cookies.2.0.0\lib\net45\Microsoft.Owin.Security.Cookies.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.OAuth">
+      <HintPath>..\packages\Microsoft.Owin.Security.OAuth.2.0.0\lib\net45\Microsoft.Owin.Security.OAuth.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Google">
+      <HintPath>..\packages\Microsoft.Owin.Security.Google.2.0.0\lib\net45\Microsoft.Owin.Security.Google.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Twitter">
+      <HintPath>..\packages\Microsoft.Owin.Security.Twitter.2.0.0\lib\net45\Microsoft.Owin.Security.Twitter.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.MicrosoftAccount">
+      <HintPath>..\packages\Microsoft.Owin.Security.MicrosoftAccount.2.0.0\lib\net45\Microsoft.Owin.Security.MicrosoftAccount.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="App_Start\FilterConfig.cs" />
+    <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="Controllers\AjaxController.cs" />
+    <Compile Include="Controllers\AllShareController.cs" />
+    <Compile Include="Controllers\DepartmentController.cs" />
+    <Compile Include="Controllers\DetailsController.cs" />
+    <Compile Include="Controllers\FileController.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\MessgerController.cs" />
+    <Compile Include="Controllers\MyFileController.cs" />
+    <Compile Include="Controllers\RoleController.cs" />
+    <Compile Include="Controllers\SchoolShareController.cs" />
+    <Compile Include="Controllers\UserGroupController.cs" />
+    <Compile Include="Core\ImageResult.cs" />
+    <Compile Include="Core\LoginFilter.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Service References\EastEliteICMSWS\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\EastEliteSMSWS\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Startup.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Application\jwplayer-6.12.0\codecs\aslcodec_vfw.dll" />
+    <Content Include="Application\jwplayer-6.12.0\codecs\asusasv2.dll" />
+    <Content Include="Application\jwplayer-6.12.0\codecs\asusasvd.dll" />
+    <Content Include="Application\jwplayer-6.12.0\codecs\ativcr2.dll" />
+    <Content Include="Application\jwplayer-6.12.0\codecs\atrc3260.dll" />
+    <Content Include="Application\jwplayer-6.12.0\codecs\avimszh.dll" />
+    <Content Include="Application\jwplayer-6.12.0\codecs\avizlib.dll" />
+    <Content Include="Application\jwplayer-6.12.0\codecs\CLRVIDDC.DLL" />
+    <Content Include="Application\jwplayer-6.12.0\codecs\clrviddd.dll" />
+    <Content Include="Application\jwplayer-6.12.0\codecs\cook.dll" />
+    <Content Include="Application\jwplayer-6.12.0\codecs\CtWbJpg.DLL" />
+    <Content Include="Application\jwplayer-6.12.0\codecs\DECVW_32.DLL" />
+    <Content Include="Application\jwplayer-6.12.0\codecs\divx.dll" />
+    <Content Include="Application\jwplayer-6.12.0\codecs\divxc32.dll" />
+    <Content Include="Application\jwplayer-6.12.0\codecs\drv23260.dll" />
+    <Content Include="Application\jwplayer-6.12.0\codecs\drv33260.dll" />
+    <Content Include="Application\jwplayer-6.12.0\codecs\drv43260.dll" />
+    <Content Include="Application\jwplayer-6.12.0\codecs\frapsvid.dll" />
+    <Content Include="Application\jwplayer-6.12.0\codecs\huffyuv.dll" />
+    <Content Include="Application\jwplayer-6.12.0\codecs\iccvid.dll" />
+    <Content Include="Application\jwplayer-6.12.0\codecs\icmw_32.dll" />
+    <Content Include="Application\jwplayer-6.12.0\codecs\ir32_32.dll" />
+    <Content Include="Application\jwplayer-6.12.0\codecs\ir41_32.dll" />
+    <Content Include="Application\jwplayer-6.12.0\codecs\ir50_32.dll" />
+    <Content Include="Application\jwplayer-6.12.0\codecs\ivvideo.dll" />
+    <Content Include="Application\jwplayer-6.12.0\codecs\jp2avi.dll" />
+    <Content Include="Application\jwplayer-6.12.0\codecs\LCodcCMP.dll" />
+    <Content Include="Application\jwplayer-6.12.0\codecs\lsvxdec.dll" />
+    <Content Include="Application\jwplayer-6.12.0\codecs\m3jp2k32.dll" />
+    <Content Include="Application\jwplayer-6.12.0\codecs\m3jpeg32.dll" />
+    <Content Include="Application\jwplayer-6.12.0\codecs\mcdvd_32.dll" />
+    <Content Include="Application\jwplayer-6.12.0\codecs\mcmjpg32.dll" />
+    <Content Include="Application\jwplayer-6.12.0\codecs\mpg4c32.dll" />
+    <Content Include="Application\jwplayer-6.12.0\codecs\msrle32.dll" />
+    <Content Include="Application\jwplayer-6.12.0\codecs\msvidc32.dll" />
+    <Content Include="Application\jwplayer-6.12.0\codecs\pclepim1.dll" />
+    <Content Include="Application\jwplayer-6.12.0\codecs\pncrt.dll" />
+    <Content Include="Application\jwplayer-6.12.0\codecs\qdv.dll" />
+    <Content Include="Application\jwplayer-6.12.0\codecs\qpeg32.dll" />
+    <Content Include="Application\jwplayer-6.12.0\codecs\qtmlClient.dll" />
+    <Content Include="Application\jwplayer-6.12.0\codecs\Readme.txt" />
+    <Content Include="Application\jwplayer-6.12.0\codecs\rt32dcmp.dll" />
+    <Content Include="Application\jwplayer-6.12.0\codecs\sipr3260.dll" />
+    <Content Include="Application\jwplayer-6.12.0\codecs\sp5x_32.dll" />
+    <Content Include="Application\jwplayer-6.12.0\codecs\tsccvid.dll" />
+    <Content Include="Application\jwplayer-6.12.0\codecs\tvqdec.dll" />
+    <Content Include="Application\jwplayer-6.12.0\codecs\ubvmp4d.dll" />
+    <Content Include="Application\jwplayer-6.12.0\codecs\ultimo.dll" />
+    <Content Include="Application\jwplayer-6.12.0\codecs\VDODEC32.dll" />
+    <Content Include="Application\jwplayer-6.12.0\codecs\vgpix32d.dll" />
+    <Content Include="Application\jwplayer-6.12.0\codecs\ViVD2.dll" />
+    <Content Include="Application\jwplayer-6.12.0\codecs\vp31vfw.dll" />
+    <Content Include="Application\jwplayer-6.12.0\codecs\vp4vfw.dll" />
+    <Content Include="Application\jwplayer-6.12.0\codecs\vp5vfw.dll" />
+    <Content Include="Application\jwplayer-6.12.0\codecs\vp6vfw.dll" />
+    <Content Include="Application\jwplayer-6.12.0\codecs\vp7vfw.dll" />
+    <Content Include="Application\jwplayer-6.12.0\codecs\vssh264.dll" />
+    <Content Include="Application\jwplayer-6.12.0\codecs\vssh264core.dll" />
+    <Content Include="Application\jwplayer-6.12.0\codecs\vssh264dec.dll" />
+    <Content Include="Application\jwplayer-6.12.0\codecs\vsshdsd.dll" />
+    <Content Include="Application\jwplayer-6.12.0\codecs\vsslight.dll" />
+    <Content Include="Application\jwplayer-6.12.0\codecs\vsswlt.dll" />
+    <Content Include="Application\jwplayer-6.12.0\codecs\wma9dmod.dll" />
+    <Content Include="Application\jwplayer-6.12.0\codecs\wmadmod.dll" />
+    <Content Include="Application\jwplayer-6.12.0\codecs\wmsdmod.dll" />
+    <Content Include="Application\jwplayer-6.12.0\codecs\wmspdmod.dll" />
+    <Content Include="Application\jwplayer-6.12.0\codecs\wmv9dmod.dll" />
+    <Content Include="Application\jwplayer-6.12.0\codecs\wmvadvd.dll" />
+    <Content Include="Application\jwplayer-6.12.0\codecs\wmvdmod.dll" />
+    <Content Include="Application\jwplayer-6.12.0\codecs\wnvplay1.dll" />
+    <Content Include="Application\jwplayer-6.12.0\codecs\wnvwinx.dll" />
+    <Content Include="Application\jwplayer-6.12.0\codecs\wvc1dmod.dll" />
+    <Content Include="Application\jwplayer-6.12.0\codecs\xanlib.dll" />
+    <Content Include="Application\jwplayer-6.12.0\codecs\zmbv.dll" />
+    <Content Include="Application\jwplayer-6.12.0\ffmpeg.exe" />
+    <Content Include="Application\jwplayer-6.12.0\index.html" />
+    <Content Include="Application\jwplayer-6.12.0\jwplayer.js" />
+    <Content Include="Application\jwplayer-6.12.0\jwplayer.flash.swf" />
+    <Content Include="Application\jwplayer-6.12.0\jwplayer.html5.js" />
+    <Content Include="Application\jwplayer-6.12.0\mencoder.exe" />
+    <Content Include="Application\jwplayer-6.12.0\mplayer.exe" />
+    <Content Include="Application\jwplayer-6.12.0\vfw2menc.exe" />
+    <Content Include="Application\layer\extend\layer.ext.js" />
+    <Content Include="Application\layer\layer.min.js" />
+    <Content Include="Application\layer\skin\default\icon_ext.png" />
+    <Content Include="Application\layer\skin\default\textbg.png" />
+    <Content Include="Application\layer\skin\default\xubox_ico0.png" />
+    <Content Include="Application\layer\skin\default\xubox_loading0.gif" />
+    <Content Include="Application\layer\skin\default\xubox_loading1.gif" />
+    <Content Include="Application\layer\skin\default\xubox_loading2.gif" />
+    <Content Include="Application\layer\skin\default\xubox_loading3.gif" />
+    <Content Include="Application\layer\skin\default\xubox_title0.png" />
+    <Content Include="Application\layer\skin\layer.css" />
+    <Content Include="Application\layer\skin\layer.ext.css" />
+    <Content Include="Application\plupload\i18n\zh_CN.js" />
+    <Content Include="Application\plupload\moxie.js" />
+    <Content Include="Application\plupload\moxie.min.js" />
+    <Content Include="Application\plupload\Moxie.swf" />
+    <Content Include="Application\plupload\Moxie.xap" />
+    <Content Include="Application\plupload\plupload.dev.js" />
+    <Content Include="Application\plupload\plupload.full.min.js" />
+    <Content Include="Application\plupload\plupload.min.js" />
+    <Content Include="Application\plupload\queue\css\jquery.plupload.queue.css" />
+    <Content Include="Application\plupload\queue\img\backgrounds.gif" />
+    <Content Include="Application\plupload\queue\img\buttons-disabled.png" />
+    <Content Include="Application\plupload\queue\img\buttons.png" />
+    <Content Include="Application\plupload\queue\img\delete.gif" />
+    <Content Include="Application\plupload\queue\img\done.gif" />
+    <Content Include="Application\plupload\queue\img\error.gif" />
+    <Content Include="Application\plupload\queue\img\throbber.gif" />
+    <Content Include="Application\plupload\queue\img\transp50.png" />
+    <Content Include="Application\plupload\queue\jquery.plupload.queue.js" />
+    <Content Include="Application\plupload\queue\jquery.plupload.queue.min.js" />
+    <Content Include="Application\plupload\queue\queue.min.js" />
+    <Content Include="Content\Css\animate.min.css" />
+    <Content Include="Content\Css\Audio.css" />
+    <Content Include="Content\Css\bootstrap.css" />
+    <Content Include="Content\Css\bootstrap.min.css" />
+    <Content Include="Content\Css\CSS.css" />
+    <Content Include="Content\Css\CSS_two.css" />
+    <Content Include="Content\Css\font-awesome.min.css" />
+    <Content Include="Content\Css\ImgList.css" />
+    <Content Include="Content\Css\jquery.alerts.css" />
+    <Content Include="Content\Css\jquery.ui.css" />
+    <Content Include="Content\Css\Move.css" />
+    <Content Include="Content\Css\Share.css" />
+    <Content Include="Content\Css\Site.css" />
+    <Content Include="Content\Css\style.brown.css" />
+    <Content Include="Content\Css\style.default.css" />
+    <Content Include="Content\Css\style.green.css" />
+    <Content Include="Content\Css\style.navyblue.css" />
+    <Content Include="Content\Css\style.palegreen.css" />
+    <Content Include="Content\Css\style.red.css" />
+    <Content Include="Content\Css\picPreview.css" />
+    <Content Include="Content\Css\Yun.css" />
+    <Content Include="Content\fonts\fontawesome\yunfont.svg" />
+    <Content Include="Content\Img\btn_icon.gif" />
+    <Content Include="Content\Img\cancel_5f98706.png" />
+    <Content Include="Content\Img\checkbox.png" />
+    <Content Include="Content\Img\dotted-bg_0e0763a.png" />
+    <Content Include="Content\Img\emptyfile_intro_711933a.png" />
+    <Content Include="Content\Img\global-icon.png" />
+    <Content Include="Content\Img\icon-tree_48f78c0.png" />
+    <Content Include="Content\Img\icons\bar.png" />
+    <Content Include="Content\Img\icons\btn_2d148f3.png" />
+    <Content Include="Content\Img\icons\btn_2d148f31.png" />
+    <Content Include="Content\Img\icons\checkbox_aea6cfd.png" />
+    <Content Include="Content\Img\icons\checkbox_aea6cfd1.png" />
+    <Content Include="Content\Img\icons\combo_arrow.png" />
+    <Content Include="Content\Img\icons\comment_btn_184a0a6.png" />
+    <Content Include="Content\Img\icons\comment_label_d150dd1.png" />
+    <Content Include="Content\Img\icons\gridIcon_2a39f1a.png" />
+    <Content Include="Content\Img\icons\gridIcon_7165cae.png" />
+    <Content Include="Content\Img\icons\icon-archive.png" />
+    <Content Include="Content\Img\icons\icon-cart.png" />
+    <Content Include="Content\Img\icons\icon-event.png" />
+    <Content Include="Content\Img\icons\icon-help.png" />
+    <Content Include="Content\Img\icons\icon-images.png" />
+    <Content Include="Content\Img\icons\list-switch_bdb86de.png" />
+    <Content Include="Content\Img\icons\list-view_4e60b0c.png" />
+    <Content Include="Content\Img\icons\listIcon_82b617a.png" />
+    <Content Include="Content\Img\icons\listIcon_ca26f6a.png" />
+    <Content Include="Content\Img\icons\message.png" />
+    <Content Include="Content\Img\icons\Ping.png" />
+    <Content Include="Content\Img\icons\plugin-icon_7318e47.png" />
+    <Content Include="Content\Img\icons\property_icon_101.png" />
+    <Content Include="Content\Img\icons\search.png" />
+    <Content Include="Content\Img\icons\sprite_list_icon.gif" />
+    <Content Include="Content\Img\icons\sys-icon_9b5f22d.png" />
+    <Content Include="Content\Img\icons\users.png" />
+    <Content Include="Content\Img\ic_rotate_left_2bed0fa.png" />
+    <Content Include="Content\Img\ic_rotate_right_1c38528.png" />
+    <Content Include="Content\Img\img_preview_ic.png" />
+    <Content Include="Content\Img\loading_7ad8ea6.gif" />
+    <Content Include="Content\Img\NODel.png" />
+    <Content Include="Content\Img\NoShare.png" />
+    <Content Include="Content\Img\page-ui_z_e5c9fbb.png" />
+    <Content Include="Content\Img\sprite_icon.gif" />
+    <Content Include="Content\Img\sure_cf83fdd.png" />
+    <Content Include="Content\Img\timer_eaf54a8.png" />
+    <Content Include="Content\Img\tip_95a4cb0.png" />
+    <Content Include="Content\Img\UserAdd.png" />
+    <Content Include="Content\Img\Usercha.png" />
+    <Content Include="Content\Img\zhuan.gif" />
+    <Content Include="Content\PdfPalyer\AdbeRdr930_zh_CN.exe" />
+    <Content Include="Content\xinjiemian\404.png" />
+    <Content Include="Content\xinjiemian\chosen-sprite.png" />
+    <Content Include="Content\xinjiemian\glyphicons-halflings-white.png" />
+    <Content Include="Content\xinjiemian\glyphicons-halflings.png" />
+    <Content Include="Content\xinjiemian\iconsweets-icons-white.png" />
+    <Content Include="Content\xinjiemian\iconsweets-icons.png" />
+    <Content Include="Content\Img\logo.gif" />
+    <Content Include="Content\Img\logo2.png" />
+    <Content Include="Scripts\areaSelect.js" />
+    <Content Include="Scripts\jQuery.asyncLoading2.js" />
+    <Content Include="Scripts\jQuery.asyncLoading.js" />
+    <Content Include="Scripts\Menu.js" />
+    <Content Include="Global.asax" />
+    <Content Include="Scripts\bootstrap.js" />
+    <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Content\fonts\.DS_Store" />
+    <Content Include="Content\fonts\fontawesome\fontawesome-webfont.eot" />
+    <Content Include="Content\fonts\fontawesome\fontawesome-webfont.svg" />
+    <Content Include="Content\fonts\fontawesome\fontawesome-webfont.ttf" />
+    <Content Include="Content\fonts\fontawesome\fontawesome-webfont.woff" />
+    <Content Include="Content\fonts\fontawesome\FontAwesome.otf" />
+    <Content Include="Content\Img\icons\.DS_Store" />
+    <Content Include="Content\Img\icons\Thumbs.db" />
+    <Content Include="App_Code\Tools.cshtml" />
+    <Content Include="Content\fonts\fontawesome\yunfont.eot" />
+    <Content Include="Content\fonts\fontawesome\yunfont.ttf" />
+    <Content Include="Content\fonts\fontawesome\yunfont.woff" />
+    <Content Include="Application\jwplayer-6.12.0\codecs\acelpdec.ax" />
+    <Content Include="Application\jwplayer-6.12.0\codecs\alf2cd.acm" />
+    <Content Include="Application\jwplayer-6.12.0\codecs\atrac3.acm" />
+    <Content Include="Application\jwplayer-6.12.0\codecs\ctadp32.acm" />
+    <Content Include="Application\jwplayer-6.12.0\codecs\divxa32.acm" />
+    <Content Include="Application\jwplayer-6.12.0\codecs\divxdec.ax" />
+    <Content Include="Application\jwplayer-6.12.0\codecs\divx_c32.ax" />
+    <Content Include="Application\jwplayer-6.12.0\codecs\i263_32.drv" />
+    <Content Include="Application\jwplayer-6.12.0\codecs\imaadp32.acm" />
+    <Content Include="Application\jwplayer-6.12.0\codecs\imc32.acm" />
+    <Content Include="Application\jwplayer-6.12.0\codecs\l3codeca.acm" />
+    <Content Include="Application\jwplayer-6.12.0\codecs\l3codecx.ax" />
+    <Content Include="Application\jwplayer-6.12.0\codecs\lhacm.acm" />
+    <Content Include="Application\jwplayer-6.12.0\codecs\m3jpegdec.ax" />
+    <Content Include="Application\jwplayer-6.12.0\codecs\mi-sc4.acm" />
+    <Content Include="Application\jwplayer-6.12.0\codecs\mpg4ds32.ax" />
+    <Content Include="Application\jwplayer-6.12.0\codecs\msadp32.acm" />
+    <Content Include="Application\jwplayer-6.12.0\codecs\msg711.acm" />
+    <Content Include="Application\jwplayer-6.12.0\codecs\msgsm32.acm" />
+    <Content Include="Application\jwplayer-6.12.0\codecs\msh261.drv" />
+    <Content Include="Application\jwplayer-6.12.0\codecs\msms001.vwp" />
+    <Content Include="Application\jwplayer-6.12.0\codecs\msnaudio.acm" />
+    <Content Include="Application\jwplayer-6.12.0\codecs\msscds32.ax" />
+    <Content Include="Application\jwplayer-6.12.0\codecs\mvoiced.vwp" />
+    <Content Include="Application\jwplayer-6.12.0\codecs\nsrt2432.acm" />
+    <Content Include="Application\jwplayer-6.12.0\codecs\QuickTime.qts" />
+    <Content Include="Application\jwplayer-6.12.0\codecs\QuickTimeEssentials.qtx" />
+    <Content Include="Application\jwplayer-6.12.0\codecs\QuickTimeInternetExtras.qtx" />
+    <Content Include="Application\jwplayer-6.12.0\codecs\scg726.acm" />
+    <Content Include="Application\jwplayer-6.12.0\codecs\tm20dec.ax" />
+    <Content Include="Application\jwplayer-6.12.0\codecs\tssoft32.acm" />
+    <Content Include="Application\jwplayer-6.12.0\codecs\ubv263d+.ax" />
+    <Content Include="Application\jwplayer-6.12.0\codecs\vdowave.drv" />
+    <Content Include="Application\jwplayer-6.12.0\codecs\vivog723.acm" />
+    <Content Include="Application\jwplayer-6.12.0\codecs\voxmsdec.ax" />
+    <Content Include="Application\jwplayer-6.12.0\codecs\wmv8ds32.ax" />
+    <Content Include="Application\jwplayer-6.12.0\codecs\wmvds32.ax" />
+    <Content Include="Application\jwplayer-6.12.0\mplayer\config" />
+    <Content Include="Application\jwplayer-6.12.0\mplayer\input.conf" />
+    <Content Include="Application\jwplayer-6.12.0\mplayer\subfont.ttf" />
+    <None Include="Properties\PublishProfiles\G.pubxml" />
+    <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\html5.js" />
+    <Content Include="Scripts\jquery-1.10.2.js" />
+    <Content Include="Scripts\jquery-1.10.2.min.js" />
+    <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.validate.js" />
+    <Content Include="Scripts\jquery.validate.min.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Scripts\Page.js" />
+    <Content Include="Scripts\respond.js" />
+    <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\WEB\Login.js" />
+    <Content Include="Scripts\WEB\WebJs.js" />
+    <Content Include="Scripts\Yun\Department.js" />
+    <Content Include="Scripts\Yun\File.js" />
+    <Content Include="Scripts\Yun\Img.js" />
+    <Content Include="Scripts\Yun\ImgListInfo.js" />
+    <Content Include="Scripts\Yun\List-view.js" />
+    <Content Include="Scripts\Yun\Messger.js" />
+    <Content Include="Scripts\Yun\Mouse.js" />
+    <Content Include="Scripts\Yun\Role.js" />
+    <Content Include="Scripts\Yun\ShareFile.js" />
+    <Content Include="Scripts\Yun\MyYunFile.js" />
+    <Content Include="Scripts\Yun\ShareList.js" />
+    <Content Include="Scripts\Yun\UserGroup.js" />
+    <Content Include="Scripts\ZeroClipboard.js" />
+    <Content Include="Scripts\zxx.drag.1.0-min.js" />
+    <Content Include="Scripts\_references.js" />
+    <Content Include="Service References\EastEliteICMSWS\EastElite.EastEliteICMSWS.CheckUserLoginBookItemResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\EastEliteICMSWS\EastElite.EastEliteICMSWS.CheckUserLoginDeviceItemResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\EastEliteICMSWS\EastElite.EastEliteICMSWS.CheckUserLoginInfoItemResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\EastEliteICMSWS\EastElite.EastEliteICMSWS.CheckUserLoginTokenItemResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\EastEliteICMSWS\EastElite.EastEliteICMSWS.DeleteDIPCISClientInfoItemResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\EastEliteICMSWS\EastElite.EastEliteICMSWS.DeleteDIPCISRecordInfoItemResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\EastEliteICMSWS\EastElite.EastEliteICMSWS.GetAdminCardByRoleCodeResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\EastEliteICMSWS\EastElite.EastEliteICMSWS.GetDictListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\EastEliteICMSWS\EastElite.EastEliteICMSWS.GetDIPCISClientListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\EastEliteICMSWS\EastElite.EastEliteICMSWS.GetDIPCISRecordListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\EastEliteICMSWS\EastElite.EastEliteICMSWS.GetECCDeviceClassItemResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\EastEliteICMSWS\EastElite.EastEliteICMSWS.GetECCDeviceClassListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\EastEliteICMSWS\EastElite.EastEliteICMSWS.GetECCUserClassListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\EastEliteICMSWS\EastElite.EastEliteICMSWS.GetECCUserRoleInfoListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\EastEliteICMSWS\EastElite.EastEliteICMSWS.GetLessonWeekInfoListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\EastEliteICMSWS\EastElite.EastEliteICMSWS.GetStudentDataByCustomerCardSN2Response.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\EastEliteICMSWS\EastElite.EastEliteICMSWS.GetStudentDataByCustomerCardSNResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\EastEliteICMSWS\EastElite.EastEliteICMSWS.GetStudentDataByDiningCardCode2Response.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\EastEliteICMSWS\EastElite.EastEliteICMSWS.GetStudentDataByDiningCardCodeResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\EastEliteICMSWS\EastElite.EastEliteICMSWS.GetUserDataByCustomerCardSNResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\EastEliteICMSWS\EastElite.EastEliteICMSWS.GetUserDataByDiningCardCodeResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\EastEliteICMSWS\EastElite.EastEliteICMSWS.GetUserDataByUserCodeResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\EastEliteICMSWS\EastElite.EastEliteICMSWS.GetUserDiningCardDataListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\EastEliteICMSWS\EastElite.EastEliteICMSWS.InsertDIPCISClientInfoItemResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\EastEliteICMSWS\EastElite.EastEliteICMSWS.InsertDIPCISRecordInfoItemResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\EastEliteICMSWS\EastElite.EastEliteICMSWS.InsertUserICCardRecordInfoItemResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\EastEliteICMSWS\EastElite.EastEliteICMSWS.SubmitLeaveApplyItemResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\EastEliteICMSWS\EastElite.EastEliteICMSWS.UpdateClassPushIDResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\EastEliteICMSWS\EastElite.EastEliteICMSWS.UpdateDIPCISClientInfoItemResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <None Include="Service References\EastEliteICMSWS\EastEliteICMSWS.disco" />
+    <None Include="Service References\EastEliteICMSWS\configuration91.svcinfo" />
+    <None Include="Service References\EastEliteICMSWS\configuration.svcinfo" />
+    <None Include="Service References\EastEliteICMSWS\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <Content Include="Service References\EastEliteSMSWS\EastElite.EastEliteSMSWS.AddReadRecordInfoItemResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\EastEliteSMSWS\EastElite.EastEliteSMSWS.ArrayOfString.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\EastEliteSMSWS\EastElite.EastEliteSMSWS.CheckIsBanZhuRenResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\EastEliteSMSWS\EastElite.EastEliteSMSWS.CheckUserLoginDeviceItemResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\EastEliteSMSWS\EastElite.EastEliteSMSWS.CheckUserLoginInfoItemResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\EastEliteSMSWS\EastElite.EastEliteSMSWS.CheckUserLoginPasswordItemResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\EastEliteSMSWS\EastElite.EastEliteSMSWS.CheckUserLoginRecruitItemResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\EastEliteSMSWS\EastElite.EastEliteSMSWS.CheckUserLoginRewardItemResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\EastEliteSMSWS\EastElite.EastEliteSMSWS.CheckUserLoginTokenItemResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\EastEliteSMSWS\EastElite.EastEliteSMSWS.CheckUserPasswordResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\EastEliteSMSWS\EastElite.EastEliteSMSWS.CheckUserRewardTokenItemResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\EastEliteSMSWS\EastElite.EastEliteSMSWS.CheckVisitorApplyInfoItemResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\EastEliteSMSWS\EastElite.EastEliteSMSWS.CheckWeiXinUserDataItemResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\EastEliteSMSWS\EastElite.EastEliteSMSWS.CheckWeiXinUserLoginItemResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\EastEliteSMSWS\EastElite.EastEliteSMSWS.DeleteConsumableSelectInfoItemResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\EastEliteSMSWS\EastElite.EastEliteSMSWS.DeleteConsumableSelectItemInfoItemResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\EastEliteSMSWS\EastElite.EastEliteSMSWS.DeleteNoticeInfoItemResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\EastEliteSMSWS\EastElite.EastEliteSMSWS.DeleteQualityEavluateDataInfoItemResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\EastEliteSMSWS\EastElite.EastEliteSMSWS.Get2DimensionPlaceInfoListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\EastEliteSMSWS\EastElite.EastEliteSMSWS.GetAdminCardByRoleCodeResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\EastEliteSMSWS\EastElite.EastEliteSMSWS.GetAgencyCodeNameListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\EastEliteSMSWS\EastElite.EastEliteSMSWS.GetAgencyNameByCodeResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\EastEliteSMSWS\EastElite.EastEliteSMSWS.GetAgencyNameList1Response.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\EastEliteSMSWS\EastElite.EastEliteSMSWS.GetAgencyNameList2Response.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\EastEliteSMSWS\EastElite.EastEliteSMSWS.GetAgencyTypeIDByCodeResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\EastEliteSMSWS\EastElite.EastEliteSMSWS.GetBlogClassNameListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\EastEliteSMSWS\EastElite.EastEliteSMSWS.GetBlogClassRightResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\EastEliteSMSWS\EastElite.EastEliteSMSWS.GetBuildingRoomInfoListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\EastEliteSMSWS\EastElite.EastEliteSMSWS.GetClassEavluateAuditItemResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\EastEliteSMSWS\EastElite.EastEliteSMSWS.GetClassEavluateAuditListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\EastEliteSMSWS\EastElite.EastEliteSMSWS.GetClassEavluateClassListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\EastEliteSMSWS\EastElite.EastEliteSMSWS.GetClassEavluateGradeListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\EastEliteSMSWS\EastElite.EastEliteSMSWS.GetClassEavluateIndex2ListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\EastEliteSMSWS\EastElite.EastEliteSMSWS.GetClassEavluateIndex3ListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\EastEliteSMSWS\EastElite.EastEliteSMSWS.GetClassEavluateIndex3ListV2Response.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\EastEliteSMSWS\EastElite.EastEliteSMSWS.GetClassNameListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\EastEliteSMSWS\EastElite.EastEliteSMSWS.GetConDictNameListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\EastEliteSMSWS\EastElite.EastEliteSMSWS.GetConsumableBasicDataListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\EastEliteSMSWS\EastElite.EastEliteSMSWS.GetConsumableSelectAuditListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\EastEliteSMSWS\EastElite.EastEliteSMSWS.GetConsumableSelectItemResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\EastEliteSMSWS\EastElite.EastEliteSMSWS.GetConsumableSelectListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\EastEliteSMSWS\EastElite.EastEliteSMSWS.GetConsumableTypeListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\EastEliteSMSWS\EastElite.EastEliteSMSWS.GetDictListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\EastEliteSMSWS\EastElite.EastEliteSMSWS.GetDIPVTSClassListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\EastEliteSMSWS\EastElite.EastEliteSMSWS.GetDIPVTSRightListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\EastEliteSMSWS\EastElite.EastEliteSMSWS.GetFreshmanInfoItemByType2Response.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\EastEliteSMSWS\EastElite.EastEliteSMSWS.GetFreshmanInfoItemResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\EastEliteSMSWS\EastElite.EastEliteSMSWS.GetGradeList2Response.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\EastEliteSMSWS\EastElite.EastEliteSMSWS.GetGradeListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\EastEliteSMSWS\EastElite.EastEliteSMSWS.GetGraduatedSchoolListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\EastEliteSMSWS\EastElite.EastEliteSMSWS.GetHomeMessageListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\EastEliteSMSWS\EastElite.EastEliteSMSWS.GetLessonWeekInfoListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\EastEliteSMSWS\EastElite.EastEliteSMSWS.GetLessonWeekStaffInfoListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\EastEliteSMSWS\EastElite.EastEliteSMSWS.GetMessageKeyWordListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\EastEliteSMSWS\EastElite.EastEliteSMSWS.GetNoticeRemarkInfoListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\EastEliteSMSWS\EastElite.EastEliteSMSWS.GetPhoneBasicInfoItemResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\EastEliteSMSWS\EastElite.EastEliteSMSWS.GetPhoneMessageAlbumListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\EastEliteSMSWS\EastElite.EastEliteSMSWS.GetPhoneMessageInfoListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\EastEliteSMSWS\EastElite.EastEliteSMSWS.GetPhoneRemarkInfoListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\EastEliteSMSWS\EastElite.EastEliteSMSWS.GetPhoneScheduleInfoListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\EastEliteSMSWS\EastElite.EastEliteSMSWS.GetQualityEavluateAuditListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\EastEliteSMSWS\EastElite.EastEliteSMSWS.GetQualityEavluateAuditV2ListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\EastEliteSMSWS\EastElite.EastEliteSMSWS.GetQualityEavluateAuditV3ListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\EastEliteSMSWS\EastElite.EastEliteSMSWS.GetQualityEavluateClassListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\EastEliteSMSWS\EastElite.EastEliteSMSWS.GetQualityEavluateClassV2ListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\EastEliteSMSWS\EastElite.EastEliteSMSWS.GetQualityEavluateDataInfoItemResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\EastEliteSMSWS\EastElite.EastEliteSMSWS.GetQualityEavluateHealthIndexListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\EastEliteSMSWS\EastElite.EastEliteSMSWS.GetQualityEavluateIndex2ListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\EastEliteSMSWS\EastElite.EastEliteSMSWS.GetQualityEavluateIndex3ListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\EastEliteSMSWS\EastElite.EastEliteSMSWS.GetQualityEavluateInfoItemResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\EastEliteSMSWS\EastElite.EastEliteSMSWS.GetQualityEavluateItemIndexListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\EastEliteSMSWS\EastElite.EastEliteSMSWS.GetReportUnitNameListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\EastEliteSMSWS\EastElite.EastEliteSMSWS.GetReserveTypeListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\EastEliteSMSWS\EastElite.EastEliteSMSWS.GetSalaryCheckingInfoTeaListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\EastEliteSMSWS\EastElite.EastEliteSMSWS.GetSchoolPhoneECCUrlResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\EastEliteSMSWS\EastElite.EastEliteSMSWS.GetStaffCodeNameList2Response.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\EastEliteSMSWS\EastElite.EastEliteSMSWS.GetStaffCodeNameList3Response.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\EastEliteSMSWS\EastElite.EastEliteSMSWS.GetStaffCodeNameListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\EastEliteSMSWS\EastElite.EastEliteSMSWS.GetStaffCodeOpenIDListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\EastEliteSMSWS\EastElite.EastEliteSMSWS.GetStaffDetailInfoItemResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\EastEliteSMSWS\EastElite.EastEliteSMSWS.GetStudentBasicInfoItemResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\EastEliteSMSWS\EastElite.EastEliteSMSWS.GetStudentCodeNameKeyListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\EastEliteSMSWS\EastElite.EastEliteSMSWS.GetStudentCodeNameListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\EastEliteSMSWS\EastElite.EastEliteSMSWS.GetStudentCodeOpenIDListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\EastEliteSMSWS\EastElite.EastEliteSMSWS.GetStudentCustListByDiningCardCodeResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\EastEliteSMSWS\EastElite.EastEliteSMSWS.GetStudentCustListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\EastEliteSMSWS\EastElite.EastEliteSMSWS.GetStudentDetailInfoItemResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\EastEliteSMSWS\EastElite.EastEliteSMSWS.GetStudentDiningCardCodeResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\EastEliteSMSWS\EastElite.EastEliteSMSWS.GetStudentOrderStatECCListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\EastEliteSMSWS\EastElite.EastEliteSMSWS.GetStudentOrderStatListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\EastEliteSMSWS\EastElite.EastEliteSMSWS.GetStudentOrderStatWXListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\EastEliteSMSWS\EastElite.EastEliteSMSWS.GetStudentTestListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\EastEliteSMSWS\EastElite.EastEliteSMSWS.GetTeacherNameListByClassCodeResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\EastEliteSMSWS\EastElite.EastEliteSMSWS.GetUnReadMessageListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\EastEliteSMSWS\EastElite.EastEliteSMSWS.GetUnReadNoticeListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\EastEliteSMSWS\EastElite.EastEliteSMSWS.GetUnReadScheduleListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\EastEliteSMSWS\EastElite.EastEliteSMSWS.GetUserBasicInfoItemResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\EastEliteSMSWS\EastElite.EastEliteSMSWS.GetUserCodeByAccountResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\EastEliteSMSWS\EastElite.EastEliteSMSWS.GetUserRightListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\EastEliteSMSWS\EastElite.EastEliteSMSWS.GetWaitDoneCountResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\EastEliteSMSWS\EastElite.EastEliteSMSWS.GetWeiXinCandidateItemResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\EastEliteSMSWS\EastElite.EastEliteSMSWS.GetWeiXinCandidateListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\EastEliteSMSWS\EastElite.EastEliteSMSWS.GetWeiXinClassListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\EastEliteSMSWS\EastElite.EastEliteSMSWS.GetWeiXinUserBasicInfoItemResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\EastEliteSMSWS\EastElite.EastEliteSMSWS.GetWXAgencyNameListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\EastEliteSMSWS\EastElite.EastEliteSMSWS.GetWXAgencyTelephoneListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\EastEliteSMSWS\EastElite.EastEliteSMSWS.GetWXClassNameListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\EastEliteSMSWS\EastElite.EastEliteSMSWS.InsertClassEavluateDataInfoItemResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\EastEliteSMSWS\EastElite.EastEliteSMSWS.InsertClassEavluateRoomInfoItemResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\EastEliteSMSWS\EastElite.EastEliteSMSWS.InsertLeaveApplyInfoItem2Response.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\EastEliteSMSWS\EastElite.EastEliteSMSWS.InsertLeaveApplyInfoItemResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\EastEliteSMSWS\EastElite.EastEliteSMSWS.InsertMessageBoardInfoItemResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\EastEliteSMSWS\EastElite.EastEliteSMSWS.InsertNoticeInfoItemResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\EastEliteSMSWS\EastElite.EastEliteSMSWS.InsertPhoneRemarkItemResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\EastEliteSMSWS\EastElite.EastEliteSMSWS.InsertQualityEavluateClassInfoItemResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\EastEliteSMSWS\EastElite.EastEliteSMSWS.InsertQualityEavluateDataInfoItemResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\EastEliteSMSWS\EastElite.EastEliteSMSWS.InsertQualityEavluateHealthInfoItemResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\EastEliteSMSWS\EastElite.EastEliteSMSWS.InsertVisitorApplyInfoItemResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\EastEliteSMSWS\EastElite.EastEliteSMSWS.IsContainValidUserCodeResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\EastEliteSMSWS\EastElite.EastEliteSMSWS.PushConsumableSelectListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\EastEliteSMSWS\EastElite.EastEliteSMSWS.ReInsertLeaveApplyInfoItem2Response.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\EastEliteSMSWS\EastElite.EastEliteSMSWS.ReInsertLeaveApplyInfoItemResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\EastEliteSMSWS\EastElite.EastEliteSMSWS.ReInsertVisitorApplyInfoItemResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\EastEliteSMSWS\EastElite.EastEliteSMSWS.RemoveReadRecordInfoItemResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\EastEliteSMSWS\EastElite.EastEliteSMSWS.ReplyHomeMessageItemResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\EastEliteSMSWS\EastElite.EastEliteSMSWS.ReplyPhoneMessageItemResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\EastEliteSMSWS\EastElite.EastEliteSMSWS.ScanConsumableSelectListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\EastEliteSMSWS\EastElite.EastEliteSMSWS.SubmitConsumableSelectInfoItemResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\EastEliteSMSWS\EastElite.EastEliteSMSWS.SubmitFreshmanInfoItemByType2Response.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\EastEliteSMSWS\EastElite.EastEliteSMSWS.SubmitFreshmanInfoItemResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\EastEliteSMSWS\EastElite.EastEliteSMSWS.SubmitHomeMessageItemResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\EastEliteSMSWS\EastElite.EastEliteSMSWS.SubmitStudentParentInfoItemResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\EastEliteSMSWS\EastElite.EastEliteSMSWS.SubmitWeiXinVoteInfoItemResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\EastEliteSMSWS\EastElite.EastEliteSMSWS.UnbindWeiXinUserDataItemResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\EastEliteSMSWS\EastElite.EastEliteSMSWS.UpdateClassEavluateDataAppealItemResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\EastEliteSMSWS\EastElite.EastEliteSMSWS.UpdateClassEavluateDataAuditItemResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\EastEliteSMSWS\EastElite.EastEliteSMSWS.UpdateConsumableSelectInfoItemResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\EastEliteSMSWS\EastElite.EastEliteSMSWS.UpdateConsumableSelectSndIdeaResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\EastEliteSMSWS\EastElite.EastEliteSMSWS.UpdateFreshmanBasicInfoItemByType2Response.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\EastEliteSMSWS\EastElite.EastEliteSMSWS.UpdateFreshmanBasicInfoItemByWeiXin1Response.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\EastEliteSMSWS\EastElite.EastEliteSMSWS.UpdateFreshmanBasicInfoItemByWeiXin2Response.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\EastEliteSMSWS\EastElite.EastEliteSMSWS.UpdateFreshmanBasicInfoItemByWeiXin3Response.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\EastEliteSMSWS\EastElite.EastEliteSMSWS.UpdateQualityEavluateDataAuditItemResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\EastEliteSMSWS\EastElite.EastEliteSMSWS.UpdateQualityEavluateDataInfoItem3Response.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\EastEliteSMSWS\EastElite.EastEliteSMSWS.UpdateQualityEavluateDataInfoItemResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\EastEliteSMSWS\EastElite.EastEliteSMSWS.UpdateStaffDetailInfoItemResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\EastEliteSMSWS\EastElite.EastEliteSMSWS.UpdateStudentDetailInfoItemResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <None Include="Service References\EastEliteSMSWS\EastEliteSMSWS.disco" />
+    <None Include="Service References\EastEliteSMSWS\configuration91.svcinfo" />
+    <None Include="Service References\EastEliteSMSWS\configuration.svcinfo" />
+    <None Include="Service References\EastEliteSMSWS\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Views\Web.config" />
+    <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\Shared\Error.cshtml" />
+    <Content Include="Views\Shared\MP.cshtml" />
+    <Content Include="Views\Manage\Index.cshtml" />
+    <Content Include="Views\Home\Login3.cshtml" />
+    <Content Include="Views\File\Upload.cshtml" />
+    <Content Include="Views\MyFile\MyFile.cshtml" />
+    <Content Include="Views\MyFile\MyShare.cshtml" />
+    <Content Include="Views\MyFile\MyDel.cshtml" />
+    <Content Include="Views\MyFile\MyFileShow.cshtml" />
+    <Content Include="Views\Shared\YunMp.cshtml" />
+    <Content Include="Views\Details\Pdf.cshtml" />
+    <Content Include="Views\Details\Img.cshtml" />
+    <Content Include="Views\Details\Video.cshtml" />
+    <Content Include="Views\Details\Audio.cshtml" />
+    <Content Include="Views\Details\FileMove.cshtml" />
+    <Content Include="Views\Details\ImgList.cshtml" />
+    <Content Include="Views\Home\Login.cshtml" />
+    <Content Include="Views\SchoolShare\School.cshtml" />
+    <Content Include="Views\Details\Office.cshtml" />
+    <Content Include="Views\Role\UserRoleIndex.cshtml" />
+    <Content Include="Views\Home\ToToLogin.cshtml" />
+    <Content Include="Views\SchoolShare\ShareDetails.cshtml" />
+    <Content Include="Views\SchoolShare\ShareOne.cshtml" />
+    <Content Include="Views\SchoolShare\SchoolFileMove.cshtml" />
+    <Content Include="Views\Role\RoleShow.cshtml" />
+    <Content Include="Views\Department\Index.cshtml" />
+    <None Include="Service References\EastEliteICMSWS\EastEliteICMSWS.wsdl" />
+    <None Include="Service References\EastEliteSMSWS\EastEliteSMSWS.wsdl" />
+    <Content Include="Views\Details\FileExitForMove.cshtml" />
+    <Content Include="Views\AllShare\ShareList.cshtml" />
+    <Content Include="Views\UserGroup\UserGroupList.cshtml" />
+    <Content Include="Views\UserGroup\UserGroupAdd.cshtml" />
+    <Content Include="Views\Messger\List.cshtml" />
+    <Content Include="Views\UserGroup\Share.cshtml" />
+    <Content Include="Views\UserGroup\UserShare.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+    <Folder Include="Models\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BLL\BLL.csproj">
+      <Project>{351407a5-e905-4ab6-8cc2-9c088663d913}</Project>
+      <Name>BLL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Model\Model.csproj">
+      <Project>{fe6adea2-080e-4092-b771-092525ef98a6}</Project>
+      <Name>Model</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadataStorage Include="Service References\EastEliteICMSWS\" />
+    <WCFMetadataStorage Include="Service References\EastEliteSMSWS\" />
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <Target Name="MvcBuildViews" AfterTargets="AfterBuild" Condition="'$(MvcBuildViews)'=='true'">
+    <AspNetCompiler VirtualPath="temp" PhysicalPath="$(WebProjectOutputDir)" />
+  </Target>
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>6339</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:6341/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target> -->
+</Project>

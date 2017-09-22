@@ -1,0 +1,60 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="NETDISKDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Link">
+    <Key>
+      <PropertyRef Name="Code" />
+    </Key>
+    <Property Name="Code" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="oaName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="link" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="sort" Type="Int32" />
+    <Property Name="img" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="OaRoles" Relationship="NETDISKDBModel.FK_Role_Link" FromRole="Link" ToRole="OaRole" />
+  </EntityType>
+  <EntityType Name="Menu">
+    <Key>
+      <PropertyRef Name="MenuCode" />
+    </Key>
+    <Property Name="MenuCode" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="MenuName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Url" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityContainer Name="NETDISKDBEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Link" EntityType="Self.Link" />
+    <EntitySet Name="Menu" EntityType="Self.Menu" />
+    <EntitySet Name="OaRoles" EntityType="NETDISKDBModel.OaRole" />
+    <AssociationSet Name="FK_Role_Link" Association="NETDISKDBModel.FK_Role_Link">
+      <End Role="Link" EntitySet="Link" />
+      <End Role="OaRole" EntitySet="OaRoles" />
+    </AssociationSet>
+    <FunctionImport Name="Pro_Link">
+      <Parameter Name="PageIndex" Mode="In" Type="Int32" />
+      <Parameter Name="PageSize" Mode="In" Type="Int32" />
+      <Parameter Name="StrWhere" Mode="In" Type="String" />
+      <Parameter Name="TableS" Mode="In" Type="String" />
+      <Parameter Name="RecordCount" Mode="InOut" Type="Int32" />
+      <Parameter Name="PageCount" Mode="InOut" Type="Int32" />
+    </FunctionImport>
+  </EntityContainer>
+  <EntityType Name="OaRole">
+    <Key>
+      <PropertyRef Name="Code" />
+    </Key>
+    <Property Name="UserCode" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="LinkCode" Type="Int32" />
+    <Property Name="Code" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Link" Relationship="NETDISKDBModel.FK_Role_Link" FromRole="OaRole" ToRole="Link" />
+  </EntityType>
+  <Association Name="FK_Role_Link">
+    <End Type="NETDISKDBModel.Link" Role="Link" Multiplicity="0..1" />
+    <End Type="NETDISKDBModel.OaRole" Role="OaRole" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Link">
+        <PropertyRef Name="Code" />
+      </Principal>
+      <Dependent Role="OaRole">
+        <PropertyRef Name="LinkCode" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

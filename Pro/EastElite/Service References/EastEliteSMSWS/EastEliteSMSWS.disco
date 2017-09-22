@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<discovery xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://schemas.xmlsoap.org/disco/">
+  <contractRef ref="http://sms.zhengzhong.cn/EastEliteSMSWS.asmx?wsdl" docRef="http://sms.zhengzhong.cn/EastEliteSMSWS.asmx" xmlns="http://schemas.xmlsoap.org/disco/scl/" />
+  <soap address="http://sms.zhengzhong.cn/EastEliteSMSWS.asmx" xmlns:q1="http://eastelite.com.cn/webservices/" binding="q1:EastEliteSMSWSSoap" xmlns="http://schemas.xmlsoap.org/disco/soap/" />
+  <soap address="http://sms.zhengzhong.cn/EastEliteSMSWS.asmx" xmlns:q2="http://eastelite.com.cn/webservices/" binding="q2:EastEliteSMSWSSoap12" xmlns="http://schemas.xmlsoap.org/disco/soap/" />
+</discovery>

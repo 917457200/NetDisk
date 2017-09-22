@@ -1,0 +1,95 @@
+﻿@font-face { font-family: yunfont; src: url(/Content/fonts/fontawesome/yunfont.eot?t=1496300303591?fo24w5); src: url(/Content/fonts/fontawesome/yunfont.eot?t=1496300303591?fo24w5#iefix) format('embedded-opentype'),url(/Content/fonts/fontawesome/yunfont.ttf) format('truetype'),url(/Content/fonts/fontawesome/yunfont.woff?t=1496300303591?fo24w5) format('woff'),url(/Content/fonts/fontawesome/yunfont.svg?t=1496300303591?fo24w5#yunfont) format('svg'); font-weight: 400; font-style: normal; }
+.dialog { border: 0 none; box-shadow: none; overflow: hidden; }
+.dialog { background: #fff none repeat scroll 0 0; border: 1px solid #ced1d9; border-radius: 4px; box-shadow: 0 0 3px #ced1d9; display: none; font-family: "Microsoft YaHei",SimSun; }
+    .dialog .dialog-min-header, .dialog .dialog-header { -moz-user-select: none; border-bottom: 1px solid #ced1d9; color: #333; position: relative; }
+    .dialog .dialog-min-header, .dialog .dialog-header { background-color: #f7faff; border-bottom: 1px solid #c4dbfe; border-top-left-radius: 4px; border-top-right-radius: 4px; font-weight: 200; height: 44px; line-height: 44px; }
+
+body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, code, form, textarea, select, optgroup, option, fieldset, legend, p, blockquote, th, td { margin: 0; padding: 0; }
+h1, h2, h3, h4, h5, h6 { font-size: 100%; }
+body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, code, form, fieldset, legend, input, button, textarea, p, blockquote, th, td { margin: 0; padding: 0; }
+h1, h2, h3, h4, h5, h6 { font-size: 100%; font-weight: 400; }
+.dialog .dialog-min-header h3, .dialog .dialog-header h3 { color: #4d4d4d; display: block; font-size: 14px; font-weight: 700; height: 42px; line-height: 42px; position: relative; text-indent: 1em; }
+.dialog .dialog-min-header h3, .dialog .dialog-header h3 { color: #424e67; }
+
+.dialog .dialog-drag { cursor: move; }
+
+.dialog .dialog-header-title { display: block; margin-right: 50px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+.dialog .dialog-min-header .select-text, .dialog .dialog-header .select-text { -moz-user-select: initial; }
+.dialog .dialog-header-title .select-text { cursor: text; font-style: normal; }
+
+.dialog .dialog-control { height: 20px; position: absolute; right: 10px; top: 10px; }
+.dialog .dialog-control { right: 12px; top: 13px; }
+.icon { font-family: yunfont !important; font-style: normal; font-variant: normal; font-weight: 400; line-height: 1; text-transform: none; }
+.dialog .dialog-icon { color: #a4a9b3; font-size: 20px; height: 20px; line-height: 20px; width: 20px; }
+.dialog .dialog-close { background-position: 0 0; }
+.dialog .dialog-icon { font-size: 24px; }
+.dialog .dialog-control span { cursor: pointer; float: right; }
+.dialog .dialog-control .icon { color: #5f7094; font-size: 12px; line-height: 20px; margin: 0 2px; text-align: center; }
+
+.icon-close:before { content: "\e92b"; }
+.dialog .dialog-control .icon .sicon { display: none; }
+.dialog .dialog-control .icon span { font-size: 14px; }
+.dialog .dialog-control span { cursor: pointer; float: right; }
+
+ul, li, ol { list-style: outside none none; }
+li { list-style: outside none none; }
+.dialog .dialog-body { background: rgba(0, 0, 0, 0) none repeat scroll 0 0; line-height: 24px; }
+#fileTreeDialog .file-tree-container { border: 1px solid #f2f2f2; height: 200px; margin: 10px 11px; overflow: auto; }
+.treeview-node, .treeview-node:link, .treeview-node:visited { -moz-border-bottom-colors: none; -moz-border-left-colors: none; -moz-border-right-colors: none; -moz-border-top-colors: none; border-color: #fff; border-image: none; border-style: solid; border-width: 1px 0; color: #2974b6; cursor: pointer; }
+.treeview-node-on, .treeview-node-on:link, .treeview-node-on:visited, .treeview-node-on:hover, .treeview-node-on:active { background: #e5f0fb none repeat scroll 0 0; border-color: #bbd4ef #fff; }
+.treeview-node, .treeview-node:link, .treeview-node:visited, .treeview-node-handler { display: block; text-decoration: none; white-space: nowrap; }
+
+.treeview-node-handler { color: #333; padding: 4px 0; }
+
+.treeview .icon-operate { background: rgba(0, 0, 0, 0) url("/Content/Img/icon-tree_48f78c0.png") no-repeat scroll 0 0; }
+
+
+
+.treeview .plus { background-position: -30px 0; cursor: pointer; height: 15px; margin: 0 3px; width: 15px; }
+.treeview .b-in-blk { display: inline-block; vertical-align: middle; }
+.treeview-ic { background: rgba(0, 0, 0, 0) url("/Content/Img/icon-tree_48f78c0.png") no-repeat scroll 0 0; height: 18px; margin-right: 5px; width: 22px; }
+._minus .treeview-ic, .treeview-root .treeview-ic { background-position: 0 -22px; height: 18px; margin-right: 5px; width: 22px; }
+
+.treeview .b-in-blk { display: inline-block; vertical-align: middle; }
+._minus .treeview-ic, .treeview-root .treeview-ic { background-position: 0 -22px; height: 18px; margin-right: 5px; width: 22px; }
+
+
+.treeview-node, .treeview-node:link, .treeview-node:visited, .treeview-node-handler { white-space: nowrap; }
+.treeview-node-hover { background: #f4f9fd none repeat scroll 0 0; border-color: #e5f0fb; }
+.treeview-node-on, .treeview-node-on:link, .treeview-node-on:visited, .treeview-node-on:hover, .treeview-node-on:active { background: #e5f0fb none repeat scroll 0 0; border-color: #bbd4ef #fff; }
+.treeview-node .minus { background-position: -30px -22px; }
+.dialog .dialog-footer { padding-bottom: 30px; text-align: center; }
+
+    .dialog .dialog-footer::after { clear: both; content: "."; display: block; font-size: 0; height: 0; line-height: 0; visibility: hidden; }
+.global-clearfix::after, .g-clearfix::after { clear: both; content: "."; display: block; font-size: 0; height: 0; line-height: 0; visibility: hidden; }
+#fileTreeDialog .dialog-footer { padding-left: 5px; padding-right: 5px; }
+.dialog .dialog-footer { padding-bottom: 15px; }
+.g-button { border: 1px solid #d4d4d4; border-radius: 2px; color: #666; display: inline-block; font-size: 12px; height: 30px; line-height: 30px; margin: 0 5px; outline: 0 none; padding-left: 15px; position: relative; text-decoration: none; vertical-align: top; white-space: nowrap; }
+.g-button-large { font-size: 14px; height: 37px; line-height: 34px; padding-left: 50px; }
+.g-button { border: 1px solid #c0d9fe; border-radius: 4px; color: #3b8cff; height: 32px; line-height: 32px; padding-left: 10px; text-decoration: none; }
+.g-button-large, .g-button-blue-large { height: 32px; padding-left: 10px; }
+#fileTreeDialog .g-button { margin: 5px 5px 0; }
+.g-button:link, .g-button:visited { color: #3b8cff; }
+.g-button:hover { border: 1px solid #c0d9fe; color: #77afff !important; }
+.g-button-right { cursor: pointer; display: block; height: 29px; line-height: 29px; padding-right: 15px; position: relative; right: -1px; text-align: center; }
+.g-button-right { cursor: pointer; height: 32px; line-height: 32px; padding-right: 10px; text-align: center; }
+.g-button-large .g-button-right, .g-button-blue-large .g-button-right { height: 32px; line-height: 32px; padding-right: 10px; }
+.g-button .text { display: inline-block; vertical-align: middle; }
+.g-button-large .text, .g-button-blue-large .text { height: 32px; line-height: 32px; }
+.g-button .text { font-size: 13px; margin-left: 2px; margin-right: 2px; vertical-align: baseline; }
+.g-button-blue-large { background: #3b8cff none repeat scroll 0 0; border: 1px solid #3b8cff; }
+    .g-button-blue-large .g-button-right .text, .g-button-blue-large:hover .g-button-right .text, .g-button-blue-large:active .g-button-right .text { color: #fff; }
+.g-button.g-button-blue-large:hover { background: #4e97ff none repeat scroll 0 0; border: 1px solid #4e97ff; }
+
+.icon-newfolder:before { content: "\e906"; }
+.icon { font-family: yunfont !important; font-style: normal; font-variant: normal; font-weight: 400; line-height: 1; text-transform: none; }
+.g-button .icon { display: inline-block; height: 24px; margin-right: 4px; vertical-align: middle; width: 20px; }
+.g-button .icon { font-size: 16px; height: 31px; line-height: 28px; margin-right: 0; }
+.treeview .treenode-empty .plus { background-position: -999px -999px; }
+.treeview-collapse { display: none; }
+body, button, input, select, textarea { color: #666; }
+input, button, select { line-height: 1.2; margin: 0; }
+.plus-create-folder input { border: 1px solid #d2d2d2; height: 24px; line-height: 24px; }
+.plus-create-folder .sure { background: rgba(0, 0, 0, 0) url("/Content/Img/sure_cf83fdd.png") no-repeat scroll center center; display: inline-block; height: 24px; margin: 0 2px 0 5px; vertical-align: top; width: 25px; }
+.plus-create-folder .cancel { background: rgba(0, 0, 0, 0) url("/Content/Img/cancel_5f98706.png") no-repeat scroll center center; display: inline-block; height: 24px; vertical-align: top; width: 25px; }

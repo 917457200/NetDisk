@@ -1,0 +1,17 @@
+﻿@{
+    ViewBag.Title = "Share";
+    Layout = "~/Views/Shared/YunMp.cshtml";
+}
+<body>
+    <div class="oh module-toolbar">
+        <div class="Linkshare">
+            用户组列表
+        </div>
+    </div>
+    <div style="padding: 10px 0px 0px 10px; overflow:hidden;">
+        @foreach( var item in ViewBag.List )
+        {
+            <a href="/UserGroup/UserShare?GroupId=@item.GroupId"><span class="GroupShare">@item.GroupName</span></a>
+        }
+    </div>
+</body>

@@ -1,0 +1,79 @@
+﻿@model Model.UserRoleInfo
+@{
+    ViewBag.Title = "RoleShow";
+    Layout = null;
+}
+<h4 class="widgettitle" id="popup_title">权限<span class="icon-fullscreen1" onclick="$.closezhezhao('popup_container', 'popup_overlay')"></span></h4>
+<div class="widgetcontent" style="margin-bottom: 0px;width:500px;">
+    <div class="stdform" style="margin-bottom: 0px;">
+        <input type="hidden" id="UserId" value="@Model.UserId" />
+        <div id="userTable" style="height: 80px; margin:0px 0px 10px 0px; overflow-y: auto;">
+            <div class="par control-group">
+                <div class="label-left">
+                    角色
+                </div>
+                <div class="controls2">
+                    @foreach( var item in ViewBag.Role )
+                    {
+                        if( item.RoleId.ToString() == Model.RoleId )
+                        {
+                    <div class="lingDiv">
+                        <input type="radio" name="Role" id="Role-@item.RoleId" checked="checked" value="@item.RoleId" />
+                        <label for="Role-@item.RoleId">@item.RoleName</label>
+                    </div>
+                        }
+                        else
+                        {
+                    <div class="lingDiv">
+                        <input type="radio" name="Role" id="Role-@item.RoleId" value="@item.RoleId" />
+                        <label for="Role-@item.RoleId">@item.RoleName</label>
+                    </div>
+                        }
+
+                    }
+
+                </div>
+            </div>
+            <div class="par control-group">
+                <div class="label-left">
+                    空间大小
+                </div>
+                <div class="controls">
+                    <input id="DiskSize" type="text" value="@Model.DiskSize" onkeyup="$.isInteger(this)" />
+                    <select id="Select1">
+                        @if( ViewBag.DiskType == 1 )
+                        {
+                        <option value="1" selected="selected">MB</option>
+                        <option value="2">GB</option>
+                        }
+                        else
+                        {
+                        <option value="1">MB</option>
+                        <option value="2" selected="selected">GB</option>
+                        }
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div style="text-align: center;">
+        <button id="BtnOKUser" class="btn btn-primary">
+            提 交
+        </button>
+    </div>
+</div>
+<script type="text/javascript">
+    $("#BtnOKUser").click(function () {
+        var UserId = $("#UserId").val();
+        var Role = $("input[name='Role']:checked").val();
+        var DiskSize = $("#DiskSize").val();
+        var DiskType = $("#Select1").val();
+        var Exsit = '@ViewBag.Exsit';
+        DFBGFlie.Flie.FlieOperation.AjaxHtml("/Role/RoleAdd", { UserId: UserId, Role: Role, DiskSize: DiskSize, DiskType: DiskType, Exsit: Exsit }, function (data) {
+            if (data = "suc") {
+                alert("分配成功！");
+                $.closezhezhao('popup_container', 'popup_overlay');
+            }
+        }, true);
+    });
+</script>

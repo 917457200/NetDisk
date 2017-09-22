@@ -1,0 +1,47 @@
+﻿@{
+    ViewBag.Title = "UserRoleList";
+    Layout = "~/Views/Shared/MP.cshtml";
+
+}
+<div class="maincontent">
+    <div class="maincontentinner">
+
+        <div role="grid" class="dataTables_wrapper" id="dyntable_wrapper" style="margin-bottom:10px;">
+            <div class="dataTables_filter" id="dyntable_filter">
+                <span>处室/教研组</span>
+                <select id="AgencyList">
+                        <option value="">--请选择--</option>
+                </select>
+                <span>教师姓名</span>
+                <input id="UserName" type="text" placeholder="输入教师姓名" />
+                <label class="btn" style=" padding: 1px 6px 0px; float: right" id="btnSearch">查询</label>
+            </div>
+        </div>
+
+        <table class="gridView table table-bordered responsive dataTable" width="100%">
+            <tr>
+                <th align="center" width="80" class="head0">用户代码</th>
+                <th align="center" width="80" class="head0">用户姓名</th>
+                <th align="center" width="80" class="head0">处室/教研组</th>
+                <th align="center" width="100" class="head0">操作</th>
+            </tr>
+        </table>
+
+
+    </div>
+</div>
+
+@section Script
+    {
+    <script src="~/Scripts/Page.js"></script>
+    <script src="~/Scripts/Yun/Role.js"></script>
+    <script type="text/javascript">
+        Query(1);
+       
+        $("#btnSearch").bind('click', function () {
+            Query(1);
+        })
+       
+    </script>
+}
+

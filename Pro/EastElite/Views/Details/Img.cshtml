@@ -1,0 +1,99 @@
+﻿@model Model.YUN_FileInfo
+@{
+    ViewBag.Title = "Img";
+    Layout = null;
+}
+<script src="~/Scripts/Yun/MyYunFile.js"></script>
+<script src="~/Scripts/Yun/Img.js"></script>
+<script src="~/Scripts/Yun/Mouse.js"></script>
+<link href="~/Content/Css/picPreview.css" rel="stylesheet" />
+
+<div class="module-picPreview">
+    <div class="dlg-hd">
+        <a class="dlg-img-ic" title="关闭"></a>
+    </div>
+    <div class="dlg-bd" id="dlg-bd">
+        <div class="module-showPic clearfix" id="module-showPic">
+            <div class="img-wrap">
+                <img id="viewpic-image" src="" fileid="@Model.FileId" pfileid="@ViewBag.ParentFileId" width="@ViewBag.ImgWidth" height="@ViewBag.ImgHeight" style=" opacity: 1; transform: rotate(0deg);  ">
+            </div>
+            <div class="img-nav">
+                @if( Model.CreateId == ViewBag.CreateId )
+                {
+                    <div class="img-nav-left" style="display: none;">
+                        <span class="pre-arrow"></span>
+                    </div>
+                    <div class="img-nav-right" style="display: none;">
+                        <span class="next-arrow"></span>
+                    </div>
+                }
+            </div>
+            <div class="img-loading">
+                <div class="loading-container" style="display: none;">
+                    <svg xmlns="" viewBox="0 0 66 66" height="26px" width="26px" class="spinner">
+                        <circle style="stroke:#4288ed" r="30" cy="33" cx="33" stroke-linecap="round" stroke-width="6" fill="none" class="path" />
+                    </svg>
+                </div>
+                <div class="loading-gif" style="display: none;">
+                    <img src="~/Content/Img/zhuan.gif" />
+                </div>
+            </div>
+        </div>
+        <div class="module-thumbnailPic" id="module-thumbnailPic" style="">
+            <div class="thumb_bc">
+            </div>
+            <div class="operate-area">
+                <div class="operate-container">
+                    <div class="large-pic"><a href="@Model.FileUrl" target="_blank"><em class="magnify-icon"></em></a></div>
+                    <div class="img-control">
+                        <em title="左旋转" class="control control-left" onclick="DFBG.FlieOAImg.FlieImg.XuanZhuan('left')"></em>
+                        <em title="右旋转" class="control control-right" onclick="DFBG.FlieOAImg.FlieImg.XuanZhuan('right')"></em>
+                        <em onclick="DFBG.FlieOAImg.FlieImg.ImgDownLoad()" title="下载图片" class="control control-download"></em>
+                        @if( Model.CreateId == ViewBag.CreateId )
+                        {
+                            <em title="分享给好友" class="control control-share" onclick="DFBG.FlieOAImg.FlieImg.ImgShareMethod()"></em>
+                            <em title="删除图片" onclick="DFBG.FlieOAImg.FlieImg.Transfer('this')" class="control control-delete"></em>
+                        }
+
+                    </div>
+                    @*<div class="show-thumb"></div>*@
+                </div>
+            </div>
+            @*<div class="thumb-wrap" style="width: 1186px;">
+                    <ol class="thumb-list" style="left: 0px;">
+                        <li class="thumb-item current">
+                            <a style="background-image:url('');background-repeat:no-repeat;background-position: 50% 50%; background-size:42px 42px; -webkit-background-size:42px 42px;" data-index="0" class="slider-item" href="javascript:void(0);"></a>
+                        </li>
+                        <li class="thumb-item">
+                            <a style="background-image:url('');background-repeat:no-repeat;background-position: 50% 50%; background-size:42px 42px; -webkit-background-size:42px 42px;" data-index="1" class="slider-item" href="javascript:void(0);"></a>
+                        </li>
+
+                    </ol>
+                </div>*@
+        </div>
+    </div>
+    <div class="dlg-aside">
+        <div class="module-picPreviewAside">
+            <div class="box">
+                <ul class="file-info">
+                    <li class="title" title="DSC03454.JPG">@Model.FileName</li>
+                    <li class="directory">
+                        所属文件夹:
+                        @if( Model.CreateId == ViewBag.CreateId )
+                        {
+                            <a class="dir-name" onclick="DFBG.FlieOAImg.FlieImg.dirName('@Model.ParentFileId')" href="#" title="@ViewBag.ParentFileName">@ViewBag.ParentFileName</a>
+                        }
+                        else
+                        {
+                            <a class="dir-name" href="#" title="@ViewBag.ParentFileName">@ViewBag.ParentFileName</a>
+                        }
+
+                    </li>
+                    <li class="date">上传日期: <span class="info-color">@(( DateTime.Parse( Model.FileCreateTime.ToString() ).ToString( "yyyy/MM/dd HH:mm:ss" ) ))</span></li>
+                </ul>
+
+            </div>
+            <div class="retract"><span class="retract-icon"></span></div>
+        </div>
+    </div>
+</div>

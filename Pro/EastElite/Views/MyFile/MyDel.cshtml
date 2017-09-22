@@ -1,0 +1,178 @@
+﻿@model List<Model.YUN_FileInfo>
+@{
+    ViewBag.Title = "MyDel";
+    Layout = "~/Views/Shared/YunMp.cshtml";
+}
+@section Head{
+    <script src="~/Scripts/Yun/List-view.js"></script>
+}
+<body>
+    <div class="oh module-toolbar">
+        <div class="Linkshare">
+            <span class="db-inline">回收站</span>
+            <div class="bar db-inline">
+                <span class="text">
+                    提示：回收站不占用网盘空间，文件保存10天后将被自动清除。
+                </span>
+
+            </div>
+
+            <span class="clear-btn" onclick="DFBGFlie.Flie.FlieOperation.ClearDel()">
+                <em title="删除" class="icon icon-delete2"></em>
+                <span class="val">清空回收站</span>
+            </span>
+            <a href="javascript:void(0);" onclick="SearchFile('MyDel')" class="g-button" style="display: inline-block; margin-left:0px; margin-right: 10px; float: right;">
+                <span class="g-button-right">
+                    搜索
+                </span>
+            </a><span class="g-button" style="display: inline-block; float:right;  padding-left:0px; margin-right:0px;">
+                <span class="g-button-right" style="padding-right:1px;">
+                    <input id="SearchId" type="text" style="border:0px; height:21px;width :200px; padding:2px 5px; margin-top:1px;" />
+                </span>
+            </span>
+        </div>
+    </div>
+    <div class="module-recyclebin-toolbar">
+
+    </div>
+    <div style="padding-left: 10px;">
+        @if( Model.Count > 0 )
+        {
+            <div style="height: 30px; line-height: 30px; padding-left: 10px; position: relative;">
+                <span style="float: left; margin-left: 20px;" id="SumNum">已加载 @Model.Count 个</span>
+            </div>
+            <div class="list-view-header">
+                <div class="list-header">
+                    <ul class="list-cols" style="display: block;">
+                        <li style="width: 39%;" class="col first-col descend">
+                            <div class="col-item check"><input type="checkbox" class="check-icon" onclick="AllCheck()" id="checkAll" /></div>
+                            <span class="text">文件名</span><span class="order-icon"></span>
+                            <div id="Qushare">
+                                <a href="#" onclick="DFBGFlie.Flie.FlieOperation.Reduction()" class="btn restore-btn">
+                                    <em title="还原" class="ico icon icon-recovery"></em>
+                                    <span class="btn-val" style="width: auto;">还原</span>
+                                </a>
+                                <a href="#" onclick="DFBGFlie.Flie.FlieOperation.TrueDel()" class="btn restore-btn">
+                                    <em title="删除" class="ico icon icon-delete2"></em>
+                                    <span class="btn-val" style="width: auto;">删除</span>
+                                </a>
+                            </div>
+                        </li>
+                        <li style="width: 16%;" class="col"><span class="text">大小</span></li>
+                        <li style="width: 9.5%;" class="col"><span class="text">状态</span></li>
+                        <li style="width: 10%;" class="col"><span class="text">添加人/分享人</span></li>
+                        <li style="width: 23%;" class="col last-col"><span class="text">删除日期</span><span class="order-icon"></span></li>
+                    </ul>
+                </div>
+            </div>
+            <div style="display: block;" class="list-view-container2">
+                <div class="module-list-view" style="height: auto; overflow: hidden;">
+                    <div class="list-view" style="margin-top: 0px;">
+
+                        @for( int i = 0; i < Model.Count; i++ )
+                        {
+                            <dd class="g-clearfix list-view-item open-enable">
+                                <input class="checkbox1" type="checkbox" name="cheName" value="@Model[i].FileId" onclick="YzCheAll()" />
+
+                                @if( (bool) Model[i].IsFolder )
+                                {
+                                    <div class="fileicon dir-small"></div>
+                                }
+                                else
+                                {
+                                    switch( Model[i].FileExtName )
+                                    {
+                                        case ".jpg":
+                                        case ".png":
+                                        case ".jpeg":
+                                        case ".gif":
+                                        case ".bmp":
+                                            <div title="" class="fileicon fileicon-small-pic"></div>
+                                            break;
+                                        case ".docx":
+                                        case ".doc":
+                                        <div title="" class="fileicon fileicon-small-doc"></div>
+                                            break;
+                                        case ".xls":
+                                        case ".xlsx":
+                                        <div title="" class="fileicon fileicon-small-xls"></div>
+                                            break;
+                                        case ".txt":
+                                        <div title="" class="fileicon fileicon-small-txt"></div>
+                                            break;
+                                        case ".rar":
+                                        <div title="" class="fileicon fileicon-small-rar"></div>
+                                            break;
+                                        case ".zip":
+                                        <div title="" class="fileicon fileicon-small-zip"></div>
+                                            break;
+                                        case ".pdf":
+                                        <div title="" class="fileicon fileicon-small-pdf"></div>
+                                            break;
+                                        case ".flv":
+                                        case ".mp4":
+                                        case ".mkv":
+                                        case ".rmvb":
+                                        case ".avi":
+                                        case ".swf":
+                                        case ".wmv":
+                                        case ".3gp":
+                                        <div title="" class="fileicon fileicon-small-video"></div>
+                                            break;
+                                        case ".exe":
+                                        <div title="" class="fileicon fileicon-small-exe"></div>
+                                            break;
+                                        case ".psd":
+                                        <div title="" class="fileicon fileicon-small-psd"></div>
+                                            break;
+                                        case ".mp3":
+                                        case ".wma":
+                                        case ".wav":
+                                        <div title="" class="fileicon fileicon-small-mp3"></div>
+                                            break;
+                                        case ".ppt":
+                                        case ".pptx":
+                                        <div title="" class="fileicon fileicon-small-ppt"></div>
+                                            break;
+                                        case ".xmind":
+                                        <div title="" class="fileicon fileicon-small-xmind"></div>
+                                            break;
+                                        default:
+                                        <div title="" class="fileicon fileicon-small"></div>
+                                            break;
+                                    }
+                                }
+                                <div style="width: 40%" class="file-name">
+                                    <div class="text"><a class="filename" title="@Model[i].FileName">@Model[i].FileName</a></div>
+                                    <div class="operate" style="display: none; width:50px;">
+                                        <div style="position: absolute; top: 0px; padding-top: 0px; line-height: normal;">
+                                            <a style="" class="g-button" onclick="DFBGFlie.Flie.FlieOperation.TrueDel(@Model[i].FileId)">
+                                                <span class="g-button-right">
+                                                    <em class="icon  icon-delete2" title="删除"></em>
+                                                </span>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div style="width: 16%" class="file-size">
+                                    @(Model[i].FileSizeKb > 1024 ? ( Model[i].FileSizeKb > 1048576 ? Math.Round( ( (decimal) Model[i].FileSizeKb / (decimal) 1024 / (decimal) 1024 ), 2, MidpointRounding.AwayFromZero ).ToString() + "G" : Math.Round( ( (decimal) Model[i].FileSizeKb / (decimal) 1024 ), 2, MidpointRounding.AwayFromZero ).ToString() + "MB" ) : Model[i].FileSizeKb.ToString() + "KB")
+                                </div>
+                                <div style="width: 10%" class="file-size">已删除</div>
+                                <div style="width: 10%" class="file-size">@Model[i].CreateName</div>
+                                <div style="width: 23%" class="ctime">@(Convert.ToDateTime( Model[i].FileDeleteTime ).ToString( "yyyy-MM-dd HH:mm" ))</div>
+                            </dd>
+                        }
+
+                    </div>
+                </div>
+                @Tools.Pager( ViewBag.max, 20 )
+            </div>
+        }
+        else
+        {
+            <div style="width: 100%; text-align:center;">
+                <img src="~/Content/Img/NoShare.png" />
+            </div>
+        }
+    </div>
+</body>

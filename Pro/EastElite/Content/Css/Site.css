@@ -1,0 +1,25 @@
+﻿body { margin: 0; font-family: 'punctuation', 'microsoft yahei'; color: #404040; background: #0ca3d2; }
+
+/* Set padding to keep content from hitting the edges */
+.body-content { padding-left: 15px; padding-right: 15px; }
+
+/* Override the default bootstrap behavior where horizontal description lists 
+   will truncate terms that are too long to fit in the left column 
+*/
+.dl-horizontal dt { white-space: normal; }
+
+
+.navbar-inverse .navbar-brand { color: white; }
+.m-t-n { margin-top: 15px; }
+.navbar { border-radius: 0; }
+
+#loginForm { margin: 80px auto; width: 640px; }
+    #loginForm .login-wrapper { position: relative; margin: 0 auto; padding: 20px 20px 20px; width: 368px; background: white; border-radius: 3px; -webkit-box-shadow: 0 0 200px rgba(255, 255, 255, 0.5), 0 1px 2px rgba(0, 0, 0, 0.3); box-shadow: 0 0 200px rgba(255, 255, 255, 0.5), 0 1px 2px rgba(0, 0, 0, 0.3); }
+    #loginForm h3 { margin: -20px -20px 21px; line-height: 40px; font-size: 15px; font-weight: bold; color: #555; text-align: center; text-shadow: 0 1px white; background: #f3f3f3; border-bottom: 1px solid #cfcfcf; border-radius: 3px 3px 0 0; -webkit-box-shadow: 0 1px whitesmoke; box-shadow: 0 1px whitesmoke; }
+    #loginForm label { font-weight: normal; }
+
+.login-wrapper:before { content: ''; position: absolute; top: -8px; right: -8px; bottom: -8px; left: -8px; z-index: -1; background: rgba(0, 0, 0, 0.08); border-radius: 4px; }
+
+.info-wrapper { height: 20px; }
+    .info-wrapper > div { position: relative; display: inline-block; text-align: center; padding: 2px 10px; }
+#loginForm .btn-primary { background: #0ca3d2; border: #0ca3d2; color: #ffffff; }

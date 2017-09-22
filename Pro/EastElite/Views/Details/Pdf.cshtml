@@ -1,0 +1,86 @@
+﻿@{
+    ViewBag.Title = "Pdf";
+    Layout = "~/Views/Shared/YunMp.cshtml";
+}
+
+@section Head{
+    <style>
+        body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, code, form, textarea, select, optgroup, option, fieldset, legend, p, blockquote, th, td { margin: 0; padding: 0; }
+        .dlg-hd { background-color: transparent; border-bottom: 0 none; border-radius: 0; height: 30px; position: absolute; right: 0; top: 0; width: 30px; z-index: 100000; }
+
+             .dlg-hd .dlg-img-ic { background: rgba(0, 0, 0, 0) url("/Content/Img/img_preview_ic.png?t=1497328293331") no-repeat scroll -14px -203px; cursor: pointer; display: block; height: 30px; width: 30px; }
+    </style>
+    <script>
+        window.onload = isAcrobatPluginInstall;
+        function isAcrobatPluginInstall() {
+            var PDf = document.getElementById("PDf");
+            PDf.style.height = document.documentElement.clientHeight + "px";
+
+            var flag = false;
+            explorerName = $.Browser();
+            // 如果是firefox浏览器
+            if (navigator.plugins && navigator.plugins.length && explorerName != 'IE') {
+                for (x = 0; x < navigator.plugins.length; x++) {
+
+                    if (navigator.plugins[x].name == 'Adobe Acrobat')
+                        flag = true;
+                    return;
+                }
+            }// 下面代码都是处理IE浏览器的情况
+            else if (window.ActiveXObject) {
+                    for (x = 2; x < 10; x++) {
+                        try {
+                            oAcro = eval("new ActiveXObject('PDF.PdfCtrl." + x + "');");
+                            if (oAcro) {
+                                flag = true;
+                            }
+                        } catch (e) {
+                            flag = false;
+                        }
+                    }
+                    try {
+                        oAcro4 = new ActiveXObject('PDF.PdfCtrl.1');
+                        if (oAcro4)
+                            flag = true;
+                    } catch (e) {
+                        flag = false;
+                    }
+                    try {
+                        oAcro7 = new ActiveXObject('AcroPDF.PDF.1');
+                        if (oAcro7)
+                            flag = true;
+                    } catch (e) {
+                        flag = false;
+                    }
+                }
+            if (flag) {
+                return true;
+            }
+            else {
+                var Ti = document.getElementById("TiShi");
+                var PDf = document.getElementById("PDf");
+                Ti.style.display = "block";
+                PDf.style.display = "none";
+            }
+            return flag;
+        }
+      
+    </script>
+}
+<body>
+    <div id="TiShi" style="width: 100%; height: 500px; line-height: 500Px; display: none; text-align:center;">对不起,您还没有安装PDF阅读器软件呢,为了方便预览PDF文档,请选择安装！<a href="~/Content/PdfPalyer/AdbeRdr930_zh_CN.exe">点击下载</a> </div>
+    <div class="dlg-hd" onclick="$.closezhezhao('popup_container2', 'popup_overlay')">
+        <a title="关闭" class="dlg-img-ic"></a>
+    </div>
+    <div style="position:absolute;top:0px;left:0;right:0px;bottom:0px;">
+        <object classid="clsid:CA8A9780-280D-11CF-A24D-444553540000" id="PDf" width="100%" align="middle" height="100%" border="0" top="-10" name="pdf">
+            <param name="toolbar" value="false">
+            <param name="_Version" value="65539">
+            <param name="_ExtentX" value="20108">
+            <param name="_ExtentY" value="10866">
+            <param name="_StockProps" value="0">
+            <param name="SRC" value="@ViewBag.url">
+            <embed src="@ViewBag.url" id="PDf2" quality="high" bgcolor="#ffffff" width="100%" height="100%" align="center" type="application/pdf" pluginspage="http://www.macromedia.com/Go/getflashplayer" />
+        </object>
+    </div>
+</body>
