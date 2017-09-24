@@ -350,7 +350,7 @@ namespace EastElite.Controllers
                 string[] array = FileIds.Split( ',' );
                 for( var i = 0; i < array.Length; i++ )
                 {
-                    IsShareMethods( Convert.ToInt32( array[i] ) );
+                    IsShareMethods(  array[i] );
                     if( YunFile.Delete( Convert.ToInt32( array[i] ) ) )
                     {
                         result = "suc";
@@ -359,8 +359,10 @@ namespace EastElite.Controllers
             }
             else
             {
+                IsShareMethods( FileIds );
                 if( YunFile.Delete( Convert.ToInt32( FileIds ) ) )//删除一个文件
                 {
+
                     result = "suc";
                 }
             }
