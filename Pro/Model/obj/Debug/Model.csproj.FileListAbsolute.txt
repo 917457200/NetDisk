@@ -21,3 +21,4 @@ E:\项目\教育网盘\NetDisk\Pro\Model\bin\Debug\zh-Hans\EntityFramework.resou
 E:\项目\教育网盘\NetDisk\Pro\Model\bin\Debug\zh-Hans\EntityFramework.SqlServer.resources.dll
 E:\项目\教育网盘\NetDisk\Pro\Model\obj\Debug\Model.dll
 E:\项目\教育网盘\NetDisk\Pro\Model\obj\Debug\Model.pdb
+E:\项目\教育网盘\NetDisk\Pro\Model\obj\Debug\Model.csprojResolveAssemblyReference.cache
