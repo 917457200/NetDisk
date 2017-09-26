@@ -57,34 +57,34 @@ DFBGFlie.Flie.FlieOperation = {
         var _base = DFBGFlie.Flie.FlieOperation;
         var FileId = arguments.length > 0 ? arguments[0] : "";
         var ShareType = arguments.length > 1 ? arguments[1] : "";//非空返回列表页
-        _base.AjaxList("../Ajax/GetShare", "", function (data) {
-            var Str = "";
-            Str += "<div id=\"ReNameId\" style=\" min-width: 650px; \" class=\"ui-draggable\">";
-            Str += "<h1 id=\"popup_title\" class=\"widgettitle YIdong\" style=\"cursor: move;\">分享文件</h1>";
-            Str += "<span onclick=\"$.closezhezhao('popup_container2','popup_overlay2')\" class=\"icon-fullscreen1\"></span>";
-            Str += "<div id=\"popup_content2\" class=\"widgetcontent\">";
+        _base.AjaxHtml("../AllShare/ShareList", { FileId: FileId }, function (data) {
+            //var Str = "";
+            //Str += "<div id=\"ReNameId\" style=\" min-width: 650px; \" class=\"ui-draggable\">";
+            //Str += "<h1 id=\"popup_title\" class=\"widgettitle YIdong\" style=\"cursor: move;\">分享文件</h1>";
+            //Str += "<span onclick=\"$.closezhezhao('popup_container2','popup_overlay2')\" class=\"icon-fullscreen1\"></span>";
+            //Str += "<div id=\"popup_content2\" class=\"widgetcontent\">";
 
-            Str += "<div style=\"text-align:center;\"> ";
-            if (data.length > 0) {
-                for (var i = 0; i < data.length; i++) {
-                    switch (data[i].ShareTypeId) {
-                        case 1001:
-                        case 1002:
-                            Str += "<input type=\"button\" onclick=\"DFBGFlie.Flie.FlieOperation.SchoolShare('" + FileId + "','" + data[i].ShareTypeId + "')\" value=\"" + data[i].ShareTypeName + "\" />";
-                            break;
-                        case 1003:
-                            Str += "<input type=\"button\" onclick=\"DFBGFlie.Flie.FlieOperation.UserGroupShare('" + FileId + "','" + data[i].ShareTypeId + "')\" value=\"" + data[i].ShareTypeName + "\" />";
-                            break;
-                        default:
-                            Str += "<input type=\"button\" onclick=\"DFBGFlie.Flie.FlieOperation.ShareMethod('" + FileId + "','" + data[i].ShareTypeId + "','" + ShareType + "')\" value=\"" + data[i].ShareTypeName + "\" />";
-                            break;
-                    }
-                }
-            }
-            Str += "</div>";
-            Str += "</div>";
-            Str += "</div>";
-            parent.$("#popup_container2").append(Str);
+            //Str += "<div style=\"text-align:center;\"> ";
+            //if (data.length > 0) {
+            //    for (var i = 0; i < data.length; i++) {
+            //        switch (data[i].ShareTypeId) {
+            //            case 1001:
+            //            case 1002:
+            //                Str += "<input type=\"button\" onclick=\"DFBGFlie.Flie.FlieOperation.SchoolShare('" + FileId + "','" + data[i].ShareTypeId + "')\" value=\"" + data[i].ShareTypeName + "\" />";
+            //                break;
+            //            case 1003:
+            //                Str += "<input type=\"button\" onclick=\"DFBGFlie.Flie.FlieOperation.UserGroupShare('" + FileId + "','" + data[i].ShareTypeId + "')\" value=\"" + data[i].ShareTypeName + "\" />";
+            //                break;
+            //            default:
+            //                Str += "<input type=\"button\" onclick=\"DFBGFlie.Flie.FlieOperation.ShareMethod('" + FileId + "','" + data[i].ShareTypeId + "','" + ShareType + "')\" value=\"" + data[i].ShareTypeName + "\" />";
+            //                break;
+            //        }
+            //    }
+            //}
+            //Str += "</div>";
+            //Str += "</div>";
+            //Str += "</div>";
+            parent.$("#popup_container2").append(data);
             $.dingwei('popup_container2', 'popup_overlay2', 'parent');
         }
      );
@@ -898,7 +898,7 @@ DFBGFlie.Flie.FlieOperation = {
         $("#popup_title").text("选择用户组");
         _base.AjaxList("../UserGroup/GetAllGroupList", "", function (data) {
             var Str = "";
-            Str += "<div style=\"height:315px; overflow-y:auto;padding:5px\" id=\"UserList\">";
+            Str += "<div style=\"height:215px; overflow-y:auto;padding:5px\" id=\"UserList\">";
             if (data.model.length > 0) {
                 for (var i = 0; i < data.model.length; i++) {
                     Str += "<div  class=\"btn userGroup\" onclick=\"DFBGFlie.Flie.FlieOperation.SchoolShare('" + FileId + "','" + ShareTypeId + "','" + data.model[i].GroupId + "')\" >";
@@ -907,9 +907,8 @@ DFBGFlie.Flie.FlieOperation = {
                 }
             }
             Str += "</div>";
-            $("#popup_content2").html(Str);
-            $.dingwei('popup_container2', 'popup_overlay2', 'parent');
-
+            $("#UserGroupContent").html(Str);
+          
         })
     }
 }

@@ -1,19 +1,102 @@
 ﻿@{
     ViewBag.Title = "ShareList";
-    Layout = "~/Views/Shared/MP.cshtml";
+    Layout = null;
 }
+<style>
+    ul { display: block; list-style-type: disc; -webkit-margin-before: 1em; -webkit-margin-after: 1em; -webkit-margin-start: 0px; -webkit-margin-end: 0px; -webkit-padding-start: 40px; }
+    .tab { background: #f7faff none repeat scroll 0 0; border-bottom: 1px solid #c4dbfe; }
+        .tab .current::after { background: rgba(0, 0, 0, 0) url("/Content/Img/share-triangle_0b53e59.png") no-repeat scroll 0 0; bottom: -22px; content: ""; display: block; height: 20px; left: 30px; position: absolute; width: 20px; }
+    .tab { padding: 0 20px 10px; }
+    ul, li, ol { list-style: none; }
+    .tab li { margin: 0 20px 0 0; width: 80px; display: inline-block; text-align: center; color: #657699; cursor: pointer; position: relative; font-size: 12px; margin-top: 10px; }
+    .tab .current { color: #3b8cff; border-radius: 5px; }
+</style>
+<script>
+    $(function () {
+        $(".tab li").click(function () {
+            $(this).addClass("current").siblings().removeClass("current");
+            $(".tp").hide().eq($(this).index()).show();
+        })
+        DFBGFlie.Flie.FlieOperation.AjaxList("/Role/GetAgencyCodeNameList", {}, function (data) {
+            var datalist = data.AgencyList;
+            var AgencyList = $("#AgencyList")
+            for (var i = 0; i < datalist.length; i++) {
 
+                AgencyList.append("  <option value=\"" + datalist[i].AgencyCode + "\">" + datalist[i].RootName + "-" + datalist[i].AgencyName + "</option>");
+            }
+        }, true);
+        DFBGFlie.Flie.FlieOperation.UserGroupShare('@ViewBag.FileId', '1003');
+    })
+    function Agency() {
+        var AgencyName=$("#AgencyList").val();
+        if (AgencyName == "") {
+            alert("请选择部门！");
+            return;
+        }
+        DFBGFlie.Flie.FlieOperation.SchoolShare('@ViewBag.FileId', '1002', AgencyName);
+    }
+</script>
 <div class="ui-draggable" style=" min-width: 650px; " id="ReNameId">
     <h1 style="cursor: move;" class="widgettitle YIdong" id="popup_title">分享文件</h1>
     <span class="icon-fullscreen1" onclick="$.closezhezhao('popup_container2','popup_overlay2')">
     </span>
-    <div class="widgetcontent" id="popup_content2">
 
-        <input type="button" value="好友分享" onclick="DFBGFlie.Flie.FlieOperation.ShareMethod('','1006','')">
-        <input type="button" value="密钥分享" onclick="DFBGFlie.Flie.FlieOperation.ShareMethod('','1004','')">
-        <input type="button" value="用户组分享" onclick="DFBGFlie.Flie.FlieOperation.ShareMethod('','1003','')">
-        <input type="button" value="部门共享" onclick="DFBGFlie.Flie.FlieOperation.SchoolShare('','1002')">
-        <input type="button" value="全校共享" onclick="DFBGFlie.Flie.FlieOperation.SchoolShare('','1001')">
+    <div class="widgetcontent" id="popup_content2" style="padding:0px;">
+        <ul class="tab">
+            <li class="share-link current">
+                好友分享
+            </li>
+            <li class="share-friend">
+                用户组分享
+            </li>
+            <li class="share-mail">
+                部门共享
+            </li>
+            <li class="share-phone">
+                全校共享
+            </li>
+        </ul>
+        <div class="tab-content">
+            <div class="tp">    
+                <div id="popup_panel" style=" padding: 10px 0px 20px;text-align: center;">
+                    <input type="button" onclick="DFBGFlie.Flie.FlieOperation.ShareMethod('@ViewBag.FileId', '1004')" value="确定" class="widgetcontent" style="min-width: 100px">
+                    <input type="button" value="取消" onclick="$.closezhezhao('popup_container2','popup_overlay2')" class="widgetcontent" style="min-width: 100px" >
+                </div>
+            </div>
+            <div class="tp dn">
+                <div id="UserGroupContent">
+
+                </div>
+                <div id="popup_panel" style=" padding: 10px 0px 20px;text-align: center;">
+                    <input type="button"  value="确定" class="widgetcontent" style="min-width: 100px">
+                    <input type="button" value="取消" onclick="$.closezhezhao('popup_container2','popup_overlay2')" class="widgetcontent" style="min-width: 100px" >
+                </div>
+            </div>
+            <div class="tp dn">
+                <div style=" padding: 20px 15px;text-align: center;" id="popup_message">
+                    <span>部门名称</span>
+                    <select id="AgencyList" style="width:200px;">
+                        <option value="">--请选择--</option>
+                    </select>
+                </div>
+                <div id="popup_panel" style=" padding: 10px 0px 20px;text-align: center;">
+                    <input type="button" onclick="Agency();" value="确定" class="widgetcontent" style="min-width: 100px">
+                    <input type="button" value="取消" onclick="$.closezhezhao('popup_container2','popup_overlay2')" class="widgetcontent" style="min-width: 100px" >
+                </div>
+            </div>
+            <div class="tp dn">
+                <div style=" padding: 20px 15px;text-align: center;" id="popup_message">全校都可以查看或下载,确定分享吗？</div>
+                <div id="popup_panel" style=" padding: 10px 0px 20px;text-align: center;">
+                    <input type="button" onclick="DFBGFlie.Flie.FlieOperation.SchoolShare('@ViewBag.FileId', '1001')" value="确定" class="widgetcontent" style="min-width: 100px" >
+                    <input type="button" value="取消" onclick="$.closezhezhao('popup_container2','popup_overlay2')" class="widgetcontent" style="min-width: 100px" >
+                </div>
+            </div>
+            @*<input type="button" value="好友分享" onclick="DFBGFlie.Flie.FlieOperation.SchoolShare('','1006','')">
+            <input type="button" value="密钥分享" onclick="DFBGFlie.Flie.FlieOperation.SchoolShare('','1004','')">
+            <input type="button" value="用户组分享" onclick="DFBGFlie.Flie.FlieOperation.SchoolShare('','1003','')">
+            <input type="button" value="部门共享" onclick="DFBGFlie.Flie.FlieOperation.SchoolShare('','1002')">
+            <input type="button" value="全校共享" onclick="DFBGFlie.Flie.FlieOperation.SchoolShare('','1001')">*@
+        </div>
 
     </div>
 </div>

@@ -93,6 +93,7 @@
     <Compile Include="MD5.cs" />
     <Compile Include="Messger\Messger.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ShareList\ShareList.cs" />
     <Compile Include="ToOffice.cs" />
     <Compile Include="UserGroup\UserGroup.cs" />
     <Compile Include="VideoConverter.cs">

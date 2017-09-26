@@ -10,8 +10,10 @@ namespace EastElite.Controllers
     {
         //
         // GET: /AllShare/
-        public ActionResult ShareList()
+        public ActionResult ShareList( string FileId ,string ShareType)
         {
+            ViewBag.FileId = FileId;
+            ViewBag.ShareType = ShareType;
             return View();
         }
 	}
