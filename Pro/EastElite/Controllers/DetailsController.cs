@@ -227,11 +227,10 @@ namespace EastElite.Controllers
         /// 目录展示
         /// </summary>
         /// <returns></returns>
-        public string folderData( string ParentFileId, string Share, string GroupId )
+        public string folderData( string ParentFileId, string Share, string GroupOrAgencyId )
         {
            BLL.Cookie.TeUser U=new BLL.Cookie.TeUser();
-            U=Cookie.GetUserCookie();
-            DataTable FileInfo = GetFile.GetFileList( ParentFileId, U.userCode, Share, U.unitCode, GroupId );
+            DataTable FileInfo = GetFile.GetFileList( ParentFileId, U.userCode, Share,  GroupOrAgencyId );
             string FileInfoStr = JsonConvert.SerializeObject( FileInfo );
             return FileInfoStr;
         }

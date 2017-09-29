@@ -334,6 +334,7 @@
     <Content Include="Content\Css\jquery.ui.css" />
     <Content Include="Content\Css\Move.css" />
     <Content Include="Content\Css\Share.css" />
+    <Content Include="Content\Css\ShareList.css" />
     <Content Include="Content\Css\Site.css" />
     <Content Include="Content\Css\style.brown.css" />
     <Content Include="Content\Css\style.default.css" />

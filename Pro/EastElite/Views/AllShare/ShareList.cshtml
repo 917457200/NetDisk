@@ -1,21 +1,27 @@
 ﻿@{
     ViewBag.Title = "ShareList";
-    Layout = null;
+    Layout = "~/Views/Shared/Mp.cshtml";
+
 }
-<style>
-    ul { display: block; list-style-type: disc; -webkit-margin-before: 1em; -webkit-margin-after: 1em; -webkit-margin-start: 0px; -webkit-margin-end: 0px; -webkit-padding-start: 40px; }
-    .tab { background: #f7faff none repeat scroll 0 0; border-bottom: 1px solid #c4dbfe; }
-        .tab .current::after { background: rgba(0, 0, 0, 0) url("/Content/Img/share-triangle_0b53e59.png") no-repeat scroll 0 0; bottom: -22px; content: ""; display: block; height: 20px; left: 30px; position: absolute; width: 20px; }
-    .tab { padding: 0 20px 10px; }
-    ul, li, ol { list-style: none; }
-    .tab li { margin: 0 20px 0 0; width: 80px; display: inline-block; text-align: center; color: #657699; cursor: pointer; position: relative; font-size: 12px; margin-top: 10px; }
-    .tab .current { color: #3b8cff; border-radius: 5px; }
-</style>
+<link href="~/Content/Css/ShareList.css" rel="stylesheet" />
 <script>
     $(function () {
         $(".tab li").click(function () {
             $(this).addClass("current").siblings().removeClass("current");
             $(".tp").hide().eq($(this).index()).show();
+        })
+        $(".share-method-line").click(function () {
+            $(this).children(".radio-icon").addClass("icon-radio-checked").removeClass("icon-radio-non");
+            $(this).siblings().children(".radio-icon").removeClass("icon-radio-checked").addClass("icon-radio-non");
+        })
+        $(".choose-value").click(function () {
+            $(".choose-list").toggleClass("dn");
+        })
+        $(".choose-list li").click(function () {
+            $(this).addClass("choose-checked").siblings().removeClass("choose-checked");
+            $(this).append("<span class=\"icon\"> &#xe932;</span>").siblings().children("span").remove();
+            $(".choose-value").children("span").text($(this).children("em").text());
+            $(".choose-list").toggleClass("dn");
         })
         DFBGFlie.Flie.FlieOperation.AjaxList("/Role/GetAgencyCodeNameList", {}, function (data) {
             var datalist = data.AgencyList;
@@ -28,15 +34,20 @@
         DFBGFlie.Flie.FlieOperation.UserGroupShare('@ViewBag.FileId', '1003');
     })
     function Agency() {
-        var AgencyName=$("#AgencyList").val();
+        var AgencyName = $("#AgencyList").val();
         if (AgencyName == "") {
             alert("请选择部门！");
             return;
         }
         DFBGFlie.Flie.FlieOperation.SchoolShare('@ViewBag.FileId', '1002', AgencyName);
     }
+    function CreatLink() {
+        $(".create-link").addClass("private-link has-create");
+        $(".OpenLink").css("display", "none");
+        $(".Close").css("display", "inline-block");
+    }
 </script>
-<div class="ui-draggable" style=" min-width: 650px; " id="ReNameId">
+<div class="ui-draggable" style=" min-width: 530px; " id="ReNameId">
     <h1 style="cursor: move;" class="widgettitle YIdong" id="popup_title">分享文件</h1>
     <span class="icon-fullscreen1" onclick="$.closezhezhao('popup_container2','popup_overlay2')">
     </span>
@@ -57,10 +68,104 @@
             </li>
         </ul>
         <div class="tab-content">
-            <div class="tp">    
+            <div class="tp">
+                <div class="create-link ">
+                    <table class="validity-section">
+                        <tbody>
+                            <tr>
+                                <td class="first-child">
+                                    <label>分享形式</label>
+                                </td>
+                                <td>
+                                    <div class="share-method-line">
+                                        <input type="radio" id="share-method-private" name="share-method" value="private" checked="true">
+                                        <span class="icon radio-icon icon-radio-checked"></span>
+                                        <label for="share-method-private">
+                                            <b>加密</b>
+                                            <span>仅限拥有密码者可查看，更加隐私安全</span>
+                                        </label>
+                                    </div>
+                                    <div class="share-method-line share-public-panel" style="color: rgb(139, 144, 158);">
+                                        <input type="radio" id="share-method-public" name="share-method" value="public">
+                                        <span class="icon radio-icon icon-radio-non"></span>
+                                        <label for="share-method-public">
+                                            <b style="color: rgb(66, 78, 103);">公开</b>
+                                            <span>
+                                                将链接发给好友即可查看或下载
+                                            </span>
+                                        </label>
+                                        <span class="share-public-tip" style="display: none;">
+                                        </span>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="first-child"><label>有效期</label></td>
+                                <td class="choose-panel">
+                                    <button class="g-button g-button-large-gray choose-value">
+                                        <span class="text">永久有效</span>
+                                        <em class="icon icon-dropdown-select"></em>
+                                    </button>
+                                    <ul class="choose-list dn">
+                                        <li class="choose-checked" value="0">
+                                            <em>永久有效</em>
+                                            <span class="icon"> &#xe932;</span>
+                                        </li>
+                                        <li value="7">
+                                            <em>7天</em>
+                                        </li>
+                                        <li value="1">
+                                            <em>1天</em>
+                                        </li>
+                                    </ul>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="create-success">
+                        <span class="public">
+                            <em class="icon"></em>
+                            成功创建公开链接
+                        </span>
+                        <span class="private">
+                            <em class="icon"></em>
+                            成功创建私密链接
+                        </span>
+                    </div>
+                    <div class="link-info">
+                        <div class="copy-button-section">
+                            <a class="g-button g-button-blue copy-button" id="copyShare">
+                                <span class="g-button-right">
+                                    <span class="text public">复制链接</span>
+                                    <span class="text private">复制链接及密码</span>
+                                </span>
+                            </a>
+                            <div class="copy-tips" style="display: none;">复制链接成功</div>
+                        </div>
+                        <div class="url">
+                            <input type="text" readonly="readonly" class="share-url" value="">
+                            <span class="share-validity-tip" style="right: 150px;">链接永久有效</span>
+                        </div>
+                        <div class="password">
+                            <h4>提取密码</h4>
+                            <input type="text" class="share-password" readonly="readonly" value="">
+                        </div>
+                    </div>
+                    <div class="description">
+                        <span class="public">
+                            1.生成文件下载链接 <br>
+                            2.把链接通过QQ、微博、人人网、QQ空间等方式分享给好友
+                        </span>
+                        <span class="private">
+                            可以将链接发送给你的QQ等好友
+                        </span>
+                    </div>
+                </div>
                 <div id="popup_panel" style=" padding: 10px 0px 20px;text-align: center;">
-                    <input type="button" onclick="DFBGFlie.Flie.FlieOperation.ShareMethod('@ViewBag.FileId', '1004')" value="确定" class="widgetcontent" style="min-width: 100px">
-                    <input type="button" value="取消" onclick="$.closezhezhao('popup_container2','popup_overlay2')" class="widgetcontent" style="min-width: 100px" >
+                    <input type="button" value="创建链接" onclick="CreatLink()" class="OpenLink" style="min-width: 100px">
+                    <input type="button" value="取消" onclick="$.closezhezhao('popup_container2','popup_overlay2')" class="OpenLink" style="min-width: 100px">
+                    <input type="button" value="关闭" onclick="$.closezhezhao('popup_container2','popup_overlay2')" class="Close 
+                          " style="min-width: 100px;display:none;">
                 </div>
             </div>
             <div class="tp dn">
@@ -68,8 +173,8 @@
 
                 </div>
                 <div id="popup_panel" style=" padding: 10px 0px 20px;text-align: center;">
-                    <input type="button"  value="确定" class="widgetcontent" style="min-width: 100px">
-                    <input type="button" value="取消" onclick="$.closezhezhao('popup_container2','popup_overlay2')" class="widgetcontent" style="min-width: 100px" >
+
+                    <input type="button" value="取消" onclick="$.closezhezhao('popup_container2','popup_overlay2')" class="widgetcontent" style="min-width: 100px">
                 </div>
             </div>
             <div class="tp dn">
@@ -81,21 +186,17 @@
                 </div>
                 <div id="popup_panel" style=" padding: 10px 0px 20px;text-align: center;">
                     <input type="button" onclick="Agency();" value="确定" class="widgetcontent" style="min-width: 100px">
-                    <input type="button" value="取消" onclick="$.closezhezhao('popup_container2','popup_overlay2')" class="widgetcontent" style="min-width: 100px" >
+                    <input type="button" value="取消" onclick="$.closezhezhao('popup_container2','popup_overlay2')" class="widgetcontent" style="min-width: 100px">
                 </div>
             </div>
             <div class="tp dn">
                 <div style=" padding: 20px 15px;text-align: center;" id="popup_message">全校都可以查看或下载,确定分享吗？</div>
                 <div id="popup_panel" style=" padding: 10px 0px 20px;text-align: center;">
-                    <input type="button" onclick="DFBGFlie.Flie.FlieOperation.SchoolShare('@ViewBag.FileId', '1001')" value="确定" class="widgetcontent" style="min-width: 100px" >
-                    <input type="button" value="取消" onclick="$.closezhezhao('popup_container2','popup_overlay2')" class="widgetcontent" style="min-width: 100px" >
+                    <input type="button" onclick="DFBGFlie.Flie.FlieOperation.SchoolShare('@ViewBag.FileId', '1001')" value="确定" class="widgetcontent" style="min-width: 100px">
+                    <input type="button" value="取消" onclick="$.closezhezhao('popup_container2','popup_overlay2')" class="widgetcontent" style="min-width: 100px">
                 </div>
             </div>
-            @*<input type="button" value="好友分享" onclick="DFBGFlie.Flie.FlieOperation.SchoolShare('','1006','')">
-            <input type="button" value="密钥分享" onclick="DFBGFlie.Flie.FlieOperation.SchoolShare('','1004','')">
-            <input type="button" value="用户组分享" onclick="DFBGFlie.Flie.FlieOperation.SchoolShare('','1003','')">
-            <input type="button" value="部门共享" onclick="DFBGFlie.Flie.FlieOperation.SchoolShare('','1002')">
-            <input type="button" value="全校共享" onclick="DFBGFlie.Flie.FlieOperation.SchoolShare('','1001')">*@
+
         </div>
 
     </div>

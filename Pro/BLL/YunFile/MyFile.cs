@@ -348,7 +348,7 @@ namespace BLL.YunFile
         /// <param name="field"></param>
         /// <param name="Ids"></param>
         /// <returns></returns>
-        public DataTable GetFileList( string ParentFileId, string CreateId, string Share, string unitCode, string GroupId )
+        public DataTable GetFileList( string ParentFileId, string CreateId, string Share, string GroupOrAgencyId )
         {
             StringBuilder strSql = new StringBuilder();
             strSql.Append( "SELECT " );
@@ -360,14 +360,14 @@ namespace BLL.YunFile
                     strSql.Append( string.Format( "WHERE ShareTypeId='1001' and IsFolder = 1 AND FileState = 1 AND ParentFileId = '{0}'and( CreateId='User' or CreateId='Admin')", ParentFileId ) );
                     break;
                 case "1002":
-                    strSql.Append( " *,(SELECT COUNT(*) FROM dbo.YUN_FileInfo WHERE  ShareTypeId ='1002' and CreateId='User' and CreateUnitCode='" + unitCode + "' )as IsChildFolder" );
+                    strSql.Append( " *,(SELECT COUNT(*) FROM dbo.YUN_FileInfo WHERE  ShareTypeId ='1002' and CreateId='User' and CreateUnitCode='" + GroupOrAgencyId + "' )as IsChildFolder" );
                     strSql.Append( " FROM dbo.YUN_FileInfo AS A " );
-                    strSql.Append( string.Format( "WHERE  ShareTypeId ='1002' and IsFolder = 1 AND FileState = 1 and CreateId='User' AND ParentFileId = '{0}' and CreateUnitCode='" + unitCode + "'", ParentFileId ) );
+                    strSql.Append( string.Format( "WHERE  ShareTypeId ='1002' and IsFolder = 1 AND FileState = 1 and CreateId='User' AND ParentFileId = '{0}' and CreateUnitCode='" + GroupOrAgencyId + "'", ParentFileId ) );
                     break;
                 case "1003":
-                    strSql.Append( " *,(SELECT COUNT(*) FROM dbo.YUN_FileInfo WHERE  ShareTypeId ='1003' and CreateId='User' and ShareGroupId='" + GroupId + "' )as IsChildFolder" );
+                    strSql.Append( " *,(SELECT COUNT(*) FROM dbo.YUN_FileInfo WHERE  ShareTypeId ='1003' and CreateId='User' and ShareGroupId='" + GroupOrAgencyId + "' )as IsChildFolder" );
                     strSql.Append( " FROM dbo.YUN_FileInfo AS A " );
-                    strSql.Append( string.Format( "WHERE  ShareTypeId ='1003' and IsFolder = 1 AND FileState = 1 and CreateId='User' AND ParentFileId = '{0}' and ShareGroupId='" + GroupId + "'", ParentFileId ) );
+                    strSql.Append( string.Format( "WHERE  ShareTypeId ='1003' and IsFolder = 1 AND FileState = 1 and CreateId='User' AND ParentFileId = '{0}' and ShareGroupId='" + GroupOrAgencyId + "'", ParentFileId ) );
                     break;
                 default:
                     strSql.Append( string.Format( " *,(SELECT COUNT(*) FROM dbo.YUN_FileInfo WHERE  CreateId = '{0}' AND IsFolder = 1 AND FileState = 1 AND ParentFileId = A.FileId  )as IsChildFolder", CreateId ) );
@@ -726,7 +726,7 @@ namespace BLL.YunFile
         /// </summary>
         /// <param name="FileId"></param>
         /// <returns></returns>
-        public string FileReNameForExit( string ParentFileId, string CreateId, string FileName, int I, string Share, string GroupId )
+        public string FileReNameForExit( string ParentFileId, string CreateId, string FileName, int I, string Share, string GroupOrAgencyId )
         {
             string Name = FileName;
 
@@ -745,14 +745,14 @@ namespace BLL.YunFile
                             if( bool.Parse( File.ToList()[0].IsFolder.ToString() ) )
                             {
                                 FileName = FileName.Replace( "(" + ( I - 1 ) + ")", "" ) + "(" + I + ")";
-                                return FileReNameForExit( ParentFileId, CreateId, FileName, I, Share, GroupId );
+                                return FileReNameForExit( ParentFileId, CreateId, FileName, I, Share, GroupOrAgencyId );
                             }
                             else
                             {
                                 string FileExt = Path.GetExtension( FileName );
                                 string FileNameWithoutExt = Path.GetFileNameWithoutExtension( FileName );
                                 FileName = FileNameWithoutExt.Replace( "(" + ( I - 1 ) + ")", "" ) + "(" + I + ")" + FileExt;
-                                return FileReNameForExit( ParentFileId, CreateId, FileName, I, Share, GroupId );
+                                return FileReNameForExit( ParentFileId, CreateId, FileName, I, Share, GroupOrAgencyId );
                             }
                         }
                         else
@@ -762,7 +762,7 @@ namespace BLL.YunFile
 
                     case "1002":
                         var File2 = from b in Db.YUN_FileInfo
-                                    where b.FileName == Name && b.ParentFileId == ParentFileId && b.CreateId == "User" && b.FileState == true && b.ShareTypeId == "1002"
+                                    where b.FileName == Name && b.ParentFileId == ParentFileId && b.CreateId == "User" && b.FileState == true && b.ShareTypeId == "1002" && b.CreateUnitCode == GroupOrAgencyId
                                     orderby b.FileId
                                     select b;
                         if( File2.Count() > 0 )
@@ -771,14 +771,14 @@ namespace BLL.YunFile
                             if( bool.Parse( File2.ToList()[0].IsFolder.ToString() ) )
                             {
                                 FileName = FileName.Replace( "(" + ( I - 1 ) + ")", "" ) + "(" + I + ")";
-                                return FileReNameForExit( ParentFileId, CreateId, FileName, I, Share, GroupId );
+                                return FileReNameForExit( ParentFileId, CreateId, FileName, I, Share, GroupOrAgencyId );
                             }
                             else
                             {
                                 string FileExt = Path.GetExtension( FileName );
                                 string FileNameWithoutExt = Path.GetFileNameWithoutExtension( FileName );
                                 FileName = FileNameWithoutExt.Replace( "(" + ( I - 1 ) + ")", "" ) + "(" + I + ")" + FileExt;
-                                return FileReNameForExit( ParentFileId, CreateId, FileName, I, Share, GroupId );
+                                return FileReNameForExit( ParentFileId, CreateId, FileName, I, Share, GroupOrAgencyId );
                             }
                         }
                         else
@@ -787,7 +787,7 @@ namespace BLL.YunFile
                         }
                     case "1003":
                         var File3 = from b in Db.YUN_FileInfo
-                                    where b.FileName == Name && b.ParentFileId == ParentFileId && b.CreateId == "User" && b.FileState == true && b.ShareTypeId == "1003" && b.ShareGroupId == GroupId
+                                    where b.FileName == Name && b.ParentFileId == ParentFileId && b.CreateId == "User" && b.FileState == true && b.ShareTypeId == "1003" && b.ShareGroupId == GroupOrAgencyId
                                     orderby b.FileId
                                     select b;
                         if( File3.Count() > 0 )
@@ -796,14 +796,14 @@ namespace BLL.YunFile
                             if( bool.Parse( File3.ToList()[0].IsFolder.ToString() ) )
                             {
                                 FileName = FileName.Replace( "(" + ( I - 1 ) + ")", "" ) + "(" + I + ")";
-                                return FileReNameForExit( ParentFileId, CreateId, FileName, I, Share, GroupId );
+                                return FileReNameForExit( ParentFileId, CreateId, FileName, I, Share, GroupOrAgencyId );
                             }
                             else
                             {
                                 string FileExt = Path.GetExtension( FileName );
                                 string FileNameWithoutExt = Path.GetFileNameWithoutExtension( FileName );
                                 FileName = FileNameWithoutExt.Replace( "(" + ( I - 1 ) + ")", "" ) + "(" + I + ")" + FileExt;
-                                return FileReNameForExit( ParentFileId, CreateId, FileName, I, Share, GroupId );
+                                return FileReNameForExit( ParentFileId, CreateId, FileName, I, Share, GroupOrAgencyId );
                             }
                         }
                         else
@@ -821,14 +821,14 @@ namespace BLL.YunFile
                             if( bool.Parse( File4.ToList()[0].IsFolder.ToString() ) )
                             {
                                 FileName = FileName.Replace( "(" + ( I - 1 ) + ")", "" ) + "(" + I + ")";
-                                return FileReNameForExit( ParentFileId, CreateId, FileName, I, Share, GroupId );
+                                return FileReNameForExit( ParentFileId, CreateId, FileName, I, Share, GroupOrAgencyId );
                             }
                             else
                             {
                                 string FileExt = Path.GetExtension( FileName );
                                 string FileNameWithoutExt = Path.GetFileNameWithoutExtension( FileName );
                                 FileName = FileNameWithoutExt.Replace( "(" + ( I - 1 ) + ")", "" ) + "(" + I + ")" + FileExt;
-                                return FileReNameForExit( ParentFileId, CreateId, FileName, I, Share, GroupId );
+                                return FileReNameForExit( ParentFileId, CreateId, FileName, I, Share, GroupOrAgencyId );
                             }
                         }
                         else

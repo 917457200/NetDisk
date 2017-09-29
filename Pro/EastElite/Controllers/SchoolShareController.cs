@@ -111,11 +111,11 @@ namespace EastElite.Controllers
         /// 目录页面
         /// </summary>
         /// <returns></returns>
-        public ActionResult SchoolFileMove( string FileId, string ShareTypeId, string GroupId )
+        public ActionResult SchoolFileMove( string FileId, string ShareTypeId, string GroupOrAgencyId )
         {
             ViewBag.FileId = FileId;
             ViewBag.ShareTypeId = ShareTypeId;
-            ViewBag.GroupId = GroupId;
+            ViewBag.GroupOrAgencyId = GroupOrAgencyId;
 
             return View();
         }
@@ -125,7 +125,7 @@ namespace EastElite.Controllers
         /// <param name="FileIdList">要移动的文件Id集合</param>
         /// <param name="WhereId">目标文件夹</param>
         /// <returns></returns>
-        public string SchoolShareFile( string FileIdList, string WhereId, string ShareTypeId, string GroupId )
+        public string SchoolShareFile( string FileIdList, string WhereId, string ShareTypeId, string GroupOrAgencyId )
         {
             if( FileIdList.Contains( "add" ) )
             {
@@ -150,9 +150,13 @@ namespace EastElite.Controllers
                     item.ShareTypeId = ShareTypeId;
                     item.CreateId = "User";
                     item.ShareFileID = item.FileId.ToString();
-                    if( GroupId!="" )
+                    if( GroupOrAgencyId != "" && ShareTypeId == "1003" )
                     {
-                        item.ShareGroupId = GroupId;
+                        item.ShareGroupId = GroupOrAgencyId;
+                    }
+                    if( GroupOrAgencyId != "" && ShareTypeId == "1002" )
+                    {
+                        item.CreateUnitCode = GroupOrAgencyId;
                     }
                     item.IsShare = true;
                     item.ShareTime = DateTime.Now;
@@ -164,7 +168,7 @@ namespace EastElite.Controllers
 
                     item.FileUrl = "/Upload/Yun/" + FileMapPath + "/" + Path.GetFileName( item.FileUrl );
 
-                    item.FileName = GetFile.FileReNameForExit( item.ParentFileId, U.userCode, item.FileName, 0, ShareTypeId, GroupId );
+                    item.FileName = GetFile.FileReNameForExit( item.ParentFileId, U.userCode, item.FileName, 0, ShareTypeId, GroupOrAgencyId );
 
                     //已有文件
                     if( FileHelper.ExitFile( Server.MapPath( item.FileUrl ) ) )
@@ -193,7 +197,7 @@ namespace EastElite.Controllers
                             List<Model.YUN_FileInfo> DownFileList = GetFile.GetFileByDown( "ParentFileId", OldId.ToString() );
                             for( int i = 0; i < DownFileList.Count; i++ )
                             {
-                                SchoolShareFile( DownFileList[i].FileId.ToString(), item.FileId.ToString(), ShareTypeId, GroupId );
+                                SchoolShareFile( DownFileList[i].FileId.ToString(), item.FileId.ToString(), ShareTypeId, GroupOrAgencyId );
                             }
                         }
                     }

@@ -5,7 +5,7 @@
 <link href="~/Content/Css/Audio.css" rel="stylesheet" />
 <script type="text/javascript">
     $(function () {
-        DFBGFlie.Flie.FlieOperation.Move("", $(".treeview-node"), 0, '@ViewBag.ShareTypeId', '@ViewBag.GroupId');
+        DFBGFlie.Flie.FlieOperation.Move("", $(".treeview-node"), 0, '@ViewBag.ShareTypeId', '@ViewBag.GroupOrAgencyId');
     })
 </script>
 <div id="fileTreeDialog" _movetype="@ViewBag.MoveType" class="dialog dialog-fileTreeDialog dialog-gray" style="width: 520px;display: block; ">
@@ -54,7 +54,7 @@
                 <span class="text" style="width: auto;">取消</span>
             </span>
         </a>
-        <a href="javascript:DFBGFlie.Flie.FlieOperation.SchoolShareFile('@ViewBag.FileId','@ViewBag.ShareTypeId', '@ViewBag.GroupId')" data-button-index="" data-button-id="b67" class="g-button g-button-blue-large" style="float: right; padding-left: 50px;">
+        <a href="javascript:DFBGFlie.Flie.FlieOperation.SchoolShareFile('@ViewBag.FileId','@ViewBag.ShareTypeId', '@ViewBag.GroupOrAgencyId')" data-button-index="" data-button-id="b67" class="g-button g-button-blue-large" style="float: right; padding-left: 50px;">
             <span class="g-button-right" style="padding-right: 50px;">
                 <span class="text" style="width: auto;">确定</span>
             </span>

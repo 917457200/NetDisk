@@ -585,12 +585,12 @@ DFBGFlie.Flie.FlieOperation = {
         }, true);
     },
     //加载目录信息
-    Move: function (treeview, obj, Pl, Share, GroupId) {
+    Move: function (treeview, obj, Pl, Share, GroupOrAgencyId) {
         var url = "/Details/folderData";
         var par = {
             ParentFileId: treeview,
             Share: Share,
-            GroupId: GroupId
+            GroupOrAgencyId: GroupOrAgencyId
         }
         EDUCAjax(par, function () {
         },
@@ -808,9 +808,9 @@ DFBGFlie.Flie.FlieOperation = {
         $.closezhezhao('popup_container2', 'popup_overlay2');
         var FileId = arguments.length > 0 ? arguments[0] : "";
         var ShareTypeId = arguments.length > 1 ? arguments[1] : "";
-        var GroupId = arguments.length > 2 ? arguments[2] : "";
-
-        DFBGFlie.Flie.FlieOperation.AjaxHtml("/SchoolShare/SchoolFileMove", { FileId: FileId, ShareTypeId: ShareTypeId, GroupId: GroupId }, function (data) {
+        var GroupOrAgencyId = arguments.length > 2 ? arguments[2] : "";
+       
+        DFBGFlie.Flie.FlieOperation.AjaxHtml("/SchoolShare/SchoolFileMove", { FileId: FileId, ShareTypeId: ShareTypeId, GroupOrAgencyId: GroupOrAgencyId, }, function (data) {
             if (data != "") {
                 parent.$("#popup_container").html("");
                 parent.$("#popup_container").append(data);
@@ -823,7 +823,7 @@ DFBGFlie.Flie.FlieOperation = {
 
         var MoveFileId = arguments.length > 0 ? arguments[0] : "";
         var ShareTypeId = arguments.length > 1 ? arguments[1] : "";
-        var GroupId = arguments.length > 2 ? arguments[2] : "";
+        var GroupOrAgencyId = arguments.length > 2 ? arguments[2] : "";
 
         var treeviewId = $(".treeview-node-on").children().children("span").attr("treeview");
         if (MoveFileId == "") {
@@ -850,7 +850,7 @@ DFBGFlie.Flie.FlieOperation = {
             return;
         }
         var url = "../SchoolShare/SchoolShareFile";
-        var par = { FileIdList: MoveFileId, WhereId: treeviewId, ShareTypeId: ShareTypeId, GroupId: GroupId }
+        var par = { FileIdList: MoveFileId, WhereId: treeviewId, ShareTypeId: ShareTypeId, GroupOrAgencyId: GroupOrAgencyId }
 
         EDUCAjax(par, function () {
             $.closezhezhao('popup_container', 'popup_overlay');
@@ -895,7 +895,7 @@ DFBGFlie.Flie.FlieOperation = {
         var _base = DFBGFlie.Flie.FlieOperation;
         var FileId = arguments.length > 0 ? arguments[0] : "";
         var ShareTypeId = arguments.length > 1 ? arguments[1] : "";
-        $("#popup_title").text("选择用户组");
+      
         _base.AjaxList("../UserGroup/GetAllGroupList", "", function (data) {
             var Str = "";
             Str += "<div style=\"height:215px; overflow-y:auto;padding:5px\" id=\"UserList\">";
