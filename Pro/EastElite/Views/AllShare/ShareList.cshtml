@@ -4,6 +4,7 @@
 
 }
 <link href="~/Content/Css/ShareList.css" rel="stylesheet" />
+<script src="~/Scripts/jquery-1.10.2.min.js" type="text/javascript"></script>
 <script>
     $(function () {
         $(".tab li").click(function () {
@@ -42,9 +43,43 @@
         DFBGFlie.Flie.FlieOperation.SchoolShare('@ViewBag.FileId', '1002', AgencyName);
     }
     function CreatLink() {
-        $(".create-link").addClass("private-link has-create");
-        $(".OpenLink").css("display", "none");
-        $(".Close").css("display", "inline-block");
+        var method = $(".icon-radio-checked").prev("input").val();
+        var ShareValidity = $(".choose-checked").attr("value");
+        var FileIdS = "";
+        var swich = getCookie("ShowType");
+        //判断如果是大图标展示，获取大图标展示中选择的id
+        if (swich == "grid") {
+            var cssId = window.frames["left"].$(".item-active");
+            for (var i = 0; i < cssId.length; i++) {
+                FileIdS += cssId[i].id + ",";
+            }
+        }
+        else {
+            //获取要删除的文件id(list展示中的id)
+            var list = window.frames["left"].$("input[type=checkbox][name=cheName]");
+            for (var i = 0; i < list.length; i++) {
+                if (list[i].checked) {
+                    FileIdS += list[i].value + ",";
+                }
+            }
+        }
+        DFBGFlie.Flie.FlieOperation.AjaxList("/AllShare/ShareCreate", { FileIdS: FileIdS, ShareValidity: ShareValidity, Method: method }, function (data) {
+            var datalist = data.AgencyList;
+            var AgencyList = $("#AgencyList")
+            for (var i = 0; i < datalist.length; i++) {
+
+                AgencyList.append("  <option value=\"" + datalist[i].AgencyCode + "\">" + datalist[i].RootName + "-" + datalist[i].AgencyName + "</option>");
+            }
+        }, true);
+        if (method == "private") {
+            $(".create-link").addClass("private-link has-create");
+            $(".OpenLink").css("display", "none");
+            $(".Close").css("display", "inline-block");
+        } else {
+            $(".create-link").addClass("public-link has-create");
+            $(".OpenLink").css("display", "none");
+            $(".Close").css("display", "inline-block");
+        }
     }
 </script>
 <div class="ui-draggable" style=" min-width: 530px; " id="ReNameId">
@@ -164,7 +199,7 @@
                 <div id="popup_panel" style=" padding: 10px 0px 20px;text-align: center;">
                     <input type="button" value="创建链接" onclick="CreatLink()" class="OpenLink" style="min-width: 100px">
                     <input type="button" value="取消" onclick="$.closezhezhao('popup_container2','popup_overlay2')" class="OpenLink" style="min-width: 100px">
-                    <input type="button" value="关闭" onclick="$.closezhezhao('popup_container2','popup_overlay2')" class="Close 
+                    <input type="button" value="关闭" onclick="$.closezhezhao('popup_container2','popup_overlay2')" class="Close
                           " style="min-width: 100px;display:none;">
                 </div>
             </div>
