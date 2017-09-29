@@ -80,6 +80,9 @@
     <Compile Include="ShareInfo.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="ShareLinkInfo.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="UserGroupInfo.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>

@@ -54,6 +54,16 @@
           <Property Name="ShareTypeId" Type="int" Nullable="false" />
           <Property Name="ShareTypeName" Type="nvarchar" MaxLength="100" />
         </EntityType>
+        <EntityType Name="ShareLinkInfo">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FileId" Type="nvarchar(max)" />
+          <Property Name="ShareLink" Type="nvarchar" MaxLength="20" />
+          <Property Name="ShareLinkKey" Type="nvarchar" MaxLength="6" />
+          <Property Name="ShareValidity" Type="int" />
+        </EntityType>
         <EntityType Name="UserGroupInfo">
           <Key>
             <PropertyRef Name="Id" />
@@ -106,6 +116,7 @@
           <EntitySet Name="MenuInfo" EntityType="Self.MenuInfo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="RoleInfo" EntityType="Self.RoleInfo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ShareInfo" EntityType="Self.ShareInfo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ShareLinkInfo" EntityType="Self.ShareLinkInfo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserGroupInfo" EntityType="Self.UserGroupInfo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserRoleInfo" EntityType="Self.UserRoleInfo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="YUN_FileInfo" EntityType="Self.YUN_FileInfo" Schema="dbo" store:Type="Tables" />
@@ -157,6 +168,7 @@
           <EntitySet Name="UserGroupInfo" EntityType="NETDISKDBModel.UserGroupInfo" />
           <EntitySet Name="GroupInfo" EntityType="NETDISKDBModel.GroupInfo" />
           <EntitySet Name="MassgeInfo" EntityType="NETDISKDBModel.MassgeInfo" />
+          <EntitySet Name="ShareLinkInfo" EntityType="NETDISKDBModel.ShareLinkInfo" />
         </EntityContainer>
         <EntityType Name="RoleInfo">
           <Key>
@@ -218,6 +230,16 @@
           <Property Name="GroupId" Type="Int32" />
           <Property Name="MassgeCreateTime" Type="DateTime" Precision="3" />
           <Property Name="MassgeExamineState" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="ShareLinkInfo">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FileId" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ShareLink" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="ShareLinkKey" Type="String" MaxLength="6" FixedLength="false" Unicode="true" />
+          <Property Name="ShareValidity" Type="Int32" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -322,6 +344,17 @@
                 <ScalarProperty Name="MassgeType" ColumnName="MassgeType" />
                 <ScalarProperty Name="MassgeNote" ColumnName="MassgeNote" />
                 <ScalarProperty Name="MassgeName" ColumnName="MassgeName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ShareLinkInfo">
+            <EntityTypeMapping TypeName="NETDISKDBModel.ShareLinkInfo">
+              <MappingFragment StoreEntitySet="ShareLinkInfo">
+                <ScalarProperty Name="ShareValidity" ColumnName="ShareValidity" />
+                <ScalarProperty Name="ShareLinkKey" ColumnName="ShareLinkKey" />
+                <ScalarProperty Name="ShareLink" ColumnName="ShareLink" />
+                <ScalarProperty Name="FileId" ColumnName="FileId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

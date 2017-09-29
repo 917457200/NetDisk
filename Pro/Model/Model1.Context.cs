@@ -35,6 +35,7 @@ namespace Model
         public virtual DbSet<UserGroupInfo> UserGroupInfo { get; set; }
         public virtual DbSet<GroupInfo> GroupInfo { get; set; }
         public virtual DbSet<MassgeInfo> MassgeInfo { get; set; }
+        public virtual DbSet<ShareLinkInfo> ShareLinkInfo { get; set; }
     
         public virtual int SpFileCreateAxis(string createId)
         {
