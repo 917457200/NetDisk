@@ -4,7 +4,18 @@
 
 }
 <link href="~/Content/Css/ShareList.css" rel="stylesheet" />
-<script src="~/Scripts/jquery-1.10.2.min.js" type="text/javascript"></script>
+
+<script src="~/Scripts/clipboard.min.js"></script>
+<script>
+    var clipboard = new Clipboard('.private');
+    var clipboard2 = new Clipboard('.public');
+    clipboard2.on('success', function (e) {
+        alert("复制成功");
+    });
+    clipboard.on('success', function (e) {
+        alert("复制成功");
+    });
+</script>
 <script>
     $(function () {
         $(".tab li").click(function () {
@@ -45,6 +56,10 @@
     function CreatLink() {
         var method = $(".icon-radio-checked").prev("input").val();
         var ShareValidity = $(".choose-checked").attr("value");
+        console.log(ShareValidity);
+        if (ShareValidity!=0) {
+            $(".share-validity-tip").remove();
+        }
         var FileIdS = "";
         var swich = getCookie("ShowType");
         //判断如果是大图标展示，获取大图标展示中选择的id
@@ -63,12 +78,16 @@
                 }
             }
         }
-        DFBGFlie.Flie.FlieOperation.AjaxList("/AllShare/ShareCreate", { FileIdS: FileIdS, ShareValidity: ShareValidity, Method: method }, function (data) {
-            var datalist = data.AgencyList;
-            var AgencyList = $("#AgencyList")
-            for (var i = 0; i < datalist.length; i++) {
-
-                AgencyList.append("  <option value=\"" + datalist[i].AgencyCode + "\">" + datalist[i].RootName + "-" + datalist[i].AgencyName + "</option>");
+        DFBGFlie.Flie.FlieOperation.AjaxHtml("/AllShare/ShareCreate", { FileIdS: FileIdS, ShareValidity: ShareValidity, Method: method }, function (data) {
+            if (data != "") {
+                var url = data.split('|');
+                $(".share-url").val(window.location.host + "/ShareOne/" + url[0]);
+                if (url[1] != "") {
+                    $(".share-password").val(url[1]);
+                    $(".private").attr("data-clipboard-text", " 链接: " + window.location.host + "/ShareOne/" + url[0] + " 密码: " + url[1]);
+                } else {
+                    $(".public").attr("data-clipboard-text", " 链接: " + window.location.host + "/ShareOne/" + url[0]);
+                }
             }
         }, true);
         if (method == "private") {
@@ -171,8 +190,8 @@
                         <div class="copy-button-section">
                             <a class="g-button g-button-blue copy-button" id="copyShare">
                                 <span class="g-button-right">
-                                    <span class="text public">复制链接</span>
-                                    <span class="text private">复制链接及密码</span>
+                                    <span class="text public" data-clipboard-text="1">复制链接</span>
+                                    <span class="text private" data-clipboard-text="2">复制链接及密码</span>
                                 </span>
                             </a>
                             <div class="copy-tips" style="display: none;">复制链接成功</div>

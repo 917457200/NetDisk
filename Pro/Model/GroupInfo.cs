@@ -20,7 +20,6 @@ namespace Model
         public Nullable<System.DateTime> CreateTime { get; set; }
         public string CreateUserName { get; set; }
         public string CreateUserId { get; set; }
-
         public Nullable<bool> Examine { get; set; }
     }
 }

@@ -404,6 +404,7 @@
     <Content Include="Content\Img\logo.gif" />
     <Content Include="Content\Img\logo2.png" />
     <Content Include="Scripts\areaSelect.js" />
+    <Content Include="Scripts\clipboard.min.js" />
     <Content Include="Scripts\jQuery.asyncLoading2.js" />
     <Content Include="Scripts\jQuery.asyncLoading.js" />
     <Content Include="Scripts\Menu.js" />

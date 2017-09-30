@@ -23,7 +23,6 @@ namespace Model
         public Nullable<bool> IsShare { get; set; }
         public string ShareTypeId { get; set; }
         public string ShareTypeName { get; set; }
-
         public string FileUrl { get; set; }
         public string CreateId { get; set; }
         public string ParentFileId { get; set; }
