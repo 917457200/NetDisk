@@ -133,6 +133,31 @@ namespace BLL.YunFile
             }
         }
         /// <summary>
+        /// 获取我的好友分享数据
+        /// </summary>
+        /// <param name="FileId"></param>
+        /// <returns></returns>
+        public List<Model.YUN_FileInfo> MyFriendLoad( string FileIds )
+        {
+            string wherestr = "";
+            string[] FileId = FileIds.Split( ',' );
+            if( !string.IsNullOrEmpty( FileIds ) )
+            {
+                wherestr = " and FileId in (" + FileIds + ")";
+            }
+
+            wherestr += " AND ShareTypeId ='1004' ";
+            StringBuilder strSql = new StringBuilder();
+            strSql.Append( "SELECT * From YUN_FileInfo" );
+            strSql.Append( " where FileState=1 " + wherestr + " ORDER BY IsFolder DESC " );
+
+            using( Model.NETDISKDBEntities Db = new Model.NETDISKDBEntities() )
+            {
+                DbRawSqlQuery<Model.YUN_FileInfo> result1 = Db.Database.SqlQuery<Model.YUN_FileInfo>( strSql.ToString() );
+                return result1.ToList();
+            }
+        }
+        /// <summary>
         /// 分类获取我的网盘数据
         /// </summary>
         /// <param name="FileId"></param>

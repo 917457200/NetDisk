@@ -870,7 +870,7 @@ DFBGFlie.Flie.FlieOperation = {
         var FileId = arguments.length > 0 ? arguments[0] : "";
         var ShareTypeId = arguments.length > 1 ? arguments[1] : "";
       
-        _base.AjaxList("../UserGroup/GetAllGroupList", "", function (data) {
+        _base.AjaxList("/UserGroup/GetAllGroupList", "", function (data) {
             var Str = "";
             Str += "<div style=\"height:215px; overflow-y:auto;padding:5px\" id=\"UserList\">";
             if (data.model.length > 0) {

@@ -15,6 +15,7 @@ namespace EastElite.Controllers
     {
         BLL.Cookie GetCookie = new BLL.Cookie();
         BLL.YunFile.MyFile GetFile = new BLL.YunFile.MyFile();
+        BLL.ShareList.ShareList ShareK = new BLL.ShareList.ShareList();
 
         /// <summary>
         /// 学校分享
@@ -55,58 +56,38 @@ namespace EastElite.Controllers
 
             return Json( new { model }, JsonRequestBehavior.AllowGet );
         }
-        /// <summary>
+
 
         /// </summary>
         /// <param name="FileId"></param>
         /// <returns></returns>
-        public ActionResult ShareDetails( string url )
+        public ActionResult ShareOne()
         {
-            string ID = url.Substring( 5, url.Length - 15 );
-            string FileId = Server.UrlDecode( Server.UrlDecode( ID ) );
-            FileId = FileId.Substring( 0, FileId.Length - 1 );
-            if( FileId.Contains( "add" ) )
-            {
-                FileId = FileId.Replace( "add", "" );
-            }
-            if( FileId.Split( ',' ).Length > 2 )
-            {
-                List<Model.YUN_FileInfo> H = GetFile.GetFileListByFileIds( FileId );
-                return View( H );
-            }
-            else
-            {
-                return RedirectToAction( "ShareOne", new { url = url } );
-            }
-
-        }
-        /// <summary>
-
-        /// </summary>
-        /// <param name="FileId"></param>
-        /// <returns></returns>
-        public ActionResult ShareOne( string url )
-        {
-            string ID = url.Substring( 5, url.Length - 15 );
-            string FileId = Server.UrlDecode( Server.UrlDecode( ID ) );
-            FileId = FileId.Substring( 0, FileId.Length - 1 );
-            if( FileId.Contains( "add" ) )
-            {
-                FileId = FileId.Replace( "add", "" );
-            }
-            Model.YUN_FileInfo File = new Model.YUN_FileInfo();
-            if( FileId.IndexOf( "," ) > -1 )
-            {
-                File = GetFile.GetModel( int.Parse( FileId ) );
-            }
-            else
-            {
-                File = GetFile.GetModel( int.Parse( FileId ) );
-            }
+            ViewBag.ShareLink = RouteData.Values["id"].ToString();
             ViewBag.Te = GetCookie.GetUserCookie();
+            Model.ShareLinkInfo ShareLinkInfo = ShareK.GetOneShareLinkInfo( RouteData.Values["id"].ToString() );
+            Model.YUN_FileInfo File = GetFile.GetModel(int.Parse(ShareLinkInfo.FileId));
             return View( File );
         }
-
+        /// <summary>
+        /// 获取我的好友分享数据
+        /// </summary>
+        /// <param name="FileId"></param>
+        /// <returns></returns>
+        public ActionResult ShareOneLoad( string FileId )
+        {
+            string ShareLink = RouteData.Values["id"].ToString();
+            string FileIdS = ShareK.GetShareLinkInfo( ShareLink );
+            var model = GetFile.MyFriendLoad( FileIdS );
+            if( model.Count > 0 )
+            {
+                return Json( new { model }, JsonRequestBehavior.AllowGet );
+            }
+            else
+            {
+                return Json( new { model }, JsonRequestBehavior.AllowGet );
+            }
+        }
         /// <summary>
         /// 目录页面
         /// </summary>

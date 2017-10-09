@@ -20,13 +20,7 @@ namespace EastElite
              defaults: new { controller = "Home", action = "Login", id = UrlParameter.Optional }
 
              );
-
-            routes.MapRoute(
-              name: "ShareOne",
-              url: "{controller}/{action}/{id}",
-             defaults: new { controller = "SchoolShare", action = "ShareOne", id = UrlParameter.Optional }
-
-             );
+           
         }
     }
 }

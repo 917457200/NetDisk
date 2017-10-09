@@ -490,6 +490,7 @@
     <Content Include="Scripts\Yun\ShareFile.js" />
     <Content Include="Scripts\Yun\MyYunFile.js" />
     <Content Include="Scripts\Yun\ShareList.js" />
+    <Content Include="Scripts\Yun\ShareOne.js" />
     <Content Include="Scripts\Yun\UserGroup.js" />
     <Content Include="Scripts\ZeroClipboard.js" />
     <Content Include="Scripts\zxx.drag.1.0-min.js" />
@@ -1068,7 +1069,6 @@
     <Content Include="Views\Details\Office.cshtml" />
     <Content Include="Views\Role\UserRoleIndex.cshtml" />
     <Content Include="Views\Home\ToToLogin.cshtml" />
-    <Content Include="Views\SchoolShare\ShareDetails.cshtml" />
     <Content Include="Views\SchoolShare\ShareOne.cshtml" />
     <Content Include="Views\SchoolShare\SchoolFileMove.cshtml" />
     <Content Include="Views\Role\RoleShow.cshtml" />

@@ -587,10 +587,10 @@ namespace EastElite.Controllers
                 for( var i = 0; i < array.Length; i++ )
                 {
                     Model.YUN_FileInfo Info = YunFile.GetModel( int.Parse( array[i].ToString() ) );
-                    if( bool.Parse( Info.IsFolder.ToString() ) && ShareTypeId == "1002" )
-                    {
-                        return "NoCanShare";
-                    }
+                    //if( bool.Parse( Info.IsFolder.ToString() ) && ShareTypeId == "1002" )
+                    //{
+                    //    return "NoCanShare";
+                    //}
                     if( YunFile.Share( int.Parse( array[i].ToString() ), ShareTypeId, GetCookie.GetUserCookie().unitCode ) )
                     {
                         result = "suc";
@@ -600,10 +600,10 @@ namespace EastElite.Controllers
             else
             {
                 Model.YUN_FileInfo Info = YunFile.GetModel( int.Parse( FileId ) );
-                if( bool.Parse( Info.IsFolder.ToString() ) && ShareTypeId == "1002" )
-                {
-                    return "NoCanShare";
-                }
+                //if( bool.Parse( Info.IsFolder.ToString() ) && ShareTypeId == "1002" )
+                //{
+                //    return "NoCanShare";
+                //}
                 if( YunFile.Share( int.Parse( FileId ), ShareTypeId, GetCookie.GetUserCookie().unitCode ) )//分享一个文件
                 {
                     result = "suc";

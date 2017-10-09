@@ -9,12 +9,15 @@
 <script>
     var clipboard = new Clipboard('.private');
     var clipboard2 = new Clipboard('.public');
-    clipboard2.on('success', function (e) {
-        alert("复制成功");
-    });
+
     clipboard.on('success', function (e) {
-        alert("复制成功");
+        $(".copy-tips").css("display", "block");
     });
+
+    clipboard2.on('success', function (e) {
+        $(".copy-tips").css("display", "block");
+    });
+   
 </script>
 <script>
     $(function () {
@@ -56,7 +59,6 @@
     function CreatLink() {
         var method = $(".icon-radio-checked").prev("input").val();
         var ShareValidity = $(".choose-checked").attr("value");
-        console.log(ShareValidity);
         if (ShareValidity!=0) {
             $(".share-validity-tip").remove();
         }
@@ -84,9 +86,9 @@
                 $(".share-url").val(window.location.host + "/ShareOne/" + url[0]);
                 if (url[1] != "") {
                     $(".share-password").val(url[1]);
-                    $(".private").attr("data-clipboard-text", " 链接: " + window.location.host + "/ShareOne/" + url[0] + " 密码: " + url[1]);
+                    $(".private").attr("data-clipboard-text", " 链接: " + window.location.host + "/SchoolShare/ShareOne/" + url[0] + " 密码: " + url[1]);
                 } else {
-                    $(".public").attr("data-clipboard-text", " 链接: " + window.location.host + "/ShareOne/" + url[0]);
+                    $(".public").attr("data-clipboard-text", " 链接: " + window.location.host + "/SchoolShare/ShareOne/" + url[0]);
                 }
             }
         }, true);

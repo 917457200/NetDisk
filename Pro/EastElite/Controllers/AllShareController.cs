@@ -30,8 +30,8 @@ namespace EastElite.Controllers
             }
             while( ShareK.Exit( ShareLink ) );
 
-
             ShareK.Add( FileIdS, ShareValidity, Method, ShareLink, ShareLinkKey );
+          
             if( Method == "private" )
             {
                 return ShareLink + "|" + ShareLinkKey;
