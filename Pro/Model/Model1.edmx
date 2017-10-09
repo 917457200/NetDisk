@@ -64,6 +64,7 @@
           <Property Name="ShareLinkKey" Type="nvarchar" MaxLength="6" />
           <Property Name="ShareValidity" Type="int" />
           <Property Name="ShareType" Type="nvarchar" MaxLength="10" />
+          <Property Name="ShareTime" Type="datetime" />
         </EntityType>
         <EntityType Name="UserGroupInfo">
           <Key>
@@ -242,6 +243,7 @@
           <Property Name="ShareLinkKey" Type="String" MaxLength="6" FixedLength="false" Unicode="true" />
           <Property Name="ShareValidity" Type="Int32" />
           <Property Name="ShareType" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="ShareTime" Type="DateTime" Precision="3" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -353,6 +355,7 @@
           <EntitySetMapping Name="ShareLinkInfo">
             <EntityTypeMapping TypeName="NETDISKDBModel.ShareLinkInfo">
               <MappingFragment StoreEntitySet="ShareLinkInfo">
+                <ScalarProperty Name="ShareTime" ColumnName="ShareTime" />
                 <ScalarProperty Name="ShareType" ColumnName="ShareType" />
                 <ScalarProperty Name="ShareValidity" ColumnName="ShareValidity" />
                 <ScalarProperty Name="ShareLinkKey" ColumnName="ShareLinkKey" />
