@@ -173,7 +173,7 @@ ul, li, ol { list-style: outside none none; }
 
     .dialog_two_dimension_code .two_dimension_code_bottom { color: #6c6c6c; font: 12px/1.5 tahoma,arial,宋体; padding-top: 2px; text-align: center; }
 
-#bd { border-bottom: 0 none; margin: 86px 30px 0; min-width: 1180px; position: relative; }
+#bd { border-bottom: 0 none; margin: 86px 30px 0; min-width: 800px; position: relative; }
 .global-clearfix::after, .g-clearfix::after { clear: both; content: "."; display: block; font-size: 0; height: 0; line-height: 0; visibility: hidden; }
 #bd-main { background-color: #fff; border: 1px solid #dfe7f1; border-radius: 5px; }
 #bd-main { width: 100%; }

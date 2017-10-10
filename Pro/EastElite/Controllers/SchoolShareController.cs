@@ -200,7 +200,7 @@ namespace EastElite.Controllers
                     string FileMapPath = "";
                     GetFile.GetFileMapPath( WhereId, ShareTypeId, ref FileMapPath );
                     FileMapPath = ( FileMapPath == "" ? "" : FileMapPath );
-
+                   
                     item.FileUrl = "/Upload/Yun/" + FileMapPath + "/" + Path.GetFileName( item.FileUrl );
 
                     item.FileName = GetFile.FileReNameForExit( item.ParentFileId, U.userCode, item.FileName, 0, ShareTypeId, GroupOrAgencyId );

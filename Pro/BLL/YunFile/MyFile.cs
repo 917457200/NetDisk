@@ -540,13 +540,23 @@ namespace BLL.YunFile
             {
                 Db.YUN_FileInfo.Attach( F );
                 Db.Entry( F ).Property( x => x.IsShare ).IsModified = true;
+                
+                string StrFileId = FileId.ToString();
+                var File = from b in Db.ShareLinkInfo
+                           where b.FileId == StrFileId
+                           orderby b.FileId
+                           select b;
+                Model.ShareLinkInfo FileModel = File.FirstOrDefault();
+                Db.ShareLinkInfo.Remove( FileModel );
                 int rows = Db.SaveChanges();
+
                 if( FileInfo.IsFolder.ToString() == "True" )
                 {
                     string FileIdString = FileId.ToString();
                     var NextFile = from B in Db.YUN_FileInfo
                                    where B.ParentFileId == FileIdString
                                    select B;
+
                     foreach( var item in NextFile.ToList() )
                     {
                         IsShare( item.FileId );
@@ -891,7 +901,7 @@ namespace BLL.YunFile
             }
         }
         /// <summary>
-        /// 向上 获取文件夹名
+        /// 
         /// </summary>
         /// <param name="field"></param>
         /// <param name="Ids"></param>
@@ -1124,7 +1134,16 @@ namespace BLL.YunFile
                 }
                 if( FileModel.IsFolder == true )
                 {
-
+                    string path="";
+                    GetFileMapPathByDel( FileModel.FileId.ToString(), FileModel.ShareTypeId,ref path );
+                    path = HttpContext.Current.Server.MapPath( "/Upload/Yun/" + path );
+                    DeleteFolderFile( path );
+                   
+                    List<Model.YUN_FileInfo> YunFileList = GetFileByDown( "ParentFileId", FileModel.FileId.ToString() );
+                    for( var z = 0; z < YunFileList.Count; z++ )
+                    {
+                        TrueDel( YunFileList[z].FileId );
+                    }
                 }
                 else
                 {
@@ -1195,7 +1214,16 @@ namespace BLL.YunFile
                 }
                 if( FileModel.IsFolder == true )
                 {
+                    string path = "";
+                    GetFileMapPathByDel( FileModel.FileId.ToString(), FileModel.ShareTypeId, ref path );
+                    path = HttpContext.Current.Server.MapPath( "/Upload/Yun/" + path );
+                    DeleteFolderFile( path );
 
+                    List<Model.YUN_FileInfo> YunFileList = GetFileByDown( "ParentFileId", FileModel.FileId.ToString() );
+                    for( var z = 0; z < YunFileList.Count; z++ )
+                    {
+                        TrueDel( YunFileList[z].FileId );
+                    }
                 }
                 else
                 {
