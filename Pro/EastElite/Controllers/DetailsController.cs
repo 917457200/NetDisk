@@ -6,6 +6,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Newtonsoft.Json;
+using Web.Core;
 
 namespace EastElite.Controllers
 {
@@ -22,6 +23,8 @@ namespace EastElite.Controllers
         /// </summary>
         /// <param name="FileId"></param>
         /// <returns></returns>
+        [LoginNeedsFilter( IsCheck = false )]
+      
         public ActionResult Img( int FileId, string ParentFileId )
         {
             Model.YUN_FileInfo FileInfo = GetFile.GetModel( FileId );
@@ -34,7 +37,17 @@ namespace EastElite.Controllers
                 ViewBag.ParentFileName = GetFile.GetFileByUp( "FileId", int.Parse( FileInfo.ParentFileId ) ).FileName;
             }
             ViewBag.ParentFileId = ParentFileId;
-            ViewBag.CreateId = Cookie.GetUserCookie().userCode;
+            BLL.Cookie.TeUser U = Cookie.GetUserCookie();
+            if( U == null )
+            {
+                ViewBag.CreateId = "";
+
+            }
+            else
+            {
+                ViewBag.CreateId = Cookie.GetUserCookie().userCode;
+
+            }
 
             using( Bitmap Bitmap = new Bitmap( Server.MapPath( FileInfo.FileUrl ) ) )
             {
@@ -144,6 +157,7 @@ namespace EastElite.Controllers
         /// Video展示
         /// </summary>
         /// <returns></returns>
+        [LoginNeedsFilter( IsCheck = false )]
         public ActionResult Video( int FileId )
         {
             BLL.VideoConverter Vi = new BLL.VideoConverter();
@@ -158,8 +172,18 @@ namespace EastElite.Controllers
             //转成功后的url
             string url = System.IO.Path.GetDirectoryName( FileInfo.FileUrl ) + "\\" + FileName + ".flv";
 
+            BLL.Cookie.TeUser U = Cookie.GetUserCookie();
+            if( U == null )
+            {
+                ViewBag.CreateId = "";
 
-            ViewBag.CreateId = Cookie.GetUserCookie().userCode;
+            }
+            else
+            {
+                ViewBag.CreateId = Cookie.GetUserCookie().userCode;
+
+            }
+          
 
             if( !BLL.FileHelper.ExitFile( ToFileUrl + ".flv" ) )
             {
@@ -206,11 +230,21 @@ namespace EastElite.Controllers
         /// Mp3展示
         /// </summary>
         /// <returns></returns>
+        [LoginNeedsFilter( IsCheck = false )]        
         public ActionResult Audio( int FileId )
         {
             Model.YUN_FileInfo FileInfo = GetFile.GetModel( FileId );
+            BLL.Cookie.TeUser U = Cookie.GetUserCookie();
+            if( U == null )
+            {
+                ViewBag.CreateId = "";
 
-            ViewBag.CreateId = Cookie.GetUserCookie().userCode;
+            }
+            else
+            {
+                ViewBag.CreateId = Cookie.GetUserCookie().userCode;
+
+            }
             return View( FileInfo );
         }
         /// <summary>

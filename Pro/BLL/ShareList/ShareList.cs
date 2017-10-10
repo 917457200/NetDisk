@@ -29,6 +29,7 @@ namespace BLL.ShareList
                     model.ShareType = Method;
                     model.ShareLink = ShareLink;
                     model.ShareLinkKey = ShareLinkKey;
+                    model.ShareTime = DateTime.Now;
                     Db.ShareLinkInfo.Add( model );
                 }
                 int C = Db.SaveChanges();
@@ -76,13 +77,15 @@ namespace BLL.ShareList
             }
         }
 
-        public Model.ShareLinkInfo GetOneShareLinkInfo( string ShareLink )
+        public Model.ShareLinkInfo GetOneShareLinkInfo( string ShareLink, out int Count )
         {
+           
             using( Model.NETDISKDBEntities Db = new Model.NETDISKDBEntities() )
             {
                 var File = from b in Db.ShareLinkInfo
                            where b.ShareLink == ShareLink
                            select b;
+                Count = File.Count();
                 if( File.Count() > 0 )
                 {
                     return File.FirstOrDefault();

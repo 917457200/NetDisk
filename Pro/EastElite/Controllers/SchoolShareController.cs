@@ -6,8 +6,10 @@ using System.Data;
 using System.Data.Entity.Infrastructure;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Web;
 using System.Web.Mvc;
+using Web.Core;
 
 namespace EastElite.Controllers
 {
@@ -57,28 +59,75 @@ namespace EastElite.Controllers
             return Json( new { model }, JsonRequestBehavior.AllowGet );
         }
 
-
+        [LoginNeedsFilter( IsCheck = false )]
         /// </summary>
         /// <param name="FileId"></param>
         /// <returns></returns>
         public ActionResult ShareOne()
         {
             ViewBag.ShareLink = RouteData.Values["id"].ToString();
-            ViewBag.Te = GetCookie.GetUserCookie();
-            Model.ShareLinkInfo ShareLinkInfo = ShareK.GetOneShareLinkInfo( RouteData.Values["id"].ToString() );
-            Model.YUN_FileInfo File = GetFile.GetModel(int.Parse(ShareLinkInfo.FileId));
-            return View( File );
+            ViewBag.IsKey = false;
+            ViewBag.IsKeyErr = false;
+
+            StringBuilder script = new StringBuilder();
+
+            string Key = GetCookie.GetCookieToString( ViewBag.ShareLink );
+            int Count = 0;
+            Model.ShareLinkInfo ShareLinkInfo = ShareK.GetOneShareLinkInfo( RouteData.Values["id"].ToString(), out Count );
+            if( ShareLinkInfo == null )
+            {
+                script.Append( String.Format( "<script>alert('{0}');</script>", "链接不存在或已取消分享！" ) );
+                return Content( script.ToString(), "Text/html" );
+            }
+            if( ShareLinkInfo.ShareType == "public" )
+            {
+                ViewBag.IsKey = true;
+            }
+            else
+            {
+                if( ShareLinkInfo.ShareLinkKey == Key )
+                {
+                    ViewBag.IsKey = true;
+                }
+                else
+                {
+                    if( string.IsNullOrEmpty( Key ) )
+                    {
+                        ViewBag.IsKeyErr = false;
+                    }
+                    else
+                    {
+                        GetCookie.DelCookeis( ViewBag.ShareLink );
+                        ViewBag.IsKeyErr = true;
+                    }
+                }
+            }
+            Model.YUN_FileInfo File = GetFile.GetModel( int.Parse( ShareLinkInfo.FileId ) );
+            ViewBag.Count = Count;
+            ViewBag.ShareLinkInfo = ShareLinkInfo;
+            DateTime ShiXiao = ShareLinkInfo.ShareTime.Value.AddDays( (double) ShareLinkInfo.ShareValidity );
+            if( ShiXiao > DateTime.Now || ShareLinkInfo.ShareValidity == 0 )
+            {
+                return View( File );
+            }
+            else
+            {
+
+                script.Append( String.Format( "<script>alert('{0}');</script>", "链接已过期" ) );
+                return Content( script.ToString(), "Text/html" );
+            }
         }
         /// <summary>
         /// 获取我的好友分享数据
         /// </summary>
         /// <param name="FileId"></param>
         /// <returns></returns>
+        [LoginNeedsFilter( IsCheck = false )]
         public ActionResult ShareOneLoad( string FileId )
         {
             string ShareLink = RouteData.Values["id"].ToString();
             string FileIdS = ShareK.GetShareLinkInfo( ShareLink );
-            var model = GetFile.MyFriendLoad( FileIdS );
+            var model = GetFile.MyFriendLoad( FileIdS, FileId );
             if( model.Count > 0 )
             {
                 return Json( new { model }, JsonRequestBehavior.AllowGet );
@@ -106,7 +155,7 @@ namespace EastElite.Controllers
         /// <param name="FileIdList">要移动的文件Id集合</param>
         /// <param name="WhereId">目标文件夹</param>
         /// <returns></returns>
-        public string SchoolShareFile( string FileIdList, string WhereId, string ShareTypeId, string GroupOrAgencyId )
+        public string SchoolShareFile( string FileIdList, string WhereId, string ShareTypeId, string GroupOrAgencyId, int? c = 0 )
         {
             if( FileIdList.Contains( "add" ) )
             {
@@ -119,12 +168,17 @@ namespace EastElite.Controllers
             {
                 foreach( var item in YunFileList )
                 {
-                    item.IsShare = true;
-                    item.ShareTime = DateTime.Now;
-                    item.ShareTypeId = ShareTypeId;
-                    DbEntityEntry<Model.YUN_FileInfo> entry = Db.Entry<Model.YUN_FileInfo>( item );
-                    entry.State = System.Data.Entity.EntityState.Modified;
-                    Db.SaveChanges();
+                    if( c == 0 )
+                    {
+                        item.IsShare = true;
+                        item.ShareTime = DateTime.Now;
+                        item.ShareTypeId = ShareTypeId;
+                        DbEntityEntry<Model.YUN_FileInfo> entry = Db.Entry<Model.YUN_FileInfo>( item );
+                        entry.State = System.Data.Entity.EntityState.Modified;
+                        Db.SaveChanges();
+                        c++;
+                    }
+
 
                     item.ParentFileId = WhereId;
                     item.FileState = true;
@@ -178,7 +232,7 @@ namespace EastElite.Controllers
                             List<Model.YUN_FileInfo> DownFileList = GetFile.GetFileByDown( "ParentFileId", OldId.ToString() );
                             for( int i = 0; i < DownFileList.Count; i++ )
                             {
-                                SchoolShareFile( DownFileList[i].FileId.ToString(), item.FileId.ToString(), ShareTypeId, GroupOrAgencyId );
+                                SchoolShareFile( DownFileList[i].FileId.ToString(), item.FileId.ToString(), ShareTypeId, GroupOrAgencyId, c );
                             }
                         }
                     }
@@ -186,5 +240,6 @@ namespace EastElite.Controllers
             }
             return "suc";
         }
+
     }
 }

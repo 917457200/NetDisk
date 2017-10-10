@@ -130,7 +130,7 @@ namespace BLL
 
             if( string.IsNullOrEmpty( UserStr ) )
             {
-                Context.Response.Redirect( "~/Home/Login" );
+                //Context.Response.Redirect( "~/Home/Login" );
                 return null;
             }
             else

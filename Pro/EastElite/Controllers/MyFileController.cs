@@ -128,7 +128,7 @@ namespace EastElite.Controllers
             {
                 wherestr += " AND [CreateId] = '" + U.userCode + "'";
             }
-            var model = GetFile.MyShareOrDelFileLoad( p, pageSize, wherestr, "IsFolder,FileId" ).ToList();
+            var model = GetFile.MyShareOrDelFileLoad( p, pageSize, wherestr, "ShareTime" ).ToList();
             ViewBag.max = GetFile.GetCount( wherestr );
             ViewBag.CreateId = U.userCode;
             return View( model );

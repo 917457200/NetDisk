@@ -22,14 +22,34 @@
             $(".cMEMEF").click(function () {
                 $(this).addClass("wGMtMgb").siblings().removeClass("wGMtMgb");
             })
-            GetManage();
-            setInterval("GetManage()", 30000);
         })
     </script>
 </head>
 <body class="body">
     <input type="hidden" id="HidFileId" value="0" />@*存放父级文件id*@
-    <div class="mainwrapper">
+    <div class="verify-form @(ViewBag.IsKey == true ? "dn" : "")">
+        <form onsubmit="return false" name="accessForm" class="clearfix">
+            <div class="title">
+
+                <span class="verify-property"><strong>@Model.CreateName</strong>给您加密分享了文件</span>
+                <div class="cb"></div>
+            </div>
+            <div class="verify-input ac-close clearfix">
+                <dl class="pickpw clearfix">
+                    <dt>
+                        请输入提取密码：
+                    </dt>
+                    <dd class="clearfix">
+                        <input type="text" name="accessCode" id="accessCode" class="access-code access-fld">
+                        <div id="submitBtn" onclick="SetShareLinkKey()"><a href="javascript:void(0);" class="g-button g-button-blue-large"><span class="g-button-right"><span class="text" style="width: auto;">提取文件</span></span></a></div>
+                    </dd>
+                </dl>
+
+            </div>
+        </form>
+        <div style="display: block;" id="tip"></div>
+    </div>
+    <div class="mainwrapper @(ViewBag.IsKey == true ? "" : "dn")">
         <div class="header" style="height:76px;">
             <div class="headerinner">
                 <div style="float: left; height: 76px; margin-left:20px;">
@@ -41,38 +61,6 @@
                 <ul class="headmenu">
                     <li class="right">
                         <div class="userloggedinfo">
-
-                            <div class="userinfo">
-                                <h5>
-                                    @if( ViewBag.Te != null )
-                                    {
-                                    @ViewBag.Te.userName;
-                                                        string userType = ViewBag.Te.userType;
-                                                        switch( userType )
-                                                        {
-                                                            case "1":
-                                    <small>-教师</small>
-                                                                break;
-                                                            case "2":
-                                    <small>-学生</small>
-                                                                break;
-                                                            case "3":
-                                    <small>-家长</small>
-                                                                break;
-                                                            default:
-                                                                break;
-                                                        }
-                                    }
-                                </h5>
-                                <ul>
-                                    <li>
-                                        <a href="/Messger/List" target="left">站内信<span id="MessgerCount"> </span></a>
-                                    </li>
-                                    <li>
-                                        <a href="/Home/OutLogin">退出登录</a>
-                                    </li>
-                                </ul>
-                            </div>
                         </div>
                     </li>
                 </ul>
@@ -85,7 +73,7 @@
                     <div class="module-share-header" node-type="module">
                         <div class="slide-show-header clearfix">
                             <div class="slide-show-left">
-                                <h2 title="@(Model.FileName)等" class="file-name"><em class="global-icon-16 global-icon-16-multi"></em>@(Model.FileName)等</h2>
+                                <h2 title="@(Model.FileName)@(ViewBag.Count>1?"等":"")" class="file-name"><em class="global-icon-16 global-icon-16-multi"></em>@(Model.FileName)@(ViewBag.Count > 1 ? "等" : "")</h2>
                             </div>
                             <div class="slide-show-right">
                                 <span class="slide-header-funcs">
@@ -96,13 +84,7 @@
 
                                         </div>
                                         <div style="position: absolute; top: 0px; padding-top: 0px; line-height: normal;" class="button-box">
-                                            <a href="javascript:void(0);" data-button-index="1" data-button-id="b1" class="g-button">
-                                                <span class="g-button-right">
-                                                    <em title="取消分享" class="icon icon-share-cancel"></em>
-                                                    <span class="text" style="width: auto;">取消分享</span>
-                                                </span>
-                                            </a>
-                                            <a href="javascript:void(0);" data-button-index="2" data-button-id="b3" class="g-button">
+                                            <a href="javascript:void(0);" onclick="DFBGFlie.Flie.FlieOperation.DownFileMore()" data-button-index="2" data-button-id="b3" class="g-button">
                                                 <span class="g-button-right">
                                                     <em title="下载" class="icon icon-download"></em>
                                                     <span class="text" style="width: auto;">下载</span>
@@ -115,20 +97,23 @@
                             <div class="cb"></div>
                             <div class="slide-show-other-infos">
                                 <div class="share-file-info">
-                                    <span> @Model.ShareTime</span>
+                                    <span>@ViewBag.ShareLinkInfo.ShareTime</span>
                                 </div>
                                 <div class="share-valid-check">
-                                    失效时间：永久有效
+                                    失效时间： @(ViewBag.ShareLinkInfo.ShareValidity == 0 ? "永久有效" : ViewBag.ShareLinkInfo.ShareTime.AddDays( ViewBag.ShareLinkInfo.ShareValidity ))
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div style="padding-left: 10px;">
+                    <div style="margin-bottom: 10px;">
                         <div style="height: 30px; line-height: 30px; padding-left: 10px; position: relative;">
                             @*<span>全部文件</span>*@
                             <span style="float: right; margin-right: 20px;" id="SumUse"></span>
                             <span style="float: right; margin-right: 20px;" id="SumNum"></span>
-                            <ul id="TitleIds" class="historylistmanager-history" style="display:block;"></ul>
+                            <ul style="display:block;" class="historylistmanager-history" id="TitleIds">
+                                <li><a href="#" onclick="window.history.go(-1)">返回上一级</a><span class="historylistmanager-separator">|</span><a href="/SchoolShare/ShareOne/@ViewBag.ShareLink">全部文件</a></li>
+                            </ul>
+
                         </div>
                         <div class="list-view-header FileShowList" style=" width: 100%;">
                             <div class="list-header">
@@ -145,9 +130,9 @@
                             </div>
                         </div>
                         <div style="display: block;" class="list-view-container" id="list-view-container">
-                            <div class="module-list-view" style="overflow-x: hidden; overflow-y: auto;">
+                            <div class="module-list-view" style="overflow-x: hidden; overflow-y: auto; height: 60%; border-bottom: 1px solid #dedede; ">
                                 @*  列表显示*@
-                                <div id="FileShowList" class="list-view FileShowList" style="margin-top: 0px;  height: 45%;">
+                                <div id="FileShowList" class="list-view FileShowList" style="margin-top: 0px; ">
                                 </div>
                             </div>
                         </div>
@@ -167,14 +152,22 @@
     <div class="module"></div>
     <script type="text/javascript">
         $(function () {
+            setCookie("ShowType", "List", "d1");
             var FileId = $.getQueryStringByName("FileId");//如果是文件夹点进来，需获取文件夹的id
 
             var UrlLoad = "/SchoolShare/ShareOneLoad/@ViewBag.ShareLink";
             var Url = "/SchoolShare/ShareOne/@ViewBag.ShareLink?FileId=";
             //调用方法加载网盘数据
-            HY.FlieShare.Flie.MyFileLoad(FileId,UrlLoad, Url);
+            HY.FlieShare.Flie.MyFileLoad(FileId, UrlLoad, Url);
+            if ('@ViewBag.IsKeyErr' == "True") {
+                alert("提取码错误！");
+            }
         })
-
+        function SetShareLinkKey() {
+            var accessCode = $("#accessCode").val();
+            setCookie('@ViewBag.ShareLink', accessCode, "d30");
+            window.location.reload();
+        }
     </script>
 </body>
 

@@ -137,16 +137,21 @@ namespace BLL.YunFile
         /// </summary>
         /// <param name="FileId"></param>
         /// <returns></returns>
-        public List<Model.YUN_FileInfo> MyFriendLoad( string FileIds )
+        public List<Model.YUN_FileInfo> MyFriendLoad( string FileIds, string FileId )
         {
             string wherestr = "";
-            string[] FileId = FileIds.Split( ',' );
-            if( !string.IsNullOrEmpty( FileIds ) )
+            if( FileId!="" )
             {
-                wherestr = " and FileId in (" + FileIds + ")";
+                wherestr = " and ParentFileId = " + FileId;
             }
-
-            wherestr += " AND ShareTypeId ='1004' ";
+            else
+            {
+                if( !string.IsNullOrEmpty( FileIds ) )
+                {
+                    wherestr = " and FileId in (" + FileIds + ")";
+                }
+                wherestr += " AND ShareTypeId ='1004' ";
+            }
             StringBuilder strSql = new StringBuilder();
             strSql.Append( "SELECT * From YUN_FileInfo" );
             strSql.Append( " where FileState=1 " + wherestr + " ORDER BY IsFolder DESC " );
@@ -185,7 +190,7 @@ namespace BLL.YunFile
             StringBuilder strSql = new StringBuilder();
 
             strSql.Append( " SELECT TOP " + pageSize + " *,(SELECT ShareTypeName FROM dbo.ShareInfo WHERE ShareTypeId =A.ShareTypeId) as ShareTypeName From (SELECT ROW_NUMBER() OVER (ORDER BY " + Ord + " desc) AS RowNumber,* FROM YUN_FileInfo where" + wherestr + " ) as A " );
-            strSql.Append( "WHERE  RowNumber > " + startRow + " ORDER BY RowNumber ASC " );
+            strSql.Append( "WHERE  RowNumber > " + startRow + " ORDER BY " + Ord + " desc " );
             using( Model.NETDISKDBEntities Db = new Model.NETDISKDBEntities() )
             {
                 DataSet Dt = SqlQueryForDataTatable1( Db.Database, strSql.ToString() );

@@ -10,6 +10,7 @@ using System.IO.Compression;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Web.Core;
 
 namespace EastElite.Controllers
 {
@@ -229,6 +230,7 @@ namespace EastElite.Controllers
         /// <param name="filePath"></param>
         /// <param name="fileName"></param>
         /// <returns></returns>
+        [LoginNeedsFilter( IsCheck = false )]
         public ActionResult DownFile( string FileId )
         {
             List<Model.YUN_FileInfo> YunFileList = YunFile.GetFileByDown( "FileId", FileId.Trim( ',' ) );
@@ -248,6 +250,7 @@ namespace EastElite.Controllers
         /// <param name="filePath"></param>
         /// <param name="fileName"></param>
         /// <returns></returns>
+        [LoginNeedsFilter( IsCheck = false )]
         public ActionResult DownFileMore( string FileIds )
         {
             if( FileIds.Contains( "add" ) )
@@ -297,8 +300,16 @@ namespace EastElite.Controllers
                 }
             }
             BLL.Cookie.TeUser U = GetCookie.GetUserCookie();
+            string zipUrl = "";
+            if( U == null )
+            {
+                zipUrl = "/Upload/Yun/压缩.zip";
+            }
+            else
+            {
+                zipUrl = "/Upload/Yun/" + U.userCode + "/压缩.zip";
+            }
 
-            string zipUrl = "/Upload/Yun/" + U.userCode + "/压缩.zip";
             string fileName = "下载文件压缩包.zip";
 
 
@@ -350,7 +361,7 @@ namespace EastElite.Controllers
                 string[] array = FileIds.Split( ',' );
                 for( var i = 0; i < array.Length; i++ )
                 {
-                    IsShareMethods(  array[i] );
+                    IsShareMethods( array[i] );
                     if( YunFile.Delete( Convert.ToInt32( array[i] ) ) )
                     {
                         result = "suc";
@@ -495,11 +506,11 @@ namespace EastElite.Controllers
                 Model.YUN_FileInfo YunFileList = YunFile.GetFileByUp( "FileId", int.Parse( parentFileId ) );
                 if( YunFileList != null )
                 {
-                    str += "<a href=\"" +Url+ YunFileList.ParentFileId + "\" >返回上一级</a>";
+                    str += "<a href=\"" + Url + YunFileList.ParentFileId + "\" >返回上一级</a>";
                 }
             }
             str += "<span class=\"historylistmanager-separator\">|</span>";
-            str += "<a href=\"" + Url+ "\"  href=\"#\">全部文件</a>";
+            str += "<a href=\"" + Url + "\"  href=\"#\">全部文件</a>";
             str += "</li>";
             return str + FileOnClick( parentFileId, true );
 
@@ -550,11 +561,11 @@ namespace EastElite.Controllers
             BLL.Cookie.TeUser U = GetCookie.GetUserCookie();
             Model.YUN_FileInfo Model = YunFile.GetModel( FileId );
 
-            if( YunFile.FileIsExit( Name,FileId, Model.ParentFileId, U.userCode ) )
+            if( YunFile.FileIsExit( Name, FileId, Model.ParentFileId, U.userCode ) )
             {
-                if( (bool)Model.IsFolder )
+                if( (bool) Model.IsFolder )
                 {
-                     Name = Name + "(1)";
+                    Name = Name + "(1)";
                 }
                 else
                 {
@@ -701,6 +712,8 @@ namespace EastElite.Controllers
             }
         }
         //大图像变小加载
+        [LoginNeedsFilter( IsCheck = false )]
+
         public FileContentResult ImgLow( int FileId, int W, int H )
         {
             Model.YUN_FileInfo FileInfo = YunFile.GetModel( FileId );
@@ -923,6 +936,8 @@ namespace EastElite.Controllers
             return result;
         }
     }
+
+    [LoginNeedsFilter( IsCheck = false )]
     public class FileResult : ActionResult
     {
         /// <summary>
@@ -930,12 +945,13 @@ namespace EastElite.Controllers
         /// </summary>
         private readonly string _filePath;//文件路径
         private readonly string _fileName;//文件名称
+        [LoginNeedsFilter( IsCheck = false )]
         public FileResult( string filePath, string fileName )
         {
             _filePath = filePath;
             _fileName = fileName;
         }
-
+        [LoginNeedsFilter( IsCheck = false )]
         public override void ExecuteResult( ControllerContext context )
         {
             string fileName = _fileName;
