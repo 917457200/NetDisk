@@ -1,4 +1,5 @@
-﻿/// <reference path="../ZeroClipboard.js" />
+﻿/// <reference path="../WEB/WebJs.js" />
+/// <reference path="../ZeroClipboard.js" />
 var ReNameFileId = "";//存储要重命名的文件id
 
 var DFBGFlie = { Flie: {} }
@@ -54,6 +55,7 @@ DFBGFlie.Flie.FlieOperation = {
     },
     //分享提示框
     ShareTransfer: function () {
+        parent.$("#popup_container2").html('');
         var _base = DFBGFlie.Flie.FlieOperation;
         var FileId = arguments.length > 0 ? arguments[0] : "";
         var ShareType = arguments.length > 1 ? arguments[1] : "";//非空返回列表页
@@ -348,17 +350,19 @@ DFBGFlie.Flie.FlieOperation = {
             Name = "新建文件夹";
         }
         var Share = $("#Share").val();
-        if (Share != undefined) {
-            Share == "1001";
-        } else {
+        var GroupOrAgencyId = $("#GroupOrAgencyId").val();
+        if (Share == undefined) {
             Share = "";
-        }
+        } 
+        if (GroupOrAgencyId == undefined) {
+            GroupOrAgencyId == "";
+        } 
         $("#" + spanId + "").html(Name);
         $("#" + inputId + "").remove();
 
         //将新建的文件夹保存到库中
         var ParentFileId = $("#HidFileId").val();//获取父级文件夹id
-        DFBGFlie.Flie.FlieOperation.AjaxHtml("/MyFile/AddFile", { ParentFileId: ParentFileId, FileName: Name, Share: Share }, function (data) {
+        DFBGFlie.Flie.FlieOperation.AjaxHtml("/MyFile/AddFile", { ParentFileId: ParentFileId, FileName: Name, Share: Share, GroupOrAgencyId: GroupOrAgencyId }, function (data) {
             if (data.indexOf("Suc") > -1) {
                 window.location.reload();
             } else if (data == "FileNameIsHas") {
@@ -613,11 +617,19 @@ DFBGFlie.Flie.FlieOperation = {
             $("._disk_id_3").click(function () {
                 $(this).parent().parent().parent().parent("li").remove();
             });
+            var Share = window.frames["left"].$("#Share").val();
+            var GroupOrAgencyId = window.frames["left"].$("#GroupOrAgencyId").val();
+            if (Share == undefined) {
+                Share = "";
+            }
+            if (GroupOrAgencyId == undefined) {
+                GroupOrAgencyId == "";
+            }
             $("._disk_id_2").click(function () {
                 var Name = $("._disk_id_4").val();
                 var pId = $(this).attr("pId");
                 if (Name.trim() != "") {
-                    DFBGFlie.Flie.FlieOperation.AjaxHtml("/MyFile/AddFile", { ParentFileId: pId, FileName: Name }, function (data) {
+                    DFBGFlie.Flie.FlieOperation.AjaxHtml("/MyFile/AddFile", { ParentFileId: pId, FileName: Name, Share: Share, GroupOrAgencyId: GroupOrAgencyId }, function (data) {
                         if (data.indexOf("Suc") > -1) {
                             $("._disk_id_4").parent().removeClass("plus-create-folder").addClass("treeview-txt").html(Name).attr("treeview", data.replace("Suc", ""));
                             $("#plus-createFolder").removeAttr("id");

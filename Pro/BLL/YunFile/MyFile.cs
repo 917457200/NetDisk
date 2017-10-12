@@ -92,7 +92,7 @@ namespace BLL.YunFile
             {
                 wherestr = " and ParentFileId='" + FileId + "'";
             }
-            wherestr += " AND ShareTypeId ='1002' and CreateUnitCode='" + UnitCode + "' and CreateId='User'";
+            wherestr += " AND ShareTypeId ='1002' and CreateUnitCode='" + UnitCode + "' and (CreateId = 'User'OR CreateId = 'Admin')";
             StringBuilder strSql = new StringBuilder();
             strSql.Append( "SELECT * From YUN_FileInfo" );
             strSql.Append( " where FileState=1 " + wherestr + " ORDER BY IsFolder DESC " );
@@ -120,7 +120,7 @@ namespace BLL.YunFile
             {
                 wherestr = " and ParentFileId='" + FileId + "'";
             }
-            wherestr += " AND ShareTypeId ='1003' and ShareGroupId='" + GroupId + "' and CreateId='User'";
+            wherestr += " AND ShareTypeId ='1003' and ShareGroupId='" + GroupId + "' and (CreateId = 'User'OR CreateId = 'Admin')";
             StringBuilder strSql = new StringBuilder();
             strSql.Append( "SELECT * From YUN_FileInfo" );
             strSql.Append( " where FileState=1 " + wherestr + " ORDER BY IsFolder DESC " );
@@ -390,14 +390,14 @@ namespace BLL.YunFile
                     strSql.Append( string.Format( "WHERE ShareTypeId='1001' and IsFolder = 1 AND FileState = 1 AND ParentFileId = '{0}'and( CreateId='User' or CreateId='Admin')", ParentFileId ) );
                     break;
                 case "1002":
-                    strSql.Append( " *,(SELECT COUNT(*) FROM dbo.YUN_FileInfo WHERE  ShareTypeId ='1002' and CreateId='User' and CreateUnitCode='" + GroupOrAgencyId + "' )as IsChildFolder" );
+                    strSql.Append( " *,(SELECT COUNT(*) FROM dbo.YUN_FileInfo WHERE  ShareTypeId ='1002' and ( CreateId='User' or CreateId='Admin') and CreateUnitCode='" + GroupOrAgencyId + "' )as IsChildFolder" );
                     strSql.Append( " FROM dbo.YUN_FileInfo AS A " );
-                    strSql.Append( string.Format( "WHERE  ShareTypeId ='1002' and IsFolder = 1 AND FileState = 1 and CreateId='User' AND ParentFileId = '{0}' and CreateUnitCode='" + GroupOrAgencyId + "'", ParentFileId ) );
+                    strSql.Append( string.Format( "WHERE  ShareTypeId ='1002' and IsFolder = 1 AND FileState = 1 and ( CreateId='User' or CreateId='Admin') AND ParentFileId = '{0}' and CreateUnitCode='" + GroupOrAgencyId + "'", ParentFileId ) );
                     break;
                 case "1003":
-                    strSql.Append( " *,(SELECT COUNT(*) FROM dbo.YUN_FileInfo WHERE  ShareTypeId ='1003' and CreateId='User' and ShareGroupId='" + GroupOrAgencyId + "' )as IsChildFolder" );
+                    strSql.Append( " *,(SELECT COUNT(*) FROM dbo.YUN_FileInfo WHERE  ShareTypeId ='1003' and ( CreateId='User' or CreateId='Admin') and ShareGroupId='" + GroupOrAgencyId + "' )as IsChildFolder" );
                     strSql.Append( " FROM dbo.YUN_FileInfo AS A " );
-                    strSql.Append( string.Format( "WHERE  ShareTypeId ='1003' and IsFolder = 1 AND FileState = 1 and CreateId='User' AND ParentFileId = '{0}' and ShareGroupId='" + GroupOrAgencyId + "'", ParentFileId ) );
+                    strSql.Append( string.Format( "WHERE  ShareTypeId ='1003' and IsFolder = 1 AND FileState = 1 and ( CreateId='User' or CreateId='Admin') AND ParentFileId = '{0}' and ShareGroupId='" + GroupOrAgencyId + "'", ParentFileId ) );
                     break;
                 default:
                     strSql.Append( string.Format( " *,(SELECT COUNT(*) FROM dbo.YUN_FileInfo WHERE  CreateId = '{0}' AND IsFolder = 1 AND FileState = 1 AND ParentFileId = A.FileId  )as IsChildFolder", CreateId ) );
@@ -547,7 +547,10 @@ namespace BLL.YunFile
                            orderby b.FileId
                            select b;
                 Model.ShareLinkInfo FileModel = File.FirstOrDefault();
-                Db.ShareLinkInfo.Remove( FileModel );
+                if( FileModel!=null )
+                {
+                    Db.ShareLinkInfo.Remove( FileModel );
+                }
                 int rows = Db.SaveChanges();
 
                 if( FileInfo.IsFolder.ToString() == "True" )
@@ -743,7 +746,7 @@ namespace BLL.YunFile
         /// </summary>
         /// <param name="FileId"></param>
         /// <returns></returns>
-        public string FileExit( string ParentFileId, string CreateId, string FileName, string Share )
+        public string FileExit( string ParentFileId, string CreateId, string FileName, string Share, string GroupOrAgencyId )
         {
             using( Model.NETDISKDBEntities Db = new Model.NETDISKDBEntities() )
             {
@@ -753,7 +756,7 @@ namespace BLL.YunFile
                            select b;
                 if( File.Count() > 0 )
                 {
-                    return FileReNameForExit( ParentFileId, CreateId, FileName, 0, Share, "" );
+                    return FileReNameForExit( ParentFileId, CreateId, FileName, 0, Share, GroupOrAgencyId );
                 }
                 else
                 {
@@ -802,7 +805,7 @@ namespace BLL.YunFile
 
                     case "1002":
                         var File2 = from b in Db.YUN_FileInfo
-                                    where b.FileName == Name && b.ParentFileId == ParentFileId && b.CreateId == "User" && b.FileState == true && b.ShareTypeId == "1002" && b.CreateUnitCode == GroupOrAgencyId
+                                    where b.FileName == Name && b.ParentFileId == ParentFileId && ( b.CreateId == "User" || b.CreateId == "Admin" ) && b.FileState == true && b.ShareTypeId == "1002" && b.CreateUnitCode == GroupOrAgencyId
                                     orderby b.FileId
                                     select b;
                         if( File2.Count() > 0 )
@@ -827,7 +830,7 @@ namespace BLL.YunFile
                         }
                     case "1003":
                         var File3 = from b in Db.YUN_FileInfo
-                                    where b.FileName == Name && b.ParentFileId == ParentFileId && b.CreateId == "User" && b.FileState == true && b.ShareTypeId == "1003" && b.ShareGroupId == GroupOrAgencyId
+                                    where b.FileName == Name && b.ParentFileId == ParentFileId && ( b.CreateId == "User" || b.CreateId == "Admin" ) && b.FileState == true && b.ShareTypeId == "1003" && b.ShareGroupId == GroupOrAgencyId
                                     orderby b.FileId
                                     select b;
                         if( File3.Count() > 0 )

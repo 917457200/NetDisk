@@ -187,12 +187,21 @@ namespace EastElite.Controllers
         public ActionResult Share()
         {
             string UserCode = GetCookie.GetUserCookie().userCode;
+            ViewBag.UserCode = UserCode;
             ViewBag.List = Group.GetAllGroupList( UserCode );
             return View();
         }
         public ActionResult UserShare( int GroupId )
         {
             var model = Group.GetGroupInfoModel( GroupId );
+            bool Admin = false;
+            string UserCode = GetCookie.GetUserCookie().userCode;
+
+            if( UserCode == model.CreateUserId )
+            {
+                Admin = true;
+            }
+            ViewBag.Admin = Admin;
             return View( model );
         }
         BLL.YunFile.MyFile GetFile = new BLL.YunFile.MyFile();

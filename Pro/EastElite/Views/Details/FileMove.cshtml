@@ -6,12 +6,15 @@
 <script type="text/javascript">
     $(function () {
         var Share = window.frames["left"].$("#Share").val();
-        if (Share != undefined) {
-            Share = true;
-        } else {
-            Share =false;
+        var GroupOrAgencyId = window.frames["left"].$("#GroupOrAgencyId").val();
+
+        if (Share== undefined) {
+            Share = "";
         }
-        DFBGFlie.Flie.FlieOperation.Move("", $(".treeview-node"), 0, Share);
+        if (GroupOrAgencyId == undefined) {
+            GroupOrAgencyId == "";
+        }
+        DFBGFlie.Flie.FlieOperation.Move("", $(".treeview-node"), 0, Share, GroupOrAgencyId);
     })
 </script>
 <div id="fileTreeDialog" _movetype="@ViewBag.MoveType" class="dialog dialog-fileTreeDialog dialog-gray" style="width: 520px;display: block; ">

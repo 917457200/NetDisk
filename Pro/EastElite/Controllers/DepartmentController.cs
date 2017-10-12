@@ -13,7 +13,27 @@ namespace EastElite.Controllers
         // GET: /Department/
         public ActionResult Index()
         {
+            using( Model.NETDISKDBEntities Db = new Model.NETDISKDBEntities() )
+            {
+            BLL.Cookie.TeUser U = GetCookie.GetUserCookie();
+                var UserRole = from b in Db.UserRoleInfo
+                               where b.UserId == U.userCode
+                               select b;
+                Model.UserRoleInfo User = UserRole.FirstOrDefault();
+
+                if( User != null && (User.RoleId == "2" || User.RoleId == "1") )
+                {
+                    ViewBag.unitCode = U.unitCode;
+
+                    ViewBag.Admin = true;
+                }
+                else
+                {
+                    ViewBag.Admin = false;
+                }
+            }
             return View();
+
         }
         /// <summary>
         /// 获取部门分享

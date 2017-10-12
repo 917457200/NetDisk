@@ -1,6 +1,6 @@
 ﻿@{
     ViewBag.Title = "ShareList";
-    Layout = "~/Views/Shared/Mp.cshtml";
+    Layout = null;
 
 }
 <link href="~/Content/Css/ShareList.css" rel="stylesheet" />
@@ -42,8 +42,12 @@
             var datalist = data.AgencyList;
             var AgencyList = $("#AgencyList")
             for (var i = 0; i < datalist.length; i++) {
-
-                AgencyList.append("  <option value=\"" + datalist[i].AgencyCode + "\">" + datalist[i].RootName + "-" + datalist[i].AgencyName + "</option>");
+                if (datalist[i].AgencyCode=='@ViewBag.unitCode') {
+                    AgencyList.append("  <option value=\"" + datalist[i].AgencyCode + "\"  selected=\"selected\">" + datalist[i].RootName + "-" + datalist[i].AgencyName + "(我的部门)</option>");
+                } else {
+                    AgencyList.append("  <option value=\"" + datalist[i].AgencyCode + "\">" + datalist[i].RootName + "-" + datalist[i].AgencyName + "</option>");
+                }
+               
             }
         }, true);
         DFBGFlie.Flie.FlieOperation.UserGroupShare('@ViewBag.FileId', '1003');

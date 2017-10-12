@@ -53,7 +53,7 @@ namespace EastElite.Controllers
         /// <param name="FileName"></param>
         /// <returns></returns>
         [LoginNeedsFilter( IsCheck = false )]
-        public string AddFile( string ParentFileId, string FileName, string Share )
+        public string AddFile( string ParentFileId, string FileName, string Share, string GroupOrAgencyId )
         {
             string result = "";
             BLL.Cookie.TeUser U = GetCookie.GetUserCookie();
@@ -69,7 +69,7 @@ namespace EastElite.Controllers
                 {
                     CreateId = U.userCode;
                 }
-                string Exit = GetFile.FileExit( ParentFileId, CreateId, FileName, Share );
+                string Exit = GetFile.FileExit( ParentFileId, CreateId, FileName, Share, GroupOrAgencyId );
                 
                 Model.YUN_FileInfo model = new Model.YUN_FileInfo();
                 if( !string.IsNullOrEmpty( Exit ) )
@@ -96,6 +96,14 @@ namespace EastElite.Controllers
                 {
                     model.IsShare = true;
                     model.ShareTime = DateTime.Now;
+                    if(  model.ShareTypeId =="1003" )
+                    {
+                        model.ShareGroupId = GroupOrAgencyId;
+                    }
+                    if( model.ShareTypeId == "1002" )
+                    {
+                        model.CreateUnitCode = GroupOrAgencyId;
+                    }
                 }
                 Db.YUN_FileInfo.Add( model );
                 int count = Db.SaveChanges();

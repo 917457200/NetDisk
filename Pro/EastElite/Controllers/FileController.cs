@@ -147,6 +147,9 @@ namespace EastElite.Controllers
                         case "1002":
                             url = VIR_PATH + "/Department";
                             break;
+                        case "1003":
+                            url = VIR_PATH + "/Group";
+                            break;
                         default:
                             url = VIR_PATH + "/" + U.userCode;
                             break;
@@ -208,6 +211,14 @@ namespace EastElite.Controllers
                                 model.IsShare = true;
                                 model.ShareTime = DateTime.Now;
                                 model.CreateId = "Admin";
+                                if( model.ShareTypeId == "1003" )
+                                {
+                                    model.ShareGroupId = fileAddresses[i].ShareGroupId;
+                                }
+                                if( model.ShareTypeId == "1002" )
+                                {
+                                    model.CreateUnitCode = fileAddresses[i].ShareGroupId;
+                                }
                             }
                             Db.YUN_FileInfo.Add( model );
                         }

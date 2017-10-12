@@ -30,9 +30,13 @@
             var parentId = $("#HidFileId", parent.document.body).val();
             var Share = $("#Share", parent.document.body).val();
             if (Share != undefined) {
-                Share = "1001";
+                Share = Share;
             } else {
                 Share = "";
+            }
+            var GroupOrAgencyId = $("#GroupOrAgencyId", parent.document.body).val();
+            if (GroupOrAgencyId == undefined) {
+                GroupOrAgencyId == "";
             }
             // Setup html5 version
             $("#uploader").pluploadQueue({
@@ -89,7 +93,8 @@
                                 FileName: filename,
                                 //Size:file.Size
                                 FileSizeKb: parseFloat(file.size / 1024).toFixed(2),
-                                ShareTypeId: Share
+                                ShareTypeId: Share,
+                                ShareGroupId: GroupOrAgencyId
                             });
                             if (up.total.queued == 0) {
                                 //判断文件大小是否超过个人空间大小，超过则不让上传

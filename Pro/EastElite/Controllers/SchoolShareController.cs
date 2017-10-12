@@ -42,8 +42,9 @@ namespace EastElite.Controllers
                 {
                     ViewBag.Admin = false;
                 }
-                return View();
             }
+            return View();
+
         }
         /// <summary>
         /// 获取学校分享

@@ -47,7 +47,7 @@ namespace EastElite.Controllers
                 if( User == null )
                 {
                     User = new Model.UserRoleInfo();
-                    User.RoleId = "2";
+                    User.RoleId = "3";
                     User.DiskSize = 500;
                     User.UserId = UserId;
                     ViewBag.Exsit = 0;

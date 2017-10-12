@@ -9,10 +9,14 @@ namespace EastElite.Controllers
     public class AllShareController : Controller
     {
         BLL.ShareList.ShareList ShareK = new BLL.ShareList.ShareList();
+        BLL.Cookie GetCookie = new BLL.Cookie();
+
         // GET: /AllShare/
         public ActionResult ShareList( string FileId, string ShareType )
         {
             ViewBag.FileId = FileId;
+            BLL.Cookie.TeUser U = GetCookie.GetUserCookie();
+            ViewBag.unitCode = U.unitCode;
             ViewBag.ShareType = ShareType;
             return View();
         }

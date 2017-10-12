@@ -11,7 +11,14 @@
     <div style="padding: 10px 0px 0px 10px; overflow:hidden;">
         @foreach( var item in ViewBag.List )
         {
-            <a href="/UserGroup/UserShare?GroupId=@item.GroupId"><span class="GroupShare">@item.GroupName</span></a>
+            if( ViewBag.UserCode == item.CreateUserId )
+            {
+                <a href="/UserGroup/UserShare?GroupId=@item.GroupId"><span class="GroupShare">@item.GroupName (创建者)</span></a>
+            }
+            else
+            {
+                <a href="/UserGroup/UserShare?GroupId=@item.GroupId"><span class="GroupShare">@item.GroupName</span></a>
+            }
         }
     </div>
 </body>
