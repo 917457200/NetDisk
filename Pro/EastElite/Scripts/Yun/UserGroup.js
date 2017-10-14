@@ -65,7 +65,7 @@ function Add() {
 function delGroupUser(obj) {
     UserCodes2 = $("#UserHid").val();
     var UserCode = $(obj).parent().attr("id").replace("UserSe", "") + "|" + $(obj).parent().text().trim();
-    alert(UserCode);
+   
     if (UserCodes2.indexOf(UserCode) > -1) {
         if (UserCodes2.indexOf(UserCode) == 0 && UserCodes2.indexOf(",") > 0) {
             $('#UserHid').val(UserCodes2.replace(UserCode + ",", ""));

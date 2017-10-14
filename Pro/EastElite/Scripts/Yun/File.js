@@ -377,7 +377,6 @@ DFBGFlie.Flie.FlieOperation = {
     //重命名确定按钮
     OnReName: function (FileId) {
         var name = $("#ReNameInfo").val();
-
         if (name.trim() == "") {
             alert("请输入文件夹名称");
             $("#ReNameInfo").focus();
@@ -919,6 +918,8 @@ function ReNameMethod(FileId, hidId, OldName) {
     Str += "</div>";
     parent.$("#popup_container").append(Str);
     $.dingwei('popup_container', 'popup_overlay', 'parent');
+    var obj = parent.$("#ReNameInfo");
+    obj.focus().select();
 }
 
 function SiShareUrl(FileId) {

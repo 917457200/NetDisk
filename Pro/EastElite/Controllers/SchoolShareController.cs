@@ -177,7 +177,6 @@ namespace EastElite.Controllers
                         DbEntityEntry<Model.YUN_FileInfo> entry = Db.Entry<Model.YUN_FileInfo>( item );
                         entry.State = System.Data.Entity.EntityState.Modified;
                         Db.SaveChanges();
-                        c++;
                     }
 
 
@@ -233,7 +232,7 @@ namespace EastElite.Controllers
                             List<Model.YUN_FileInfo> DownFileList = GetFile.GetFileByDown( "ParentFileId", OldId.ToString() );
                             for( int i = 0; i < DownFileList.Count; i++ )
                             {
-                                SchoolShareFile( DownFileList[i].FileId.ToString(), item.FileId.ToString(), ShareTypeId, GroupOrAgencyId, c );
+                                SchoolShareFile( DownFileList[i].FileId.ToString(), item.FileId.ToString(), ShareTypeId, GroupOrAgencyId, 1 );
                             }
                         }
                     }
