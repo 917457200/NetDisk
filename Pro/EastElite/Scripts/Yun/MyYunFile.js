@@ -95,7 +95,7 @@ DFBG.FlieOA.Flie = {
                             var model = data[i];
 
                             htmlInfo += "<li id=\"add" + model.FileId + "\" class=\"grid-view-item open-enable\" style=\"display: block;\">";
-                            htmlInfo += " <div class=\"FileShow\">";
+                            htmlInfo += " <div class=\"FileShow\" title=\"" + model.FileName + "\" >";
 
                             //****图标***
                             //判断是否是文件夹，如果是文件夹连接为打开文件夹，如果不是文件夹，连接为下载连接
@@ -185,11 +185,11 @@ DFBG.FlieOA.Flie = {
                             htmlInfo += "</div>";
 
 
-                            if (model.FileName.length > 5) {
-                                htmlInfo += "<div class=\"file-name\"><span title=\"" + model.FileName + "\" class=\"filename\">" + model.FileName.substr(0, 5) + "..." + model.FileExtName + "</span></div> ";
+                            if (model.FileName.length > 6) {
+                                htmlInfo += "<div class=\"file-name\"><span title=\"" + model.FileName + "\" class=\"filename\">" + model.FileName.substring(0, 6) + "...</span></div> ";
                             }
                             else {
-                                htmlInfo += "<div class=\"file-name\"><span title=\"" + model.FileName + "\" href=\"javascript:void(0);\" class=\"filename\">" + model.FileName + "</span></div>";
+                                htmlInfo += "<div class=\"file-name\"><span title=\"" + model.FileName + "\" href=\"javascript:void(0);\" class=\"filename\">" + model.FileName + model.FileExtName + "</span></div>";
                             }
                             htmlInfo += "</li>";
 
@@ -519,8 +519,8 @@ DFBG.FlieOA.Flie = {
                           htmlInfo += "</div>";
 
 
-                          if (model.FileName.length > 5) {
-                              htmlInfo += "<div class=\"file-name\"><span title=\"" + model.FileName + "\" class=\"filename\">" + model.FileName.substr(0, 5) + "..." + model.FileExtName + "</span></div> ";
+                          if (model.FileName.length > 6) {
+                              htmlInfo += "<div class=\"file-name\"><span title=\"" + model.FileName + "\" class=\"filename\">" + model.FileName.substring(0, 6) + "..." + model.FileExtName + "</span></div> ";
                           }
                           else {
                               htmlInfo += "<div class=\"file-name\"><span title=\"" + model.FileName + "\" href=\"javascript:void(0);\" class=\"filename\">" + model.FileName + "</span></div>";

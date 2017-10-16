@@ -5,6 +5,7 @@
     var _this = $(this);
 
     _this.on('mousedown', function (e) {
+
         _this.find('a').removeClass('item-active');
         var startTop = e.pageY;
         var startLeft = e.pageX;
@@ -116,7 +117,6 @@ function showTime(YearS, Moth) {
             }
             obj.html(Html);
             $(".operate-select-box").click(function (e) {
-
                 $(this).parent().css("display", "none");
                 $(".item-active").removeClass("item-active");
             })
@@ -143,7 +143,7 @@ function showTime(YearS, Moth) {
                     $(this).next().css("display", "none");
                 }
             })
-            $('body').Select();
+            $('.empty-time').Select();
             $("img").load(function () {
                 //图片默认隐藏
                 $(this).hide();
