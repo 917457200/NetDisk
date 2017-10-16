@@ -316,3 +316,30 @@ function Laryer(Name, FunName) {
     container.append(kuan);
     $.dingwei('popup_container', 'popup_overlay', 'parent');
 }
+//打开文件上传窗口
+var _layerIndex;
+function showLayer(FileId, Share, GroupOrAgencyId) {
+    _layerIndex = $.layer({
+        type: 2,
+        maxmin: true,
+        title: '文件上传',
+        area: ['700px', '415px'],
+        fix: true,
+        border: [2, 0.3, '#000'],
+        iframe: {
+            src: '/File/Upload?parentId=' + FileId + '&Share=' + Share + '&GroupOrAgencyId=' + GroupOrAgencyId,
+            scrolling: 'auto'
+        },
+        close: function (index) {
+            layer.close(_layerIndex);
+        }
+    });
+    //注册关闭方法
+    if (!window.closeUpPageHandler) {
+        window.closeUpPageHandler = function (files) {
+            setTimeout(function () {
+                layer.close(_layerIndex);
+            }, 100);
+        }
+    }
+}

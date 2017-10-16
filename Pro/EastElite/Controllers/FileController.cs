@@ -21,8 +21,12 @@ namespace EastElite.Controllers
 
         public static string VIR_PATH = "/Upload/Yun";
 
-        public ActionResult Upload()
+        public ActionResult Upload(string parentId,string Share,string GroupOrAgencyId)
         {
+            ViewBag.parentId = parentId;
+            ViewBag.Share = Share;
+            ViewBag.GroupOrAgencyId = GroupOrAgencyId;
+
             return View();
         }
 

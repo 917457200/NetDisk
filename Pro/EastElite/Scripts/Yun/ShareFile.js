@@ -179,8 +179,8 @@ DFBGShare.FlieShare.Flie = {
                             htmlInfo += "</div>";
 
 
-                            if (model.FileName.length > 10) {
-                                htmlInfo += "<div class=\"file-name\"><span title=\"" + model.FileName + "\" class=\"filename\">" + model.FileName.substr(0, 6) + "..." + model.FileExtName + "</span></div> ";
+                            if (model.FileName.length > 5) {
+                                htmlInfo += "<div class=\"file-name\"><span title=\"" + model.FileName + "\" class=\"filename\">" + model.FileName.substr(0, 5) + "..." + model.FileExtName + "</span></div> ";
                             }
                             else {
                                 htmlInfo += "<div class=\"file-name\"><span title=\"" + model.FileName + "\" href=\"javascript:void(0);\" class=\"filename\">" + model.FileName + "</span></div>";

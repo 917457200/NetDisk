@@ -27,17 +27,9 @@
 
         $(function () {
             var Up = true;
-            var parentId = $("#HidFileId", parent.document.body).val();
-            var Share = $("#Share", parent.document.body).val();
-            if (Share != undefined) {
-                Share = Share;
-            } else {
-                Share = "";
-            }
-            var GroupOrAgencyId = $("#GroupOrAgencyId", parent.document.body).val();
-            if (GroupOrAgencyId == undefined) {
-                GroupOrAgencyId == "";
-            }
+            var parentId ='@ViewBag.parentId';
+            var Share = '@ViewBag.Share';
+            var GroupOrAgencyId = '@ViewBag.GroupOrAgencyId';
             // Setup html5 version
             $("#uploader").pluploadQueue({
                 // General settings
@@ -112,8 +104,10 @@
                                         success: function (data) {
                                             if (data.s) {
                                                 alert("上传成功！");
+                                                close();
                                                 //刷新页面
-                                                parent.window.location.reload();
+                                                parent.window.frames["left"].location.reload();
+
                                             } else {
                                                 close();
                                                 alert("上传失败，请重新上传！\n" + data.msg)

@@ -3,33 +3,7 @@ var DFBG = { FlieOA: {} }
 var maxListnum = 0, maxGridnum=0;
 var SumListNum = 0;
 var SumGridNum = 0;
-//打开文件上传窗口
-var _layerIndex;
-function showLayer() {
-    _layerIndex = $.layer({
-        type: 2,
-        maxmin: true,
-        title: '文件上传',
-        area: ['700px', '415px'],
-        fix: true,
-        border: [2, 0.3, '#000'],
-        iframe: {
-            src: '/File/Upload',
-            scrolling: 'auto'
-        },
-        close: function (index) {
-            layer.close(_layerIndex);
-        }
-    });
-    //注册关闭方法
-    if (!window.closeUpPageHandler) {
-        window.closeUpPageHandler = function (files) {
-            setTimeout(function () {
-                layer.close(_layerIndex);
-            }, 100);
-        }
-    }
-}
+
 var OptionFile = (function (opt) {
     var o = {
         length: 0
@@ -211,8 +185,8 @@ DFBG.FlieOA.Flie = {
                             htmlInfo += "</div>";
 
 
-                            if (model.FileName.length > 10) {
-                                htmlInfo += "<div class=\"file-name\"><span title=\"" + model.FileName + "\" class=\"filename\">" + model.FileName.substr(0, 6) + "..." + model.FileExtName + "</span></div> ";
+                            if (model.FileName.length > 5) {
+                                htmlInfo += "<div class=\"file-name\"><span title=\"" + model.FileName + "\" class=\"filename\">" + model.FileName.substr(0, 5) + "..." + model.FileExtName + "</span></div> ";
                             }
                             else {
                                 htmlInfo += "<div class=\"file-name\"><span title=\"" + model.FileName + "\" href=\"javascript:void(0);\" class=\"filename\">" + model.FileName + "</span></div>";
@@ -545,8 +519,8 @@ DFBG.FlieOA.Flie = {
                           htmlInfo += "</div>";
 
 
-                          if (model.FileName.length > 10) {
-                              htmlInfo += "<div class=\"file-name\"><span title=\"" + model.FileName + "\" class=\"filename\">" + model.FileName.substr(0, 6) + "..." + model.FileExtName + "</span></div> ";
+                          if (model.FileName.length > 5) {
+                              htmlInfo += "<div class=\"file-name\"><span title=\"" + model.FileName + "\" class=\"filename\">" + model.FileName.substr(0, 5) + "..." + model.FileExtName + "</span></div> ";
                           }
                           else {
                               htmlInfo += "<div class=\"file-name\"><span title=\"" + model.FileName + "\" href=\"javascript:void(0);\" class=\"filename\">" + model.FileName + "</span></div>";
@@ -856,6 +830,20 @@ DFBG.FlieOA.Flie = {
                 setTimeout("$(\".module-tip\").hide()", 5000);
             }
         }, url, "html", false, "", false);
+    },
+    showLayer: function () {
+        var FileId = $("#HidFileId").val();
+        var Share = $("#Share").val();
+        if (Share != undefined) {
+            Share = Share;
+        } else {
+            Share = "";
+        }
+        var GroupOrAgencyId = $("#GroupOrAgencyId").val();
+        if (GroupOrAgencyId == undefined) {
+            GroupOrAgencyId == "";
+        }
+        parent.showLayer(FileId, Share, GroupOrAgencyId);
     }
 }
 parent.window.onresize = function () {
