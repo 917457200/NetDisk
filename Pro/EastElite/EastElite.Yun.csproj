@@ -492,7 +492,6 @@
     <Content Include="Scripts\Yun\ShareList.js" />
     <Content Include="Scripts\Yun\ShareOne.js" />
     <Content Include="Scripts\Yun\UserGroup.js" />
-    <Content Include="Scripts\ZeroClipboard.js" />
     <Content Include="Scripts\zxx.drag.1.0-min.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Service References\EastEliteICMSWS\EastElite.EastEliteICMSWS.CheckUserLoginBookItemResponse.datasource">

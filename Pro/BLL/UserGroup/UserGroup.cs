@@ -362,5 +362,47 @@ namespace BLL.UserGroup
             }
 
         }
+        //退出
+        public bool UserGroupQuit( int GroupId, string UserId )
+        {
+            using( Model.NETDISKDBEntities Db = new Model.NETDISKDBEntities() )
+            {
+                var UserGroupInfo = from B in Db.UserGroupInfo
+                                    where B.GroupId == GroupId && B.UserId == UserId
+                                    select B;
+
+                Model.UserGroupInfo User = UserGroupInfo.FirstOrDefault();
+
+                var GroupInfo = from B in Db.GroupInfo
+                                    where B.GroupId == GroupId
+                                    select B;
+
+                Model.GroupInfo Group= GroupInfo.FirstOrDefault();
+                Db.UserGroupInfo.Remove( User );
+
+                Model.MassgeInfo M = new Model.MassgeInfo();
+                M.GroupId = GroupId;
+                M.MassgeCreateTime = DateTime.Now;
+                M.MassgeName = "退出 " + Group.GroupName + " 用户组";
+                M.MassgeNote = User.UserName + " 退出 " + Group.GroupName + " 用户组";
+                M.MassgeState = false;
+                M.MassgeExamineState = false;
+                M.MassgeToUserId = Group.CreateUserId;
+                M.MassgeSendUserId = UserId;
+                M.MassgeType = "1001";
+                Db.MassgeInfo.Add( M );
+                int row = Db.SaveChanges();
+
+                if( row > 0 )
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+
+        }
     }
 }

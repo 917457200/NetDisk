@@ -1,5 +1,4 @@
 ﻿/// <reference path="../WEB/WebJs.js" />
-/// <reference path="../ZeroClipboard.js" />
 var ReNameFileId = "";//存储要重命名的文件id
 
 var DFBGFlie = { Flie: {} }
@@ -62,8 +61,7 @@ DFBGFlie.Flie.FlieOperation = {
         _base.AjaxHtml("../AllShare/ShareList", { FileId: FileId }, function (data) {
             parent.$("#popup_container2").append(data);
             $.dingwei('popup_container2', 'popup_overlay2', 'parent');
-        }
-     );
+        });
     },
     //分享
     ShareMethod: function (FileId, ShareTypeId) {

@@ -17,16 +17,19 @@ function Query(pageIndex) {
 //参数model:本行数据
 function SetOperate(model) {
     var str = "<td align=\"center\">";
-    if (model.MassgeState == false) {
-        str += "<span class='btn btn-primary' style=\"color:#fff;\" onclick=\"Laryer('同意','Examine','" + model.GroupId + "','" + model.MassgeSendUserId + "','" + model.Id + "','True')\">同意</span>";
-        str += "<span class='btn btn-primary' style=\"color:#fff;\" onclick=\"Laryer('不同意','Examine','" + model.GroupId + "','" + model.MassgeSendUserId + "','" + model.Id + "','False')\">不同意</span>";
+    if (model.MassgeType == "1001") {
+        str += "无";
     } else {
-        if (model.MassgeExamineState) {
-            str += "已同意";
+        if (model.MassgeState == false) {
+            str += "<span class='btn btn-primary' style=\"color:#fff;\" onclick=\"Laryer('同意','Examine','" + model.GroupId + "','" + model.MassgeSendUserId + "','" + model.Id + "','True')\">同意</span>";
+            str += "<span class='btn btn-primary' style=\"color:#fff;\" onclick=\"Laryer('不同意','Examine','" + model.GroupId + "','" + model.MassgeSendUserId + "','" + model.Id + "','False')\">不同意</span>";
         } else {
-            str += "已拒绝";
+            if (model.MassgeExamineState) {
+                str += "已同意";
+            } else {
+                str += "已拒绝";
+            }
         }
-       
     }
     str += "</td>";
     return str;

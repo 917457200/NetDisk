@@ -146,6 +146,18 @@ namespace EastElite.Controllers
                 return "Err";
             }
         }
+        //退出
+        public string UserGroupQuit( int GroupId, string UserId )
+        {
+            if( Group.UserGroupQuit( GroupId, UserId ) )
+            {
+                return "Suc";
+            }
+            else
+            {
+                return "Err";
+            }
+        }
         //审核
         public string GroupExamine( int GroupId, string UserId, int Id, bool State )
         {

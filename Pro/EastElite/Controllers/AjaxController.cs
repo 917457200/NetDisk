@@ -55,6 +55,18 @@ namespace EastElite.Controllers
                 return Json( Share.ToList(), JsonRequestBehavior.AllowGet );
             }
         }
+        public ActionResult ToLogin( string d, string e )
+        {
+            GetCookie.ExistCookie();
+            //数据库访问模式
+            using( Model.NETDISKDBEntities Db = new Model.NETDISKDBEntities() )
+            {
+                var Share = from b in Db.ShareInfo
+                            orderby b.ShareTypeId descending
+                            select b;
+                return Json( Share.ToList(), JsonRequestBehavior.AllowGet );
+            }
+        }
         /// <summary>
         ///获取人员分页
         /// </summary>

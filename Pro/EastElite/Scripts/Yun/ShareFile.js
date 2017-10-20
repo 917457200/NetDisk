@@ -90,7 +90,7 @@ DFBGShare.FlieShare.Flie = {
                             var model = data[i];
 
                             htmlInfo += "<li id=\"add" + model.FileId + "\" href=\"javascript:;\" class=\"grid-view-item open-enable\" style=\"display: block;\">";
-                            htmlInfo += " <div class=\"FileShow\">";
+                            htmlInfo += " <div class=\"FileShow\"  title=\"" + model.FileName + "\">";
                             //****图标***
                             //判断是否是文件夹，如果是文件夹连接为打开文件夹，如果不是文件夹，连接为下载连接
                             if (model.IsFolder == true) {

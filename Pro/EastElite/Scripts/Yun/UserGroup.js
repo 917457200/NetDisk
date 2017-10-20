@@ -28,7 +28,7 @@ function SetOperate(model) {
         } else if (model.Examine == false) {
             str += "<span >您已申请</span>";
         } else if (model.Examine == true) {
-            str += "<span >您已在组中</span>";
+            str += "<span >您已在组中 <span class='btn btn-primary' style=\"color:#fff;\" onclick=\"Laryer('退出','Quit','" + model.GroupId + "','" + UserCode + "')\">退出</span></span>";
         }
     }
     str += "</td>";
@@ -210,6 +210,19 @@ function AddAllUser() {
 function Apply(GroupId, UserId) {
     var userName = $("#userName").val();
     DFBGFlie.Flie.FlieOperation.AjaxHtml("/UserGroup/UserGroupExamine", { GroupId: GroupId, UserId: UserId, UserName: userName }, function (data) {
+        if (data == "Suc") {
+            parent.$("#popup_container").fadeOut(500);
+            parent.$("#popup_overlay").fadeOut(500);
+            parent.$("#popup_container").css("display", "none");
+            parent.$("#popup_overlay").css("display", "none");
+            parent.$("#popup_container").html("");
+            window.location.reload();
+        }
+    }, false);
+}
+function Quit(GroupId, UserId) {
+    var userName = $("#userName").val();
+    DFBGFlie.Flie.FlieOperation.AjaxHtml("/UserGroup/UserGroupQuit", { GroupId: GroupId, UserId: UserId, UserName: userName }, function (data) {
         if (data == "Suc") {
             parent.$("#popup_container").fadeOut(500);
             parent.$("#popup_overlay").fadeOut(500);
