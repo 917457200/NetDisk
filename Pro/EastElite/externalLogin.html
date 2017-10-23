@@ -1,0 +1,102 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="js/jquery-1.11.3.min.js"></script>
+    <link href="Css/bootstrap.min.css" rel="stylesheet" />
+    <link href="Css/Site.css" rel="stylesheet" />
+    <title>壹键通校园荣誉管理系统</title>
+
+
+    <script src="js/WebJS.js"></script>
+    <script>
+        $(document).ready(function () {
+         
+            externalLogin();
+          
+        });
+        function checkParames(param)
+        {
+            if (param != undefined && param != null && param != "")
+                return true;
+            else
+                return false;
+        }
+        function externalLogin() {
+            var url = "/Ajax/Service.ashx?actionname=01-02";
+            var usercode = getQueryString("Code");
+            var userType = getQueryString("Type");
+            var ts = getQueryString("ts");
+            var userToken = getQueryString("userToken");
+            if (checkParames(usercode) && checkParames(userType) && checkParames(ts) && checkParames(userToken)) {
+                var par = { "userCode": usercode, "userType": userType, "ts": ts, "userToken": userToken };
+                EDUCAjax(par, function () {
+                    $('#login').html("登陆中...");
+                }, function (re) {
+                    $('#login').html("登陆");
+
+                    if (undefined != re.ret && re.ret.length > 0) {
+
+                        if ($.toString(re.ret[0]).indexOf("用户登录成功") > 0) {
+
+                            var user = $.extend({}, re.data.result[0], { "campus": re.data.campus });
+                            setCookie("loginUser", JSON.stringify(user));
+
+                            gotourl("/show.html");
+                        }
+                        else {
+                            $('.bg-danger .text-danger').html(re.ret[0]);
+                            $('.bg-danger').show();
+                        }
+
+
+                    }
+                    else {
+                        $('.bg-danger .text-danger').html("网络异常,请重试!");
+                        $('.bg-danger').show();
+
+                    }
+
+
+                }, url);
+            }
+            else {
+                showErrorMsg("数据异常");
+            }
+           
+
+
+        }
+        function showErrorMsg(errormsg)
+        {
+            $('.bg-danger .text-danger').html(errormsg + ",3秒后自动跳转到登陆页面!");
+            $('.bg-danger').show();
+        
+            var intervalid;
+            intervalid = setInterval(function () {
+                gotourl("/login.html");
+                clearInterval(intervalid);
+            }, 3000);
+
+        }
+
+
+    </script>
+
+</head>
+<body>
+    <div style="padding-left: 15%; padding-right: 15%; ">
+        <div class="text-center info-wrapper">
+            <div class="bg-danger" style="display:none;">
+                <span class="text-danger"></span>
+            </div>
+        </div>
+    
+       
+    </div>
+</body>
+</html>

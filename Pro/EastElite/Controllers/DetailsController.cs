@@ -281,11 +281,15 @@ namespace EastElite.Controllers
 
             return View();
         }
-        public ActionResult GetImgListInfo( string time )
+        public ActionResult GetImgTitleInfo( string time )
         {
             var ImgTitleInfoList = ImgBll.ImgTitleInfoList( Cookie.GetUserCookie().userCode, time ).ToList();
+            return Json( new { ImgTitleInfoList}, JsonRequestBehavior.AllowGet );
+        }
+        public ActionResult GetImgListInfo( string time )
+        {
             var ImgInfoList = ImgBll.ImgInfoList( Cookie.GetUserCookie().userCode, time ).ToList();
-            return Json( new { ImgTitleInfoList, ImgInfoList }, JsonRequestBehavior.AllowGet );
+            return Json( new { ImgInfoList }, JsonRequestBehavior.AllowGet );
         }
     }
 }

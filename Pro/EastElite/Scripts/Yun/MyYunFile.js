@@ -189,7 +189,7 @@ DFBG.FlieOA.Flie = {
                                 htmlInfo += "<div class=\"file-name\"><span title=\"" + model.FileName + "\" class=\"filename\">" + model.FileName.substring(0, 6) + "...</span></div> ";
                             }
                             else {
-                                htmlInfo += "<div class=\"file-name\"><span title=\"" + model.FileName + "\" href=\"javascript:void(0);\" class=\"filename\">" + model.FileName + model.FileExtName + "</span></div>";
+                                htmlInfo += "<div class=\"file-name\"><span title=\"" + model.FileName + "\" href=\"javascript:void(0);\" class=\"filename\">" + model.FileName  + "</span></div>";
                             }
                             htmlInfo += "</li>";
 
@@ -520,7 +520,7 @@ DFBG.FlieOA.Flie = {
 
 
                           if (model.FileName.length > 6) {
-                              htmlInfo += "<div class=\"file-name\"><span title=\"" + model.FileName + "\" class=\"filename\">" + model.FileName.substring(0, 6) + "..." + model.FileExtName + "</span></div> ";
+                              htmlInfo += "<div class=\"file-name\"><span title=\"" + model.FileName + "\" class=\"filename\">" + model.FileName.substring(0, 6) + "...</span></div> ";
                           }
                           else {
                               htmlInfo += "<div class=\"file-name\"><span title=\"" + model.FileName + "\" href=\"javascript:void(0);\" class=\"filename\">" + model.FileName + "</span></div>";

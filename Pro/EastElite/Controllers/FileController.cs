@@ -21,7 +21,7 @@ namespace EastElite.Controllers
 
         public static string VIR_PATH = "/Upload/Yun";
 
-        public ActionResult Upload(string parentId,string Share,string GroupOrAgencyId)
+        public ActionResult Upload( string parentId, string Share, string GroupOrAgencyId )
         {
             ViewBag.parentId = parentId;
             ViewBag.Share = Share;
@@ -778,6 +778,140 @@ namespace EastElite.Controllers
             return File( new FileStream( AppDomain.CurrentDomain.BaseDirectory + path, FileMode.Open ), "text/plain", FileName );
         }
 
+        [LoginNeedsFilter( IsCheck = false )]
+        public string DaoRu( string WEb )
+        {
+            string g = "";
+            DirectoryInfo TheFolder = new DirectoryInfo( @"" + WEb );
+            string FileUr = "";
+            int i = 0;
+            foreach( DirectoryInfo NextFolder in TheFolder.GetDirectories() )
+            {
+                using( Model.NETDISKDBEntities Db = new Model.NETDISKDBEntities() )
+                {
+                    string ParentFileId = "";
+                    Model.YUN_FileInfo model = new Model.YUN_FileInfo();
+                    model.FileName = NextFolder.Name;
+                    model.FileExtName = "";
+                    model.FileSizeKb = 0;
+                    model.FileCreateTime = DateTime.Now;
+                    model.IsFolder = true;
+                    model.FileUrl = "";
+                    model.CreateId = "130501";
+                    model.CreateName = "赵测1";
+                    model.CreateUnitCode = "610105100611";
+                    model.ParentFileId = ParentFileId;
+                    model.FileState = true;
+                    Db.YUN_FileInfo.Add( model );
+                    int count = Db.SaveChanges();
+                    if( count > 0 )
+                    {
+                        FileUr = NextFolder.Name + "◆" + model.FileId.ToString() + "◆" + WEb + NextFolder.Name;
+                        Childdao( FileUr );
+                    }
+
+                }
+                i++;
+            }
+            foreach( FileInfo NextFile in TheFolder.GetFiles() )
+            {
+
+                using( Model.NETDISKDBEntities Db = new Model.NETDISKDBEntities() )
+                {
+                    Model.YUN_FileInfo model = new Model.YUN_FileInfo();
+                    model.FileName = NextFile.Name;
+                    model.FileExtName = System.IO.Path.GetExtension( NextFile.Name ).ToLower();
+                    model.FileSizeKb = Convert.ToInt32( NextFile.Length / 1024 );
+                    model.FileCreateTime = DateTime.Now;
+                    model.IsFolder = false;
+                    string fullFileName = string.Format( "{0}", UploadPath( "", "" ) + "\\" + Guid.NewGuid() + model.FileExtName );
+                    string ReturnFileUrl = fullFileName.Substring( FileHelper.CurrentBaseDir.Length );
+                    if( !ReturnFileUrl.StartsWith( @"\" ) )
+                    {
+                        ReturnFileUrl = @"\" + ReturnFileUrl;
+                    }
+                    ReturnFileUrl = ReturnFileUrl.Replace( @"\", @"/" );
+                    model.FileUrl = ReturnFileUrl;
+                    model.CreateId = "130501";
+                    model.FileState = true;
+                    model.IsShare = false;
+                    model.ParentFileId = "";
+                    model.CreateName = "赵测1";
+                    model.CreateUnitCode = "610105100611";
+                    //文件复制
+                    FileHelper.CopyFile( NextFile.FullName, Server.MapPath( ReturnFileUrl ), 1024 * 1024 );
+
+                    Db.YUN_FileInfo.Add( model );
+                    Db.SaveChanges();
+                }
+            }
+            return "成功！";
+        }
+        public void Childdao( string FileUr )
+        {
+            string[] File = FileUr.Split( '◆' );
+            string FileUr2 = "";
+            DirectoryInfo TheFolder = new DirectoryInfo( @"" + File[2]);
+            int i = 0;
+            foreach( DirectoryInfo NextFolder in TheFolder.GetDirectories() )
+            {
+                using( Model.NETDISKDBEntities Db = new Model.NETDISKDBEntities() )
+                {
+                    Model.YUN_FileInfo model = new Model.YUN_FileInfo();
+                    model.FileName = NextFolder.Name;
+                    model.FileExtName = "";
+                    model.FileSizeKb = 0;
+                    model.FileCreateTime = DateTime.Now;
+                    model.IsFolder = true;
+                    model.FileUrl = "";
+                    model.CreateId = "130501";
+                    model.CreateName = "赵测1";
+                    model.CreateUnitCode = "610105100611";
+                    model.ParentFileId = File[1];
+                    model.FileState = true;
+                    Db.YUN_FileInfo.Add( model );
+                    int count = Db.SaveChanges();
+                    if( count > 0 )
+                    {
+                        FileUr2 = NextFolder.Name + "◆" + model.FileId.ToString() + "◆" + File[2]+"//" + NextFolder.Name;
+                        Childdao( FileUr2 );
+                    }
+                }
+                i++;
+            }
+            foreach( FileInfo NextFile in TheFolder.GetFiles() )
+            {
+
+                using( Model.NETDISKDBEntities Db = new Model.NETDISKDBEntities() )
+                {
+                    Model.YUN_FileInfo model = new Model.YUN_FileInfo();
+                    model.FileName = NextFile.Name;
+                    model.FileExtName = System.IO.Path.GetExtension( NextFile.Name ).ToLower();
+                    model.FileSizeKb = Convert.ToInt32( NextFile.Length / 1024 );
+                    model.FileCreateTime = DateTime.Now;
+                    model.IsFolder = false;
+                    string fullFileName = string.Format( "{0}", UploadPath( File[1], "" ) + "\\" + Guid.NewGuid() + model.FileExtName );
+                    string ReturnFileUrl = fullFileName.Substring( FileHelper.CurrentBaseDir.Length );
+                    if( !ReturnFileUrl.StartsWith( @"\" ) )
+                    {
+                        ReturnFileUrl = @"\" + ReturnFileUrl;
+                    }
+                    ReturnFileUrl = ReturnFileUrl.Replace( @"\", @"/" );
+                    model.FileUrl = ReturnFileUrl;
+                    model.CreateId = "130501";
+                    model.FileState = true;
+                    model.IsShare = false;
+                    model.ParentFileId = File[1];
+                    model.CreateName = "赵测1";
+                    model.CreateUnitCode = "610105100611";
+                    //文件复制
+                    FileHelper.CopyFile( NextFile.FullName, Server.MapPath( ReturnFileUrl ), 1024 * 1024 );
+
+                    Db.YUN_FileInfo.Add( model );
+                    Db.SaveChanges();
+                }
+            }
+        }
         /// <summary>
         /// 移动文件、复制文件
         /// </summary>
