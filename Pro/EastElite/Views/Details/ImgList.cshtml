@@ -16,8 +16,8 @@
         $(".name").click(function (e) {
             $(this).addClass("current").siblings().removeClass("current");
         })
-
         showTime('@(ViewBag.Time.Count>0?ViewBag.Time[0].YearS:"")', '@(ViewBag.Time.Count>0?ViewBag.Time[0].Moth:"")');
+        
     })
 
 </script>
@@ -89,7 +89,7 @@
 </div>
 
 <div class="empty-time">
-    <div class="module-timeline" id="main-timeline" style=" height:80%">
+    <div class="module-timeline" id="main-timeline" style=" height:90%">
         <div class="timeline-item  global-clearfix alloff">
         </div>
     </div>

@@ -9,16 +9,23 @@
         </div>
     </div>
     <div style="padding: 10px 0px 0px 10px; overflow:hidden;">
-        @foreach( var item in ViewBag.List )
+        @if( ViewBag.List.Count > 0 )
         {
-            if( ViewBag.UserCode == item.CreateUserId )
+            foreach( var item in ViewBag.List )
             {
-                <a href="/UserGroup/UserShare?GroupId=@item.GroupId"><span class="GroupShare">@item.GroupName (创建者)</span></a>
+                if( ViewBag.UserCode == item.CreateUserId )
+                {
+                    <a href="/UserGroup/UserShare?GroupId=@item.GroupId"><span class="GroupShare">@item.GroupName (创建者)</span></a>
+                }
+                else
+                {
+                    <a href="/UserGroup/UserShare?GroupId=@item.GroupId"><span class="GroupShare">@item.GroupName</span></a>
+                }
             }
-            else
-            {
-                <a href="/UserGroup/UserShare?GroupId=@item.GroupId"><span class="GroupShare">@item.GroupName</span></a>
-            }
+        }
+        else
+        {
+           <div class="aGMvFtb"><div class="hqvyGW05 wegnv3JM"><p class="ggEQwFb"> 还没有加入用户组</p></div></div> 
         }
     </div>
 </body>

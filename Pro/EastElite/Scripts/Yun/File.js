@@ -888,6 +888,8 @@ DFBGFlie.Flie.FlieOperation = {
                     Str += data.model[i].GroupName;
                     Str += "</div>";
                 }
+            } else {
+                Str += "<div id=\"popup_message\" style=\" padding: 20px 15px;text-align: center;\">还未加入用户组</div>";
             }
             Str += "</div>";
             $("#UserGroupContent").html(Str);
