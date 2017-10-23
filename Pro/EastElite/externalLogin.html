@@ -6,16 +6,13 @@
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <script src="js/jquery-1.11.3.min.js"></script>
-    <link href="Css/bootstrap.min.css" rel="stylesheet" />
-    <link href="Css/Site.css" rel="stylesheet" />
-    <title>壹键通校园荣誉管理系统</title>
-
-
-    <script src="js/WebJS.js"></script>
+    <script src="Scripts/jquery-1.10.2.min.js"></script>
+    <link href="Content/Css/bootstrap.min.css" rel="stylesheet" />
+    <link href="Content/Css/Site.css" rel="stylesheet" />
+    <title>壹键通教育云盘服务平台</title>
+    <script src="Scripts/WEB/WebJs.js"></script>
     <script>
         $(document).ready(function () {
-         
             externalLogin();
           
         });
@@ -27,7 +24,7 @@
                 return false;
         }
         function externalLogin() {
-            var url = "/Ajax/Service.ashx?actionname=01-02";
+            var url = "/Ajax/ToLoginUnpassWord";
             var usercode = getQueryString("Code");
             var userType = getQueryString("Type");
             var ts = getQueryString("ts");
@@ -38,30 +35,19 @@
                     $('#login').html("登陆中...");
                 }, function (re) {
                     $('#login').html("登陆");
-
                     if (undefined != re.ret && re.ret.length > 0) {
-
                         if ($.toString(re.ret[0]).indexOf("用户登录成功") > 0) {
-
-                            var user = $.extend({}, re.data.result[0], { "campus": re.data.campus });
-                            setCookie("loginUser", JSON.stringify(user));
-
-                            gotourl("/show.html");
+                            window.location.href="/Manage/Index";
                         }
                         else {
                             $('.bg-danger .text-danger').html(re.ret[0]);
                             $('.bg-danger').show();
                         }
-
-
                     }
                     else {
                         $('.bg-danger .text-danger').html("网络异常,请重试!");
                         $('.bg-danger').show();
-
                     }
-
-
                 }, url);
             }
             else {
@@ -71,6 +57,7 @@
 
 
         }
+     
         function showErrorMsg(errormsg)
         {
             $('.bg-danger .text-danger').html(errormsg + ",3秒后自动跳转到登陆页面!");

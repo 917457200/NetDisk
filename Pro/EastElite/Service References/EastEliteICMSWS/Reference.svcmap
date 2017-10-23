@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="794b64ce-06ee-442c-a152-788120a71d16" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="4c3d18d3-3c24-42c8-8c4f-a56cc671e6ea" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
   <ClientOptions>
     <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
     <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
@@ -22,8 +22,8 @@
     <MetadataSource Address="http://sms.zhengzhong.cn/EastEliteICMSWS.asmx" Protocol="http" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="EastEliteICMSWS.wsdl" MetadataType="Wsdl" ID="778eddc5-2ad9-4434-9b2e-0c99aedd89e2" SourceId="1" SourceUrl="http://sms.zhengzhong.cn/EastEliteICMSWS.asmx?wsdl" />
-    <MetadataFile FileName="EastEliteICMSWS.disco" MetadataType="Disco" ID="252364b0-b4e5-443b-ab81-c92ff4ed0709" SourceId="1" SourceUrl="http://sms.zhengzhong.cn/EastEliteICMSWS.asmx?disco" />
+    <MetadataFile FileName="EastEliteICMSWS.wsdl" MetadataType="Wsdl" ID="b0e5d5a0-ccd8-42f4-aa5f-62fd99768084" SourceId="1" SourceUrl="http://sms.zhengzhong.cn/EastEliteICMSWS.asmx?wsdl" />
+    <MetadataFile FileName="EastEliteICMSWS.disco" MetadataType="Disco" ID="60d53576-420d-42fe-9583-794e066526d7" SourceId="1" SourceUrl="http://sms.zhengzhong.cn/EastEliteICMSWS.asmx?disco" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />

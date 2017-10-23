@@ -403,6 +403,7 @@
     <Content Include="Content\xinjiemian\iconsweets-icons.png" />
     <Content Include="Content\Img\logo.gif" />
     <Content Include="Content\Img\logo2.png" />
+    <Content Include="externalLogin.html" />
     <Content Include="Scripts\areaSelect.js" />
     <Content Include="Scripts\clipboard.min.js" />
     <Content Include="Scripts\jQuery.asyncLoading2.js" />
@@ -1029,6 +1030,7 @@
     <Content Include="Service References\EastEliteSMSWS\EastElite.EastEliteSMSWS.UpdateStudentDetailInfoItemResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Content>
+    <None Include="Service References\EastEliteICMSWS\EastEliteICMSWS.wsdl" />
     <None Include="Service References\EastEliteSMSWS\EastEliteSMSWS.disco" />
     <None Include="Service References\EastEliteSMSWS\configuration91.svcinfo" />
     <None Include="Service References\EastEliteSMSWS\configuration.svcinfo" />
@@ -1072,7 +1074,6 @@
     <Content Include="Views\SchoolShare\SchoolFileMove.cshtml" />
     <Content Include="Views\Role\RoleShow.cshtml" />
     <Content Include="Views\Department\Index.cshtml" />
-    <None Include="Service References\EastEliteICMSWS\EastEliteICMSWS.wsdl" />
     <None Include="Service References\EastEliteSMSWS\EastEliteSMSWS.wsdl" />
     <Content Include="Views\Details\FileExitForMove.cshtml" />
     <Content Include="Views\AllShare\ShareList.cshtml" />

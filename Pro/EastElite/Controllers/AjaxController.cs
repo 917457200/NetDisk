@@ -4,9 +4,13 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.ServiceModel;
+using System.Text;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Script.Serialization;
+using System.Web.Security;
+using System.Web.Services.Description;
+using Web.Core;
 
 namespace EastElite.Controllers
 {
@@ -14,11 +18,11 @@ namespace EastElite.Controllers
     {
         BLL.Cookie GetCookie = new BLL.Cookie();
 
-        public ActionResult GetOaMeun(string d, string e)
+        public ActionResult GetOaMeun( string d, string e )
         {
             GetCookie.ExistCookie();
             //数据库访问模式
-            using (Model.NETDISKDBEntities Db = new Model.NETDISKDBEntities())
+            using( Model.NETDISKDBEntities Db = new Model.NETDISKDBEntities() )
             {
                 string UserId = GetCookie.GetUserCookie().userCode;
                 var UserRole = from b in Db.UserRoleInfo
@@ -29,7 +33,7 @@ namespace EastElite.Controllers
                 if( User == null || User.RoleId != "1" )
                 {
                     var Menu = from b in Db.MenuInfo
-                               where b.MenuCode!="50"
+                               where b.MenuCode != "50"
                                orderby b.MenuCode
                                select b;
                     return Json( Menu.ToList(), JsonRequestBehavior.AllowGet );
@@ -50,22 +54,33 @@ namespace EastElite.Controllers
             using( Model.NETDISKDBEntities Db = new Model.NETDISKDBEntities() )
             {
                 var Share = from b in Db.ShareInfo
-                           orderby b.ShareTypeId descending
-                           select b ;
-                return Json( Share.ToList(), JsonRequestBehavior.AllowGet );
-            }
-        }
-        public ActionResult ToLogin( string d, string e )
-        {
-            GetCookie.ExistCookie();
-            //数据库访问模式
-            using( Model.NETDISKDBEntities Db = new Model.NETDISKDBEntities() )
-            {
-                var Share = from b in Db.ShareInfo
                             orderby b.ShareTypeId descending
                             select b;
                 return Json( Share.ToList(), JsonRequestBehavior.AllowGet );
             }
+        }
+
+        [LoginNeedsFilter( IsCheck = false )]
+        public string  ToLoginUnpassWord( string d, string e )
+        {
+            string UserCode = Request.Form["userCode"].ToString();
+            byte userType = Convert.ToByte( Request.Form["userType"] );
+            string  ts =  Request.Form["ts"].ToString();
+            string userToken = Request.Form["userToken"].ToString();
+          
+            StringBuilder script = new StringBuilder();
+            BLL.Cookie.TeUser U = new BLL.Cookie.TeUser();
+            EastEliteICMSWS.EastEliteICMSWSSoapClient client = new EastEliteICMSWS.EastEliteICMSWSSoapClient();
+            string result = client.CheckUserLoginTokenItem( UserCode, userType, ts, userToken );
+
+            if( result.IndexOf( "SUCC" ) > -1 )//登录成功
+            {
+                U = GetCookie.GetUserNameForSerVice( result );
+                U.userName = U.userName;
+                GetCookie.SetCookie( "Dfbg_OAUser", Newtonsoft.Json.JsonConvert.SerializeObject( U ), 1 );
+                FormsAuthentication.SetAuthCookie( UserCode, false );
+            }
+            return result;
         }
         /// <summary>
         ///获取人员分页
@@ -115,6 +130,6 @@ namespace EastElite.Controllers
             int startRow = ( pageIndex - 1 ) * pageSize;
             return RoleInfolist.Skip( startRow ).Take( pageSize ).ToList();
         }
-     
+
     }
 }
