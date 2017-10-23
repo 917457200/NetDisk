@@ -53,7 +53,7 @@ a { color: #06c; text-decoration: none; }
 
 .timeline-checkall span.icon { color: #3b8cff; display: none; }
 .timeline-checkall label { padding-left: 5px; }
-.module-timeline .timeline-content { padding-bottom: 5px; }
+.module-timeline .timeline-content { padding-bottom: 5px; overflow:hidden; }
 .list-content { position: relative; z-index: 1; }
 
     .list-content .content-item { position: relative; }

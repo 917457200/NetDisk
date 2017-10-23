@@ -91,7 +91,7 @@ function showTime(YearS, Moth) {
                 Html += "<div class=\"timeline-title global-clearfix\">";
                 Html += "<span class=\"timeline-day\">" + data.ImgTitleInfoList[i].CreateUnitCode + "</span>";
                 Html += "<span class=\"global-icon-down\"></span>";
-                Html += "<span class=\"timeline-days-num\" id=\"days-num" + datatime + "\"></span>";
+                Html += "<span class=\"timeline-days-num\" id=\"days-num" + datatime + "\"></span>张";
                 Html += "<div class=\"timeline-checkall\">";
                 Html += " <a class=\"global-icon global-icon-checkbox\"></a>";
                 Html += "<span class=\"icon checksmall-icon\">";
@@ -102,10 +102,8 @@ function showTime(YearS, Moth) {
                 Html += "<div id=\"data" + datatime + "\" class=\"timeline-content global-clearfix list-content\">";
                 Html += "</div>";
                 obj.html(Html);
-                GetImgListInfo(datatime);
-
+                GetImgListInfo(datatime,1);
             }
-          
             $(".operate-select-box").click(function (e) {
                 $(this).parent().css("display", "none");
                 $(".item-active").removeClass("item-active");
@@ -132,11 +130,11 @@ function showTime(YearS, Moth) {
         }
     })
 }
-function GetImgListInfo(time) {
+function GetImgListInfo(time, idenx) {
     $.ajax({
         type: "POST",
         url: "../Details/GetImgListInfo",
-        data: { time: time },
+        data: { time: time, idenx: idenx },
         dataType: "json",
         async: true,
         beforeSend: function (XMLHttpRequest) {
@@ -155,7 +153,7 @@ function GetImgListInfo(time) {
                     Html += "</div>";
                     Html += "</a>";
                 }
-                $("#days-num" + time).html(data.ImgInfoList.length + " 张");
+                $("#days-num" + time).html(data.ImgInfoList.length);
                 $("#data" + time).html(Html);
                 $(".checkbox-item").off();
                 $(".checkbox-item").mousedown(function (e) {
@@ -182,4 +180,3 @@ function GetImgListInfo(time) {
         }
     });
 }
-

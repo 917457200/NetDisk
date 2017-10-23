@@ -208,6 +208,7 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="404.html" />
     <Content Include="Application\jwplayer-6.12.0\codecs\aslcodec_vfw.dll" />
     <Content Include="Application\jwplayer-6.12.0\codecs\asusasv2.dll" />
     <Content Include="Application\jwplayer-6.12.0\codecs\asusasvd.dll" />
@@ -345,6 +346,7 @@
     <Content Include="Content\Css\picPreview.css" />
     <Content Include="Content\Css\Yun.css" />
     <Content Include="Content\fonts\fontawesome\yunfont.svg" />
+    <Content Include="Content\Img\404.jpg" />
     <Content Include="Content\Img\btn_icon.gif" />
     <Content Include="Content\Img\cancel_5f98706.png" />
     <Content Include="Content\Img\checkbox.png" />

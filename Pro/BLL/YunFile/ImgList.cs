@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.Entity.Infrastructure;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
@@ -46,18 +47,37 @@ namespace BLL.YunFile
                 return Filelist;
             }
         }
-        public List<Model.YUN_FileInfo> ImgInfoList( string UserCode, string time )
+        public List<Model.YUN_FileInfo> ImgInfoList( int pageIndex, int pageSize, string UserCode, string time )
         {
             DataSetToList List = new DataSetToList();
 
-            using( var db = new Model.NETDISKDBEntities() )
-            {
-                string strSql = "SELECT top 1000 FileId,FileName,FileCreateTime,FileUrl,FileState,(CONVERT(varchar(10),(SELECT DATEPART(yyyy, FileCreateTime)))+'年'+ CONVERT(varchar(10),(SELECT DATEPART(mm, FileCreateTime)))+'月'+ CONVERT(varchar(10),(SELECT DATEPART(dd, FileCreateTime)))+'日') AS CreateUnitCode FROM dbo.YUN_FileInfo as a WHERE CreateId = '" + UserCode + "' AND FileExtName IN ('.bmp', '.jpeg', '.jpg', '.gif', '.png', '.tif', '.psd', '.dwg') and FileState=1 AND DATEDIFF(dd, FileCreateTime, '" + time + "') = 0 ORDER BY CreateUnitCode DESC";
-                DataSet Dt = MyFile.SqlQueryForDataTatable1( db.Database, strSql );
-                List<Model.YUN_FileInfo> Filelist = List.ToList<Model.YUN_FileInfo>( Dt, 0 );
-                return Filelist;
-            }
+            int startRow = ( pageIndex - 1 ) * pageSize;
+            StringBuilder strSql = new StringBuilder();
 
+            strSql.Append( " SELECT TOP " + pageSize + " FileId,FileName,FileCreateTime,FileUrl,FileState,(CONVERT(varchar(10),(SELECT DATEPART(yyyy, FileCreateTime)))+'年'+ CONVERT(varchar(10),(SELECT DATEPART(mm, FileCreateTime)))+'月'+ CONVERT(varchar(10),(SELECT DATEPART(dd, FileCreateTime)))+'日') AS CreateUnitCode From (SELECT ROW_NUMBER() OVER (ORDER BY  FileId  desc) AS RowNumber,* FROM YUN_FileInfo as a where CreateId = '" + UserCode + "' AND FileExtName IN ('.bmp', '.jpeg', '.jpg', '.gif', '.png', '.tif', '.psd', '.dwg') and FileState=1 AND DATEDIFF(dd, FileCreateTime, '" + time + "') = 0 ) as A " );
+            strSql.Append( "WHERE  RowNumber > " + startRow + " ORDER BY CreateUnitCode desc " );
+
+            using( Model.NETDISKDBEntities Db = new Model.NETDISKDBEntities() )
+            {
+                DataSet Dt =MyFile.SqlQueryForDataTatable1( Db.Database, strSql.ToString() );
+                List<Model.YUN_FileInfo> result1 = List.ToList<Model.YUN_FileInfo>( Dt, 0 );
+
+                return result1.ToList();
+            }
+        }
+
+        public int ImgInfoListCount(string UserCode, string time )
+        {
+            StringBuilder strSql = new StringBuilder();
+
+            strSql.Append( " SELECT count(FileId) From YUN_FileInfo where CreateId = '" + UserCode + "' AND FileExtName IN ('.bmp', '.jpeg', '.jpg', '.gif', '.png', '.tif', '.psd', '.dwg') and FileState=1 AND DATEDIFF(dd, FileCreateTime, '" + time + "') = 0 " );
+
+            using( Model.NETDISKDBEntities Db = new Model.NETDISKDBEntities() )
+            {
+                DbRawSqlQuery<int> result2 = Db.Database.SqlQuery<int>( strSql.ToString());
+                return result2.FirstOrDefault();
+              
+            }
         }
         public class DateList
         {
