@@ -161,6 +161,8 @@ function GetImgListInfo(time, idenx) {
                 if (Nowlength < data.Count) {
                     $(".daysMore" + time).html("");
                     $(".daysMore" + time).append("<span class=\"\" onclick=\"GetImgListInfo('" + time + "'," + (idenx + 1) + ")\">点击查看更多</span>");
+                } else {
+                    $(".daysMore" + time).html("");
                 }
                 $("#days-num" + time).html(Nowlength);
                 $("#data" + time).append(Html);

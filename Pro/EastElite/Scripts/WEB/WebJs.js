@@ -328,7 +328,7 @@ function showLayer(FileId, Share, GroupOrAgencyId) {
         type: 2,
         maxmin: true,
         title: '文件上传',
-        area: ['700px', '415px'],
+        area: ['700px', '430px'],
         fix: true,
         border: [2, 0.3, '#000'],
         iframe: {

@@ -60,6 +60,9 @@ function GetOaMeun() {
                 }
             }
             $(".nav").append(Str);
+            $(".dygbw9Bp").click(function () {
+                $($(".cMEMEF")[0]).addClass("wGMtMgb").siblings().removeClass("wGMtMgb");
+            })
         }
         else {
             $('.err').show();
