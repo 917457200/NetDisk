@@ -124,6 +124,8 @@ DFBG.FlieOA.Flie = {
                                         break;
                                     case ".docx":
                                     case ".doc":
+                                    case ".dot":
+                                    case ".docm":
                                         htmlInfo += "<span  class=\"fileicon fileicon-large-doc\">";
                                         break;
                                     case ".xls":
@@ -134,6 +136,7 @@ DFBG.FlieOA.Flie = {
                                         htmlInfo += "<span  class=\"fileicon fileicon-large-txt\">";
                                         break;
                                     case ".rar":
+                                    case ".7z":
                                         htmlInfo += "<span  class=\"fileicon fileicon-large-rar\">";
                                         break;
                                     case ".zip":
@@ -153,11 +156,14 @@ DFBG.FlieOA.Flie = {
                                     case ".mpeg":
                                     case ".mpg":
                                     case ".rm":
+                                    case ".asf":
+                                    case ".mov":
+                                    case ".smi":
                                         htmlInfo += "<span  class=\"fileicon fileicon-large-video\">";
                                         break;
-                                    case ".exe":
-                                        htmlInfo += "<span  class=\"fileicon fileicon-large-exe\">";
-                                        break;
+                                    //case ".exe":
+                                    //    htmlInfo += "<span  class=\"fileicon fileicon-large-exe\">";
+                                    //    break;
                                     case ".psd":
                                         htmlInfo += "<span  class=\"fileicon fileicon-large-psd\">";
                                         break;
@@ -168,6 +174,7 @@ DFBG.FlieOA.Flie = {
                                         break;
                                     case ".ppt":
                                     case ".pptx":
+                                    case ".pptm":
                                         htmlInfo += "<span  class=\"fileicon fileicon-large-ppt\">";
                                         break;
                                     case ".xmind":
@@ -223,6 +230,8 @@ DFBG.FlieOA.Flie = {
                                         break;
                                     case ".docx":
                                     case ".doc":
+                                    case ".dot":
+                                    case ".docm":
                                         htmlList += "<div  class=\"fileicon fileicon-small-doc\"></div>";
                                         break;
                                     case ".xls":
@@ -233,6 +242,7 @@ DFBG.FlieOA.Flie = {
                                         htmlList += "<div  class=\"fileicon fileicon-small-txt\"></div>";
                                         break;
                                     case ".rar":
+                                    case ".7z":
                                         htmlList += "<div  class=\"fileicon fileicon-small-rar\"></div>";
                                         break;
                                     case ".zip":
@@ -252,10 +262,13 @@ DFBG.FlieOA.Flie = {
                                     case ".mpeg":
                                     case ".mpg":
                                     case ".rm":
+                                    case ".asf":
+                                    case ".mov":
+                                    case ".smi":
                                         htmlList += "<div  class=\"fileicon fileicon-small-video\"></div>";
                                         break;
-                                    case ".exe":
-                                        htmlList += "<div  class=\"fileicon fileicon-small-exe\"></div>";
+                                    //case ".exe":
+                                    //    htmlList += "<div  class=\"fileicon fileicon-small-exe\"></div>";
                                         break;
                                     case ".psd":
                                         htmlList += "<div  class=\"fileicon fileicon-small-psd\"></div>";
@@ -267,6 +280,7 @@ DFBG.FlieOA.Flie = {
                                         break;
                                     case ".ppt":
                                     case ".pptx":
+                                    case ".pptm":
                                         htmlList += "<div  class=\"fileicon fileicon-small-ppt\"></div>";
                                         break;
                                     case ".xmind":
@@ -455,6 +469,8 @@ DFBG.FlieOA.Flie = {
                                       break;
                                   case ".docx":
                                   case ".doc":
+                                  case ".dot":
+                                  case ".docm":
                                       htmlInfo += "<span  class=\"fileicon fileicon-large-doc\">";
                                       break;
                                   case ".xls":
@@ -465,6 +481,7 @@ DFBG.FlieOA.Flie = {
                                       htmlInfo += "<span  class=\"fileicon fileicon-large-txt\">";
                                       break;
                                   case ".rar":
+                                  case ".7z":
                                       htmlInfo += "<span  class=\"fileicon fileicon-large-rar\">";
                                       break;
                                   case ".zip":
@@ -484,9 +501,9 @@ DFBG.FlieOA.Flie = {
                                   case ".mpeg":
                                   case ".mpg":
                                   case ".rm":
-                                  case ".mpeg":
-                                  case ".mpg":
-                                  case ".rm":
+                                  case ".asf":
+                                  case ".mov":
+                                  case ".smi":
                                       htmlInfo += "<span  class=\"fileicon fileicon-large-video\">";
                                       break;
                                   case ".exe":
@@ -502,6 +519,7 @@ DFBG.FlieOA.Flie = {
                                       break;
                                   case ".ppt":
                                   case ".pptx":
+                                  case ".pptm":
                                       htmlInfo += "<span  class=\"fileicon fileicon-large-ppt\">";
                                       break;
                                   case ".xmind":
@@ -586,7 +604,6 @@ DFBG.FlieOA.Flie = {
                                   case ".jpg":
                                   case ".png":
                                   case ".jpeg":
-                                  case ".jpg":
                                   case ".gif":
                                   case ".bmp":
                                       //图片
@@ -595,6 +612,8 @@ DFBG.FlieOA.Flie = {
                                       break;
                                   case ".docx":
                                   case ".doc":
+                                  case ".dot":
+                                  case ".docm":
                                       htmlList += "<div  class=\"fileicon fileicon-small-doc\"></div>";
                                       break;
                                   case ".xls":
@@ -605,6 +624,7 @@ DFBG.FlieOA.Flie = {
                                       htmlList += "<div  class=\"fileicon fileicon-small-txt\"></div>";
                                       break;
                                   case ".rar":
+                                  case ".7z":
                                       htmlList += "<div  class=\"fileicon fileicon-small-rar\"></div>";
                                       break;
                                   case ".zip":
@@ -624,6 +644,9 @@ DFBG.FlieOA.Flie = {
                                   case ".mpeg":
                                   case ".mpg":
                                   case ".rm":
+                                  case ".asf":
+                                  case ".mov":
+                                  case ".smi":
                                       htmlList += "<div  class=\"fileicon fileicon-small-video\"></div>";
                                       break;
                                   case ".exe":
@@ -639,6 +662,7 @@ DFBG.FlieOA.Flie = {
                                       break;
                                   case ".ppt":
                                   case ".pptx":
+                                  case ".pptm":
                                       htmlList += "<div  class=\"fileicon fileicon-small-ppt\"></div>";
                                       break;
                                   case ".xmind":

@@ -183,11 +183,11 @@ namespace EastElite.Controllers
             string wherestr = " FileState=1 and IsFolder=0  ";
             if( Type == "1" )
             {
-                wherestr += " and  FileExtName In('.bmp','.jpeg','.jpg','.gif','.png','.tif','.psd','.dwg')";
+                wherestr += " and  FileExtName In('.bmp','.jpeg','.jpg','.gif','.png','.tif','.psd','.dwg','.wmf')";
             }
             if( Type == "2" )
             {
-                wherestr += " and  FileExtName In('.doc','.docx','.xls','.xlsx','.ppt','.xmind','.pptx','.pdf')";
+                wherestr += " and  FileExtName In('.doc','.docx','.xls','.xlsx','.ppt','.pptx','.pdf','.dot','.docm','.pptm','.txt','.mht','.html','.htm','.wps','.wpt','.dps','.et')";
             }
             if( Type == "3" )
             {
@@ -195,7 +195,7 @@ namespace EastElite.Controllers
             }
             if( Type == "4" )
             {
-                wherestr += " and  FileExtName In('.flv','.mkv','.rmvb','.avi','.swf','.mp4','.wmv','.mpg','.mpeg','.rm')";
+                wherestr += " and  FileExtName In('.flv','.mkv','.rmvb','.avi','.swf','.mp4','.wmv','.mpg','.mpeg','.rm','.asf','.mov','.smi')";
             }
             if( Type == "5" )
             {

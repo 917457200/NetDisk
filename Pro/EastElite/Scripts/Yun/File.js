@@ -480,7 +480,9 @@ DFBGFlie.Flie.FlieOperation = {
             case ".xls":
             case ".xlsx":
             case ".ppt":
+            case ".docm":
             case ".pptx":
+            case ".pptm":
                 DFBGFlie.Flie.FlieOperation.AjaxHtml("/Details/Office", { FileId: FileId }, function (data) {
                     if (data != "") {
                         _base.Layer();
@@ -513,7 +515,9 @@ DFBGFlie.Flie.FlieOperation = {
             case ".mpeg":
             case ".mpg":
             case ".rm":
-
+            case ".asf":
+            case ".mov":
+            case ".smi":
                 DFBGFlie.Flie.FlieOperation.AjaxHtml("/Details/Video", { FileId: FileId }, function (data) {
                     if (data != "") {
                         _base.Layer();
@@ -537,7 +541,6 @@ DFBGFlie.Flie.FlieOperation = {
             case ".txt":
             case ".rar":
             case ".zip":
-            case ".exe":
             case ".psd":
             case ".xmind":
                 _base.Layer();

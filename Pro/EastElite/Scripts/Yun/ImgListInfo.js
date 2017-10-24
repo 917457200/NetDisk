@@ -100,7 +100,9 @@ function showTime(YearS, Moth) {
                 Html += " </div>";
                 Html += "</div>";
                 Html += "<div id=\"data" + datatime + "\" class=\"timeline-content global-clearfix list-content\">";
+               
                 Html += "</div>";
+                Html += "<div class=\"daysMore daysMore" + datatime + "\" ></div>";
                 obj.html(Html);
                 GetImgListInfo(datatime,1);
             }
@@ -121,9 +123,11 @@ function showTime(YearS, Moth) {
                 if ($(this).children(".global-icon-down").hasClass("global-icon-up")) {
                     $(this).children(".global-icon-down").removeClass("global-icon-up");
                     $(this).next().css("display", "block");
+                    $(this).next().next().css("display", "block");
                 } else {
                     $(this).children(".global-icon-down").addClass("global-icon-up");
                     $(this).next().css("display", "none");
+                    $(this).next().next().css("display", "none");
                 }
             })
            
@@ -153,8 +157,13 @@ function GetImgListInfo(time, idenx) {
                     Html += "</div>";
                     Html += "</a>";
                 }
-                $("#days-num" + time).html(data.ImgInfoList.length);
-                $("#data" + time).html(Html);
+                var Nowlength = parseFloat($("#days-num" + time).html() == "" ? 0 : $("#days-num" + time).html()) + parseFloat(data.ImgInfoList.length);
+                if (Nowlength < data.Count) {
+                    $(".daysMore" + time).html("");
+                    $(".daysMore" + time).append("<span class=\"\" onclick=\"GetImgListInfo('" + time + "'," + (idenx + 1) + ")\">点击查看更多</span>");
+                }
+                $("#days-num" + time).html(Nowlength);
+                $("#data" + time).append(Html);
                 $(".checkbox-item").off();
                 $(".checkbox-item").mousedown(function (e) {
                     e.preventDefault();

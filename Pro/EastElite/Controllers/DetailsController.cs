@@ -66,7 +66,7 @@ namespace EastElite.Controllers
         /// <returns></returns>
         public ActionResult ImgNext( int FileId, string Arrow, string ParentFileId )
         {
-            string Swhere = " FileExtName In('.bmp','.jpeg','.jpg','.gif','.png','.tif','.psd','.dwg') and FileState=1";
+            string Swhere = " FileExtName In('.bmp','.jpeg','.jpg','.gif','.png','.tif','.psd','.dwg','.wmf','.tif') and FileState=1";
             if( ParentFileId != "" )
             {
                 Swhere += " and  ParentFileId in(" + ParentFileId + ")  ";
@@ -136,6 +136,8 @@ namespace EastElite.Controllers
                 {
                     case ".docx":
                     case ".doc":
+                    case ".dot":
+                    case ".docm":
                         BLL.ToOffice.ConvertWordPdf( Server.MapPath( FileInfo.FileUrl ), ToFileUrl );
                         break;
                     case ".xls":
@@ -144,6 +146,7 @@ namespace EastElite.Controllers
                         break;
                     case ".ppt":
                     case ".pptx":
+                    case ".pptm":
                         BLL.ToOffice.ConvertPPTPDF( Server.MapPath( FileInfo.FileUrl ), ToFileUrl );
                         break;
                     default:
@@ -189,6 +192,8 @@ namespace EastElite.Controllers
             {
                 switch( EXT )
                 {
+                    case ".flv":
+                    case ".mp4":
                     case ".mkv":
                     case ".rmvb":
                     case ".avi":
@@ -198,6 +203,9 @@ namespace EastElite.Controllers
                     case ".mpeg":
                     case ".mpg":
                     case ".rm":
+                    case ".asf":
+                    case ".mov":
+                    case ".smi":
                         Vi.ChangeFile( Server.MapPath( FileInfo.FileUrl ), ToFileUrl, ToFileUrl );
 
                         break;
@@ -210,6 +218,8 @@ namespace EastElite.Controllers
             ViewBag.url = ( System.IO.Path.GetDirectoryName( FileInfo.FileUrl ) + "\\" + FileName + ".jpg" ).Replace( "\\", "/" );
             switch( EXT )
             {
+                case ".flv":
+                case ".mp4":
                 case ".mkv":
                 case ".rmvb":
                 case ".avi":
@@ -219,6 +229,9 @@ namespace EastElite.Controllers
                 case ".mpeg":
                 case ".mpg":
                 case ".rm":
+                case ".asf":
+                case ".mov":
+                case ".smi":
                     FileInfo.FileUrl = url.Replace( "\\", "/" );
                     break;
                 default:

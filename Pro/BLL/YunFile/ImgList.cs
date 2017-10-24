@@ -33,7 +33,7 @@ namespace BLL.YunFile
 
             using( var db = new Model.NETDISKDBEntities() )
             {
-                string strSql = "SELECT DISTINCT (CONVERT(varchar(10),(SELECT DATEPART(yyyy, FileCreateTime)))+'年'+ CONVERT(varchar(10),(SELECT DATEPART(mm, FileCreateTime)))+'月'+ CONVERT(varchar(10),(SELECT DATEPART(dd, FileCreateTime)))+'日') AS CreateUnitCode FROM dbo.YUN_FileInfo as a WHERE CreateId = '" + UserCode + "' AND FileExtName IN ('.bmp', '.jpeg', '.jpg', '.gif', '.png', '.tif', '.psd', '.dwg') and FileState=1 AND datediff(month,FileCreateTime,'" + time + "')=0 ORDER BY CreateUnitCode DESC";
+                string strSql = "SELECT DISTINCT (CONVERT(varchar(10),(SELECT DATEPART(yyyy, FileCreateTime)))+'年'+ CONVERT(varchar(10),(SELECT DATEPART(mm, FileCreateTime)))+'月'+ CONVERT(varchar(10),(SELECT DATEPART(dd, FileCreateTime)))+'日') AS CreateUnitCode FROM dbo.YUN_FileInfo as a WHERE CreateId = '" + UserCode + "' AND FileExtName IN ('.bmp','.jpeg','.jpg','.gif','.png','.tif','.psd','.dwg','.wmf') and FileState=1 AND datediff(month,FileCreateTime,'" + time + "')=0 ORDER BY CreateUnitCode DESC";
                 DataSet ds = MyFile.SqlQueryForDataTatable1( db.Database, strSql );
                
                 string[] column = new string[ds.Tables[0].Columns.Count];
@@ -54,7 +54,7 @@ namespace BLL.YunFile
             int startRow = ( pageIndex - 1 ) * pageSize;
             StringBuilder strSql = new StringBuilder();
 
-            strSql.Append( " SELECT TOP " + pageSize + " FileId,FileName,FileCreateTime,FileUrl,FileState,(CONVERT(varchar(10),(SELECT DATEPART(yyyy, FileCreateTime)))+'年'+ CONVERT(varchar(10),(SELECT DATEPART(mm, FileCreateTime)))+'月'+ CONVERT(varchar(10),(SELECT DATEPART(dd, FileCreateTime)))+'日') AS CreateUnitCode From (SELECT ROW_NUMBER() OVER (ORDER BY  FileId  desc) AS RowNumber,* FROM YUN_FileInfo as a where CreateId = '" + UserCode + "' AND FileExtName IN ('.bmp', '.jpeg', '.jpg', '.gif', '.png', '.tif', '.psd', '.dwg') and FileState=1 AND DATEDIFF(dd, FileCreateTime, '" + time + "') = 0 ) as A " );
+            strSql.Append( " SELECT TOP " + pageSize + " FileId,FileName,FileCreateTime,FileUrl,FileState,(CONVERT(varchar(10),(SELECT DATEPART(yyyy, FileCreateTime)))+'年'+ CONVERT(varchar(10),(SELECT DATEPART(mm, FileCreateTime)))+'月'+ CONVERT(varchar(10),(SELECT DATEPART(dd, FileCreateTime)))+'日') AS CreateUnitCode From (SELECT ROW_NUMBER() OVER (ORDER BY  FileId  desc) AS RowNumber,* FROM YUN_FileInfo as a where CreateId = '" + UserCode + "' AND FileExtName IN ('.bmp','.jpeg','.jpg','.gif','.png','.tif','.psd','.dwg','.wmf') and FileState=1 AND DATEDIFF(dd, FileCreateTime, '" + time + "') = 0 ) as A " );
             strSql.Append( "WHERE  RowNumber > " + startRow + " ORDER BY CreateUnitCode desc " );
 
             using( Model.NETDISKDBEntities Db = new Model.NETDISKDBEntities() )
@@ -70,7 +70,7 @@ namespace BLL.YunFile
         {
             StringBuilder strSql = new StringBuilder();
 
-            strSql.Append( " SELECT count(FileId) From YUN_FileInfo where CreateId = '" + UserCode + "' AND FileExtName IN ('.bmp', '.jpeg', '.jpg', '.gif', '.png', '.tif', '.psd', '.dwg') and FileState=1 AND DATEDIFF(dd, FileCreateTime, '" + time + "') = 0 " );
+            strSql.Append( " SELECT count(FileId) From YUN_FileInfo where CreateId = '" + UserCode + "' AND FileExtName IN ('.bmp','.jpeg','.jpg','.gif','.png','.tif','.psd','.dwg','.wmf') and FileState=1 AND DATEDIFF(dd, FileCreateTime, '" + time + "') = 0 " );
 
             using( Model.NETDISKDBEntities Db = new Model.NETDISKDBEntities() )
             {

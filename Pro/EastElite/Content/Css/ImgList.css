@@ -116,3 +116,4 @@ address, caption, cite, code, dfn, em, strong, th, var { font-style: normal; fon
 
     .aGMvFtb .ggEQwFb .cjujvy90 { cursor: pointer; margin: 0 5px; position: relative; }
     .aGMvFtb .ggEQwFb span { color: #3b8cff; }
+.daysMore span{ display:block; text-align:center;margin:10px auto; width:90%; background-color:#3b8cff; color:#fff;cursor:pointer; border-radius:10px; height:30px;line-height:30px;}

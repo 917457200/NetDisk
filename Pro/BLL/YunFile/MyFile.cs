@@ -948,22 +948,33 @@ namespace BLL.YunFile
                     {
                         case ".docx":
                         case ".doc":
+                        case ".dot":
+                        case ".docm":
                         case ".xls":
                         case ".xlsx":
                         case ".ppt":
                         case ".pptx":
+                        case ".pptm":
                             string PDfFileUrl = System.IO.Path.GetDirectoryName( WebUrl ) + "\\" + FileName + ".pdf";
                             if( FileHelper.ExitFile( PDfFileUrl ) )
                             {
                                 DeleteFile( PDfFileUrl );
                             }
                             break;
+                       
+                        case ".mp4":
                         case ".mkv":
                         case ".rmvb":
                         case ".avi":
                         case ".swf":
                         case ".wmv":
                         case ".3gp":
+                        case ".mpeg":
+                        case ".mpg":
+                        case ".rm":
+                        case ".asf":
+                        case ".mov":
+                        case ".smi":
                             string FlvFileUrl = System.IO.Path.GetDirectoryName( WebUrl ) + "\\" + FileName + ".flv";
                             string jpgFileUrl = System.IO.Path.GetDirectoryName( WebUrl ) + "\\" + FileName + ".jpg";
 
@@ -1029,22 +1040,33 @@ namespace BLL.YunFile
                     {
                         case ".docx":
                         case ".doc":
+                        case ".dot":
+                        case ".docm":
                         case ".xls":
                         case ".xlsx":
                         case ".ppt":
                         case ".pptx":
+                        case ".pptm":
                             string PDfFileUrl = System.IO.Path.GetDirectoryName( WebUrl ) + "\\" + FileName + ".pdf";
                             if( FileHelper.ExitFile( PDfFileUrl ) )
                             {
                                 DeleteFile( PDfFileUrl );
                             }
                             break;
+                      
+                        case ".mp4":
                         case ".mkv":
                         case ".rmvb":
                         case ".avi":
                         case ".swf":
                         case ".wmv":
                         case ".3gp":
+                        case ".mpeg":
+                        case ".mpg":
+                        case ".rm":
+                        case ".asf":
+                        case ".mov":
+                        case ".smi":
                             string FlvFileUrl = System.IO.Path.GetDirectoryName( WebUrl ) + "\\" + FileName + ".flv";
                             string jpgFileUrl = System.IO.Path.GetDirectoryName( WebUrl ) + "\\" + FileName + ".jpg";
 
@@ -1114,12 +1136,20 @@ namespace BLL.YunFile
                             DeleteFile( PDfFileUrl );
                         }
                         break;
+                  
+                    case ".mp4":
                     case ".mkv":
                     case ".rmvb":
                     case ".avi":
                     case ".swf":
                     case ".wmv":
                     case ".3gp":
+                    case ".mpeg":
+                    case ".mpg":
+                    case ".rm":
+                    case ".asf":
+                    case ".mov":
+                    case ".smi":
                         string FlvFileUrl = System.IO.Path.GetDirectoryName( WebUrl ) + "\\" + FileName + ".flv";
                         string jpgFileUrl = System.IO.Path.GetDirectoryName( WebUrl ) + "\\" + FileName + ".jpg";
 
@@ -1184,22 +1214,35 @@ namespace BLL.YunFile
                 {
                     case ".docx":
                     case ".doc":
+                    case ".dot":
+                    case ".docm":
                     case ".xls":
                     case ".xlsx":
                     case ".ppt":
                     case ".pptx":
+                    case ".pptm":
+
                         string PDfFileUrl = System.IO.Path.GetDirectoryName( WebUrl ) + "\\" + FileModel.FileName + ".pdf";
                         if( FileHelper.ExitFile( PDfFileUrl ) )
                         {
                             DeleteFile( PDfFileUrl );
                         }
                         break;
+                   
+                    case ".mp4":
                     case ".mkv":
                     case ".rmvb":
                     case ".avi":
                     case ".swf":
                     case ".wmv":
                     case ".3gp":
+                    case ".mpeg":
+                    case ".mpg":
+                    case ".rm":
+                    case ".asf":
+                    case ".mov":
+                    case ".smi":
+
                         string FlvFileUrl = System.IO.Path.GetDirectoryName( WebUrl ) + "\\" + FileName + ".flv";
                         string jpgFileUrl = System.IO.Path.GetDirectoryName( WebUrl ) + "\\" + FileName + ".jpg";
 
