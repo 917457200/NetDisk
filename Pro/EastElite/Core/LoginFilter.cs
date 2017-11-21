@@ -46,8 +46,8 @@ namespace Web.Core
             int intMinute = e.SignalTime.Minute;
             int intSecond = e.SignalTime.Second;
             // 定制时间； 比如 在24：00 ：00 的时候执行某个函数
-            int iHour = 24;
-            int iMinute = 00;
+            int iHour = 15;
+            int iMinute = 10;
             int iSecond = 00;
             // 设置　每天的24：00：00开始执行程序
             if( intHour == iHour && intMinute == iMinute && intSecond == iSecond )

@@ -148,77 +148,63 @@ namespace BLL
         }
 
         /// <summary>  
-        /// 复制大文件  
+        /// 复制文件  
         /// </summary>  
-        /// <param name="fromPath">源文件的路径</param>  
-        /// <param name="toPath">文件保存的路径</param>  
-        /// <param name="eachReadLength">每次读取的长度</param>  
-        /// <returns>是否复制成功</returns>  
-        public static bool CopyFile( string fromPath, string toPath, int eachReadLength )
+        public static bool CopyFile( string fromPath, string toPath )
         {
             try
             {
-                if( !System.IO.Directory.Exists( Path.GetDirectoryName( toPath ) ) )
+                Thread t = new Thread( new ThreadStart( () =>
                 {
-                    //不存在创建文件
-                    System.IO.Directory.CreateDirectory( Path.GetDirectoryName( toPath ) );
-                }
-                //将源文件 读取成文件流  
-                using(  FileStream fromFile = new FileStream( fromPath, FileMode.Open, FileAccess.Read ) )
-                {
-                    //已追加的方式 写入文件流  
-                    FileStream toFile = new FileStream( toPath, FileMode.Append, FileAccess.Write );
-                    //实际读取的文件长度  
-                    int toCopyLength = 0;
-                    //如果每次读取的长度小于 源文件的长度 分段读取  
-                    if( eachReadLength < fromFile.Length )
+                    if( !System.IO.Directory.Exists( Path.GetDirectoryName( toPath ) ) )
                     {
-                        byte[] buffer = new byte[eachReadLength];
-                        long copied = 0;
-                        while( copied <= fromFile.Length - eachReadLength )
-                        {
-                            toCopyLength = fromFile.Read( buffer, 0, eachReadLength );
-                            fromFile.Flush();
-                            toFile.Write( buffer, 0, eachReadLength );
-                            toFile.Flush();
-                            //流的当前位置  
-                            toFile.Position = fromFile.Position;
-                            copied += toCopyLength;
-                        }
-                        int left = (int) ( fromFile.Length - copied );
-                        toCopyLength = fromFile.Read( buffer, 0, left );
-                        fromFile.Flush();
-                        toFile.Write( buffer, 0, left );
-                        toFile.Flush();
-
+                        //不存在创建文件
+                        System.IO.Directory.CreateDirectory( Path.GetDirectoryName( toPath ) );
                     }
-                    else
-                    {
-                        //如果每次拷贝的文件长度大于源文件的长度 则将实际文件长度直接拷贝  
-                        byte[] buffer = new byte[fromFile.Length];
-                        fromFile.Read( buffer, 0, buffer.Length );
-                        fromFile.Flush();
-                        toFile.Write( buffer, 0, buffer.Length );
-                        toFile.Flush();
-                    }
-
-                    fromFile.Close();
-                    toFile.Close();
-                    return true;  
-                }
+                    File.Copy( fromPath, toPath, true );
+                } ) );
+                t.Start();
+                return true;
             }
             catch( Exception )
             {
                 return false;
                 throw;
             }
-
-
         }
+        public static bool MoveFile( string fromPath, string toPath )
+        {
+
+            try
+            {
+                Thread t = new Thread( new ThreadStart( () =>
+             {
+                 if( !System.IO.Directory.Exists( Path.GetDirectoryName( toPath ) ) )
+                 {
+                     //不存在创建文件
+                     System.IO.Directory.CreateDirectory( Path.GetDirectoryName( toPath ) );
+                 }
+                 //string fileNewDestination = @"E:\test.rar";
+                 FileInfo file = new FileInfo( fromPath );
+                 if( file.Exists )
+                 {
+                     file.MoveTo( toPath );
+                 }
+             } ) );
+                t.Start();
+                return true;
+            }
+            catch( Exception )
+            {
+                return false;
+                throw;
+            }
+        }
+
         /// <summary>  
         /// 是否存在  
         /// </summary>  
-        public static bool ExitFile( string Path)
+        public static bool ExitFile( string Path )
         {
             try
             {

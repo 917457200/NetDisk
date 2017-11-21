@@ -7,6 +7,7 @@ using System.Data.Entity.Infrastructure;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Web;
 using System.Web.Mvc;
 using Web.Core;
@@ -156,88 +157,83 @@ namespace EastElite.Controllers
         /// <param name="FileIdList">要移动的文件Id集合</param>
         /// <param name="WhereId">目标文件夹</param>
         /// <returns></returns>
-        public string SchoolShareFile( string FileIdList, string WhereId, string ShareTypeId, string GroupOrAgencyId, int? c = 0 )
+        public string SchoolShareFile( string FileIdList, string WhereId, string ShareTypeId, string GroupOrAgencyId, string userCode, int? c = 0 )
         {
-            if( FileIdList.Contains( "add" ) )
+           
+            if( string.IsNullOrEmpty( userCode ) )
             {
-                FileIdList = FileIdList.Replace( "add", "" );
+                BLL.Cookie.TeUser U = GetCookie.GetUserCookie();
+                userCode = U.userCode;
             }
-            BLL.Cookie.TeUser U = GetCookie.GetUserCookie();
-
-            List<Model.YUN_FileInfo> YunFileList = GetFile.GetFileByDown( "FileId", FileIdList.Trim( ',' ) );
-            using( Model.NETDISKDBEntities Db = new Model.NETDISKDBEntities() )
+            Thread t = new Thread( new ThreadStart( () =>
             {
-                foreach( var item in YunFileList )
+                if( FileIdList.Contains( "add" ) )
                 {
-                    if( c == 0 )
+                    FileIdList = FileIdList.Replace( "add", "" );
+                }
+
+                List<Model.YUN_FileInfo> YunFileList = GetFile.GetFileByDown( "FileId", FileIdList.Trim( ',' ) );
+                using( Model.NETDISKDBEntities Db = new Model.NETDISKDBEntities() )
+                {
+                    foreach( var item in YunFileList )
                     {
+                        if( c == 0 )
+                        {
+                            item.IsShare = true;
+                            item.ShareTime = DateTime.Now;
+                            item.ShareTypeId = ShareTypeId;
+                            DbEntityEntry<Model.YUN_FileInfo> entry = Db.Entry<Model.YUN_FileInfo>( item );
+                            entry.State = System.Data.Entity.EntityState.Modified;
+                            Db.SaveChanges();
+                        }
+
+                        item.ParentFileId = WhereId;
+                        item.FileState = true;
+                        item.ShareTypeId = ShareTypeId;
+                        item.CreateId = "User";
+                        item.ShareFileID = item.FileId.ToString();
+                        if( GroupOrAgencyId != "" && ShareTypeId == "1003" )
+                        {
+                            item.ShareGroupId = GroupOrAgencyId;
+                        }
+                        if( GroupOrAgencyId != "" && ShareTypeId == "1002" )
+                        {
+                            item.CreateUnitCode = GroupOrAgencyId;
+                        }
                         item.IsShare = true;
                         item.ShareTime = DateTime.Now;
-                        item.ShareTypeId = ShareTypeId;
-                        DbEntityEntry<Model.YUN_FileInfo> entry = Db.Entry<Model.YUN_FileInfo>( item );
-                        entry.State = System.Data.Entity.EntityState.Modified;
+
+                        item.FileName = GetFile.FileReNameForExit( item.ParentFileId, userCode, item.FileName, 0, ShareTypeId, GroupOrAgencyId );
+
+                       
+
+                        int OldId = item.FileId;
+
+                        Db.YUN_FileInfo.Add( item );
                         Db.SaveChanges();
-                    }
 
-
-                    item.ParentFileId = WhereId;
-                    item.FileState = true;
-                    item.ShareTypeId = ShareTypeId;
-                    item.CreateId = "User";
-                    item.ShareFileID = item.FileId.ToString();
-                    if( GroupOrAgencyId != "" && ShareTypeId == "1003" )
-                    {
-                        item.ShareGroupId = GroupOrAgencyId;
-                    }
-                    if( GroupOrAgencyId != "" && ShareTypeId == "1002" )
-                    {
-                        item.CreateUnitCode = GroupOrAgencyId;
-                    }
-                    item.IsShare = true;
-                    item.ShareTime = DateTime.Now;
-
-                    string FileUrl = item.FileUrl;
-                    string FileMapPath = "";
-                    GetFile.GetFileMapPath( WhereId, ShareTypeId, ref FileMapPath );
-                    FileMapPath = ( FileMapPath == "" ? "" : FileMapPath );
-                   
-                    item.FileUrl = "/Upload/Yun/" + FileMapPath + "/" + Path.GetFileName( item.FileUrl );
-
-                    item.FileName = GetFile.FileReNameForExit( item.ParentFileId, U.userCode, item.FileName, 0, ShareTypeId, GroupOrAgencyId );
-
-                    //已有文件
-                    if( FileHelper.ExitFile( Server.MapPath( item.FileUrl ) ) )
-                    {
-                        item.FileUrl = "/Upload/Yun/" + FileMapPath + "/" + Guid.NewGuid() + Path.GetExtension( item.FileUrl );
-                    }
-                    //文件复制
-                    FileHelper.CopyFile( Server.MapPath( FileUrl ), Server.MapPath( item.FileUrl ), 1024 * 1024 );
-
-                    int OldId = item.FileId;
-
-                    Db.YUN_FileInfo.Add( item );
-                    Db.SaveChanges();
-
-                    if( item.IsFolder == true )
-                    {
-                        string OldFileMapPath = "";
-                        GetFile.GetFileMapPath( item.FileId.ToString(), ShareTypeId, ref OldFileMapPath );
                         if( item.IsFolder == true )
                         {
-                            if( !System.IO.Directory.Exists( Server.MapPath( "/Upload/Yun/" + OldFileMapPath ) ) )
+                            string OldFileMapPath = "";
+                            GetFile.GetFileMapPath( item.FileId.ToString(), ShareTypeId, userCode, ref OldFileMapPath );
+                            if( item.IsFolder == true )
                             {
-                                //不存在创建文件
-                                System.IO.Directory.CreateDirectory( Server.MapPath( "/Upload/Yun/" + OldFileMapPath ) );
-                            }
-                            List<Model.YUN_FileInfo> DownFileList = GetFile.GetFileByDown( "ParentFileId", OldId.ToString() );
-                            for( int i = 0; i < DownFileList.Count; i++ )
-                            {
-                                SchoolShareFile( DownFileList[i].FileId.ToString(), item.FileId.ToString(), ShareTypeId, GroupOrAgencyId, 1 );
+                                if( !System.IO.Directory.Exists( Server.MapPath( "/Upload/Yun/" + OldFileMapPath ) ) )
+                                {
+                                    //不存在创建文件
+                                    System.IO.Directory.CreateDirectory( Server.MapPath( "/Upload/Yun/" + OldFileMapPath ) );
+                                }
+                                List<Model.YUN_FileInfo> DownFileList = GetFile.GetFileByDown( "ParentFileId", OldId.ToString() );
+                                for( int i = 0; i < DownFileList.Count; i++ )
+                                {
+                                    SchoolShareFile( DownFileList[i].FileId.ToString(), item.FileId.ToString(), ShareTypeId, GroupOrAgencyId, userCode,1 );
+                                }
                             }
                         }
                     }
                 }
-            }
+            } ) );
+            t.Start();
             return "suc";
         }
 

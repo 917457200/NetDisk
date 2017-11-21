@@ -8,6 +8,7 @@ using System.Drawing.Imaging;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
+using System.Threading;
 using System.Web;
 using System.Web.Mvc;
 using Web.Core;
@@ -160,7 +161,7 @@ namespace EastElite.Controllers
                     }
                     break;
                 default:
-                    YunFile.GetFileMapPath( parentFileId, Share, ref GetFileMapPath );
+                    YunFile.GetFileMapPath( parentFileId, Share, U.userCode, ref GetFileMapPath );
                     url = VIR_PATH + "/" + GetFileMapPath;
                     break;
             }
@@ -348,26 +349,11 @@ namespace EastElite.Controllers
         /// <returns></returns>
         public string DelMore( string FileIds )
         {
-            string result = "";
+
             FileIds = FileIds.Trim( ',' );
             if( FileIds.Contains( "add" ) )
             {
                 FileIds = FileIds.Replace( "add", "" );
-            }
-
-            string isFile = "";
-            //删除磁盘中的数据
-            List<Model.YUN_FileInfo> YunFileList = YunFile.GetFileByDown( "FileId", FileIds.Trim( ',' ) );
-            for( var z = 0; z < YunFileList.Count; z++ )
-            {
-                //判断当前需要删的是否是文件夹，如果是文件夹则需删除文件夹下的所有文件
-                string path = Server.MapPath( YunFileList[z].FileUrl.ToString() );
-                isFile = YunFileList[z].IsFolder.ToString();
-                if( isFile != "True" )
-                {
-                    YunFile.FileDelete( path );
-                }
-
             }
             //删除数据库中的数据
             if( FileIds.Contains( ',' ) )
@@ -377,29 +363,20 @@ namespace EastElite.Controllers
                 for( var i = 0; i < array.Length; i++ )
                 {
                     IsShareMethods( array[i] );
-                    if( YunFile.Delete( Convert.ToInt32( array[i] ) ) )
-                    {
-                        result = "suc";
-                    }
+                    YunFile.Delete( Convert.ToInt32( array[i] ) );
                 }
             }
             else
             {
                 IsShareMethods( FileIds );
-                if( YunFile.Delete( Convert.ToInt32( FileIds ) ) )//删除一个文件
-                {
-
-                    result = "suc";
-                }
+                YunFile.Delete( Convert.ToInt32( FileIds ) ); //删除一个文件
             }
-
-            //删除文件夹下数据库中的文件数据
-            if( isFile == "True" )
+            Thread t = new Thread( new ThreadStart( () =>
             {
                 DeleteFileDg( FileIds );
-            }
-
-            return result;
+            } ) );
+            t.Start();
+            return "suc";
         }
 
         //清空回收站
@@ -419,29 +396,25 @@ namespace EastElite.Controllers
         //真正删除文件
         public string TrueDel( string FileIds )
         {
-            BLL.Cookie.TeUser U = GetCookie.GetUserCookie();
-            string result = "";
-            FileIds = FileIds.Trim( ',' );
-            if( FileIds.Contains( ',' ) )
-            {
+            Thread t = new Thread( new ThreadStart( () =>
+             {
+                 FileIds = FileIds.Trim( ',' );
+                 if( FileIds.Contains( ',' ) )
+                 {
 
-                string[] array = FileIds.Split( ',' );
-                for( var i = 0; i < array.Length; i++ )
-                {
-                    if( YunFile.TrueDel( int.Parse( array[i].ToString() ) ) )
-                    {
-                        result = "suc";
-                    }
-                }
-            }
-            else
-            {
-                if( YunFile.TrueDel( int.Parse( FileIds ) ) )///真正删除文件
-                {
-                    result = "suc";
-                }
-            }
-            return result;
+                     string[] array = FileIds.Split( ',' );
+                     for( var i = 0; i < array.Length; i++ )
+                     {
+                         YunFile.TrueDel( int.Parse( array[i].ToString() ) );
+                     }
+                 }
+                 else
+                 {
+                     YunFile.TrueDel( int.Parse( FileIds ) ); ///真正删除文件
+                 }
+             } ) );
+            t.Start();
+            return "suc";
         }
 
         /// <summary>
@@ -456,10 +429,6 @@ namespace EastElite.Controllers
             for( var d = 0; d < YunFileList.Count; d++ )
             {
                 id = YunFileList[d].FileId.ToString();
-                if( YunFileList[d].IsFolder.ToString() == "False" )
-                {
-                    YunFile.FileDelete( Server.MapPath( YunFileList[d].FileUrl.ToString() ) );//删磁盘文件
-                }
                 YunFile.Delete( Convert.ToInt32( YunFileList[d].FileId ) );//删库中数据
                 DeleteFileDg( id );
             }
@@ -600,42 +569,35 @@ namespace EastElite.Controllers
         /// <returns></returns>
         public string ShareMethod( string FileId, string ShareTypeId )
         {
-            string result = "";
-            FileId = FileId.Trim( ',' );
-            if( FileId.Contains( "add" ) )
-            {
-                FileId = FileId.Replace( "add", "" );
-            }
-            if( FileId.Contains( ',' ) )
-            {
-                //批量分享
-                string[] array = FileId.Split( ',' );
-                for( var i = 0; i < array.Length; i++ )
-                {
-                    Model.YUN_FileInfo Info = YunFile.GetModel( int.Parse( array[i].ToString() ) );
-                    //if( bool.Parse( Info.IsFolder.ToString() ) && ShareTypeId == "1002" )
-                    //{
-                    //    return "NoCanShare";
-                    //}
-                    if( YunFile.Share( int.Parse( array[i].ToString() ), ShareTypeId, GetCookie.GetUserCookie().unitCode ) )
-                    {
-                        result = "suc";
-                    }
-                }
-            }
-            else
-            {
-                Model.YUN_FileInfo Info = YunFile.GetModel( int.Parse( FileId ) );
-                //if( bool.Parse( Info.IsFolder.ToString() ) && ShareTypeId == "1002" )
-                //{
-                //    return "NoCanShare";
-                //}
-                if( YunFile.Share( int.Parse( FileId ), ShareTypeId, GetCookie.GetUserCookie().unitCode ) )//分享一个文件
-                {
-                    result = "suc";
-                }
-            }
-            return result;
+            Thread t = new Thread( new ThreadStart( () =>
+              {
+                  FileId = FileId.Trim( ',' );
+                  if( FileId.Contains( "add" ) )
+                  {
+                      FileId = FileId.Replace( "add", "" );
+                  }
+                  if( FileId.Contains( ',' ) )
+                  {
+                      //批量分享
+                      string[] array = FileId.Split( ',' );
+                      for( var i = 0; i < array.Length; i++ )
+                      {
+                          Model.YUN_FileInfo Info = YunFile.GetModel( int.Parse( array[i].ToString() ) );
+                          YunFile.Share( int.Parse( array[i].ToString() ), ShareTypeId, GetCookie.GetUserCookie().unitCode );
+                      }
+                  }
+                  else
+                  {
+                      Model.YUN_FileInfo Info = YunFile.GetModel( int.Parse( FileId ) );
+                      //if( bool.Parse( Info.IsFolder.ToString() ) && ShareTypeId == "1002" )
+                      //{
+                      //    return "NoCanShare";
+                      //}
+                      YunFile.Share( int.Parse( FileId ), ShareTypeId, GetCookie.GetUserCookie().unitCode );//分享一个文件
+                  }
+              } ) );
+            t.Start();
+            return "suc";
         }
 
         /// <summary>
@@ -644,42 +606,44 @@ namespace EastElite.Controllers
         /// <returns></returns>
         public string IsShareMethods( string FileId )
         {
-            string result = "";
-            FileId = FileId.Trim( ',' );
-            if( FileId.Contains( "add" ) )
-            {
-                FileId = FileId.Replace( "add", "" );
-            }
-            if( FileId.Contains( ',' ) )
-            {
-                //批量取消分享
-                string[] array = FileId.Split( ',' );
-                for( var i = 0; i < array.Length; i++ )
-                {
-                    if( YunFile.IsShare( int.Parse( array[i].ToString() ) ) )
-                    {
-                        string ShareFileS = YunFile.GetModelByShareFileID( array[i].ToString() );
-                        if( ShareFileS != "" )
-                        {
-                            TrueDel( ShareFileS );
-                        }
-                        result = "suc";
-                    }
-                }
-            }
-            else
-            {
-                if( YunFile.IsShare( int.Parse( FileId ) ) )
-                {
-                    string ShareFileS = YunFile.GetModelByShareFileID( FileId );
-                    if( ShareFileS != "" )
-                    {
-                        TrueDel( ShareFileS );
-                    }
-                    result = "suc";
-                }
-            }
-            return result;
+
+            Thread t = new Thread( new ThreadStart( () =>
+           {
+               FileId = FileId.Trim( ',' );
+               if( FileId.Contains( "add" ) )
+               {
+                   FileId = FileId.Replace( "add", "" );
+               }
+               if( FileId.Contains( ',' ) )
+               {
+                   //批量取消分享
+                   string[] array = FileId.Split( ',' );
+                   for( var i = 0; i < array.Length; i++ )
+                   {
+                       if( YunFile.IsShare( int.Parse( array[i].ToString() ) ) )
+                       {
+                           string ShareFileS = YunFile.GetModelByShareFileID( array[i].ToString() );
+                           if( ShareFileS != "" )
+                           {
+                               TrueDel( ShareFileS );
+                           }
+                       }
+                   }
+               }
+               else
+               {
+                   if( YunFile.IsShare( int.Parse( FileId ) ) )
+                   {
+                       string ShareFileS = YunFile.GetModelByShareFileID( FileId );
+                       if( ShareFileS != "" )
+                       {
+                           TrueDel( ShareFileS );
+                       }
+                   }
+               }
+           } ) );
+            t.Start();
+            return "suc";
         }
         //缩略图加载
         public FileContentResult ImgSuoLue( int FileId )
@@ -839,7 +803,7 @@ namespace EastElite.Controllers
                     model.CreateName = "赵测1";
                     model.CreateUnitCode = "610105100611";
                     //文件复制
-                    FileHelper.CopyFile( NextFile.FullName, Server.MapPath( ReturnFileUrl ), 1024 * 1024 );
+                    FileHelper.CopyFile( NextFile.FullName, Server.MapPath( ReturnFileUrl ) );
 
                     Db.YUN_FileInfo.Add( model );
                     Db.SaveChanges();
@@ -851,7 +815,7 @@ namespace EastElite.Controllers
         {
             string[] File = FileUr.Split( '◆' );
             string FileUr2 = "";
-            DirectoryInfo TheFolder = new DirectoryInfo( @"" + File[2]);
+            DirectoryInfo TheFolder = new DirectoryInfo( @"" + File[2] );
             int i = 0;
             foreach( DirectoryInfo NextFolder in TheFolder.GetDirectories() )
             {
@@ -873,7 +837,7 @@ namespace EastElite.Controllers
                     int count = Db.SaveChanges();
                     if( count > 0 )
                     {
-                        FileUr2 = NextFolder.Name + "◆" + model.FileId.ToString() + "◆" + File[2]+"//" + NextFolder.Name;
+                        FileUr2 = NextFolder.Name + "◆" + model.FileId.ToString() + "◆" + File[2] + "//" + NextFolder.Name;
                         Childdao( FileUr2 );
                     }
                 }
@@ -905,7 +869,7 @@ namespace EastElite.Controllers
                     model.CreateName = "赵测1";
                     model.CreateUnitCode = "610105100611";
                     //文件复制
-                    FileHelper.CopyFile( NextFile.FullName, Server.MapPath( ReturnFileUrl ), 1024 * 1024 );
+                    FileHelper.CopyFile( NextFile.FullName, Server.MapPath( ReturnFileUrl ) );
 
                     Db.YUN_FileInfo.Add( model );
                     Db.SaveChanges();
@@ -926,18 +890,12 @@ namespace EastElite.Controllers
                 FileIdList = FileIdList.Replace( "add", "" );
             }
             BLL.Cookie.TeUser U = GetCookie.GetUserCookie();
+             
+            FileMoveTo( FileIdList.Trim( ',' ), WhereId, MoveType, Share, U.userCode );
 
-            if( YunFile.FileIsExit( FileIdList.Trim( ',' ), WhereId, U.userCode ) )
-            {
-                return "FileExit";
-            }
-            else
-            {
-                FileMoveTo( FileIdList.Trim( ',' ), WhereId, MoveType, Share );
-
-            }
             return "suc";
         }
+
         /// <summary>
         /// 移动文件、复制文件
         /// </summary>
@@ -945,18 +903,23 @@ namespace EastElite.Controllers
         /// <param name="WhereId">目标文件夹</param>
         /// <param name="MoveType">类型 1复制 2移动</param>
         /// <returns></returns>
-        public string FileMoveTo( string FileIdList, string WhereId, string MoveType, string Share )
+        public string FileMoveTo( string FileIdList, string WhereId, string MoveType, string Share, string userCode )
         {
+            ///userCode是否为空
+            if( string.IsNullOrEmpty( userCode ) )
+            {
+                BLL.Cookie.TeUser U = GetCookie.GetUserCookie();
+                userCode = U.userCode;
+            }
             if( FileIdList.Contains( "add" ) )
             {
                 FileIdList = FileIdList.Replace( "add", "" );
             }
-            int re; bool Copy = false;
+            //获取要复制的文件
             List<Model.YUN_FileInfo> YunFileList = YunFile.GetFileByDown( "FileId", FileIdList.Trim( ',' ) );
             using( Model.NETDISKDBEntities Db = new Model.NETDISKDBEntities() )
             {
-                BLL.Cookie.TeUser U = GetCookie.GetUserCookie();
-
+                //要复制的文件循环
                 foreach( var item in YunFileList )
                 {
                     if( WhereId == item.FileId.ToString() )
@@ -966,27 +929,20 @@ namespace EastElite.Controllers
                     item.ParentFileId = WhereId;
                     item.FileState = true;
                     item.IsShare = false;
-                    if( item.IsFolder == true )
-                    {
-                        Copy = true;
-                    }
-                    string FileUrl = item.FileUrl;
+                    string FileUrl = item.FileUrl;//要复制的文件路径
                     string FileMapPath = "";
-                    YunFile.GetFileMapPath( WhereId, Share, ref FileMapPath );
-                    FileMapPath = ( FileMapPath == "" ? "" : FileMapPath );
+                    /// 递归向上 获取当前复制到的文件夹名
+                    YunFile.GetFileMapPath( WhereId, Share, userCode, ref FileMapPath );
+                    FileMapPath = ( FileMapPath == userCode + "/" ? FileMapPath :( FileMapPath+"/") );//复制到的文件夹名
 
-                    item.FileUrl = "/Upload/Yun/" + FileMapPath + "/" + Path.GetFileName( item.FileUrl );
+                    //复制到的文件路径
+                    item.FileUrl = "/Upload/Yun/" +  FileMapPath  + Path.GetFileName( item.FileUrl );
 
                     //已有文件
                     if( FileHelper.ExitFile( Server.MapPath( item.FileUrl ) ) )
                     {
-                        item.FileUrl = "/Upload/Yun/" + FileMapPath + "/" + Guid.NewGuid() + Path.GetExtension( item.FileUrl );
-                        item.FileName = YunFile.FileReNameForExit( item.ParentFileId, U.userCode, item.FileName, 0, Share, "" );
-                    }
-                    //文件复制
-                    if( FileHelper.CopyFile( Server.MapPath( FileUrl ), Server.MapPath( item.FileUrl ), 1024 * 1024 ) )
-                    {
-                        Copy = true;
+                        item.FileUrl = "/Upload/Yun/" +  FileMapPath  + Guid.NewGuid() + Path.GetExtension( item.FileUrl );
+                        item.FileName = YunFile.FileReNameForExit( item.ParentFileId, userCode, item.FileName, 0, Share, "" );
                     }
                     int OldId = item.FileId;
 
@@ -996,64 +952,60 @@ namespace EastElite.Controllers
                         case "1":
                             if( item.IsFolder == true )
                             {
-                                item.FileName = YunFile.FileReNameForExit( item.ParentFileId, U.userCode, item.FileName, 0, Share, "" );
+                                item.FileName = YunFile.FileReNameForExit( item.ParentFileId, userCode, item.FileName, 0, Share, "" );
                                 Db.YUN_FileInfo.Add( item );
                                 Db.SaveChanges();
                                 List<Model.YUN_FileInfo> DownFileList = YunFile.GetFileByDown( "ParentFileId", OldId.ToString() );
                                 for( int i = 0; i < DownFileList.Count; i++ )
                                 {
-                                    FileMoveTo( DownFileList[i].FileId.ToString(), item.FileId.ToString(), MoveType, Share );
+                                    FileMoveTo( DownFileList[i].FileId.ToString(), item.FileId.ToString(), MoveType, Share, userCode );
                                 }
                             }
                             else
                             {
+                                //文件复制
+                                FileHelper.CopyFile( Server.MapPath( FileUrl ), Server.MapPath( item.FileUrl ) );
                                 Db.YUN_FileInfo.Add( item );
                                 Db.SaveChanges();
                             }
                             break;
                         case "2":
-                            if( Copy )
+                            DbEntityEntry<Model.YUN_FileInfo> entry = Db.Entry<Model.YUN_FileInfo>( item );
+                            entry.State = System.Data.Entity.EntityState.Modified;
+                            string OldFileMapPath = "";
+                            YunFile.GetFileMapPath( OldId.ToString(), Share, userCode, ref OldFileMapPath );
+
+                            if( item.IsFolder == true )
                             {
-                                DbEntityEntry<Model.YUN_FileInfo> entry = Db.Entry<Model.YUN_FileInfo>( item );
-                                entry.State = System.Data.Entity.EntityState.Modified;
-                                string OldFileMapPath = "";
-                                YunFile.GetFileMapPath( OldId.ToString(), Share, ref OldFileMapPath );
-
-                                if( item.IsFolder == true )
+                                item.FileName = YunFile.FileReNameForExit( item.ParentFileId, userCode, item.FileName, 0, Share, "" );
+                                Db.SaveChanges();
+                                if( !System.IO.Directory.Exists( Server.MapPath( "/Upload/Yun/" + FileMapPath ) ) )
                                 {
-                                    item.FileName = YunFile.FileReNameForExit( item.ParentFileId, U.userCode, item.FileName, 0, Share, "" );
-                                    Db.SaveChanges();
-                                    if( !System.IO.Directory.Exists( Server.MapPath( "/Upload/Yun/" + FileMapPath ) ) )
-                                    {
-                                        //不存在创建文件
-                                        System.IO.Directory.CreateDirectory( Server.MapPath( "/Upload/Yun/" + FileMapPath ) );
-                                    }
-                                    List<Model.YUN_FileInfo> DownFileList = YunFile.GetFileByDown( "ParentFileId", OldId.ToString() );
-                                    for( int i = 0; i < DownFileList.Count; i++ )
-                                    {
-                                        FileMoveTo( DownFileList[i].FileId.ToString(), item.FileId.ToString(), MoveType, Share );
-                                    }
-
-                                    if( System.IO.Directory.Exists( Server.MapPath( "/Upload/Yun/" + OldFileMapPath ) ) )
-                                    {
-                                        System.IO.Directory.Delete( Server.MapPath( "/Upload/Yun/" + OldFileMapPath ) );
-                                    }
+                                    //不存在创建文件
+                                    System.IO.Directory.CreateDirectory( Server.MapPath( "/Upload/Yun/" + FileMapPath ) );
                                 }
-                                else
+                                List<Model.YUN_FileInfo> DownFileList = YunFile.GetFileByDown( "ParentFileId", OldId.ToString() );
+                                for( int i = 0; i < DownFileList.Count; i++ )
                                 {
-                                    Db.SaveChanges();
-                                    YunFile.DeleteFile( Server.MapPath( FileUrl ) );
+                                    FileMoveTo( DownFileList[i].FileId.ToString(), item.FileId.ToString(), MoveType, Share, userCode );
                                 }
+                            }
+                            else
+                            {
+                                FileHelper.MoveFile( Server.MapPath( FileUrl ), Server.MapPath( item.FileUrl ) );
+                                Db.SaveChanges();
                             }
                             break;
                         default:
                             break;
                     }
                 }
-
             }
             return "suc";
         }
+
+
+
         //还原文件
         public string Reduction( string FileId )
         {

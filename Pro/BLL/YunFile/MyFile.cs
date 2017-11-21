@@ -7,6 +7,7 @@ using System.Data.SqlClient;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
 
@@ -15,6 +16,7 @@ namespace BLL.YunFile
     public class MyFile
     {
         DataSetToList List = new DataSetToList();
+        public string str4 = AppDomain.CurrentDomain.BaseDirectory;    //获取基目录，它由程序集冲突解决程序用来探测程序集。
 
         /// <summary>
         /// 获取我的网盘数据
@@ -140,7 +142,7 @@ namespace BLL.YunFile
         public List<Model.YUN_FileInfo> MyFriendLoad( string FileIds, string FileId )
         {
             string wherestr = "";
-            if( FileId!="" )
+            if( FileId != "" )
             {
                 wherestr = " and ParentFileId = " + FileId;
             }
@@ -259,7 +261,7 @@ namespace BLL.YunFile
         /// </summary>
         /// <param name="parentFileId"></param>
         /// <returns></returns>
-        public void GetFileMapPath( string parentFileId, string IsShare, ref string path )
+        public void GetFileMapPath( string parentFileId, string IsShare, string userCode, ref string path )
         {
             string isFile = "";
             //空值和0 是我的网盘否是最顶部
@@ -267,7 +269,6 @@ namespace BLL.YunFile
             {
                 case "":
                 case "0":
-                    Cookie C = new Cookie();
                     switch( IsShare )
                     {
                         case "1001":
@@ -280,7 +281,7 @@ namespace BLL.YunFile
                             path = "Group/" + path;
                             break;
                         default:
-                            path = C.GetUserCookie().userCode + "/" + path;
+                            path = userCode + "/" + path;
                             break;
                     }
                     break;
@@ -297,7 +298,7 @@ namespace BLL.YunFile
                     isFile = YunFileList.IsFolder.ToString();
                     if( isFile == "True" )
                     {
-                        GetFileMapPath( YunFileList.ParentFileId, IsShare, ref  path );
+                        GetFileMapPath( YunFileList.ParentFileId, IsShare, userCode, ref  path );
                     }
                     break;
             }
@@ -328,7 +329,7 @@ namespace BLL.YunFile
         /// </summary>
         /// <param name="parentFileId"></param>
         /// <returns></returns>
-        public void GetFileMapPathByDel( string parentFileId, string IsShare, ref string path )
+        public void GetFileMapPathByDel( string parentFileId, string userCode, string IsShare, ref string path )
         {
             string isFile = "";
             //空值和0 是我的网盘否是最顶部
@@ -336,7 +337,7 @@ namespace BLL.YunFile
             {
                 case "":
                 case "0":
-                    Cookie C = new Cookie();
+
                     switch( IsShare )
                     {
                         case "1001":
@@ -349,7 +350,7 @@ namespace BLL.YunFile
                             path = "Group/" + path;
                             break;
                         default:
-                            path = C.GetUserCookie().userCode + "/" + path;
+                            path = userCode + "/" + path;
                             break;
                     }
                     break;
@@ -366,7 +367,7 @@ namespace BLL.YunFile
                     isFile = YunFileList.IsFolder.ToString();
                     if( isFile == "True" )
                     {
-                        GetFileMapPathByDel( YunFileList.ParentFileId, IsShare, ref  path );
+                        GetFileMapPathByDel( YunFileList.ParentFileId, userCode, IsShare, ref  path );
                     }
                     break;
             }
@@ -437,7 +438,10 @@ namespace BLL.YunFile
         /// <param name="path"></param>
         public void FileDelete( string path )
         {
-            //File.Delete(path);
+            if( File.Exists( path ) )
+            {
+                File.Delete( path );
+            }
         }
         /// <summary> 
         /// 文件删除
@@ -445,16 +449,30 @@ namespace BLL.YunFile
         /// <param name="path"></param>
         public void DeleteFile( string path )
         {
-            if( File.Exists( path ) )
+            try
             {
-                File.Delete( path );
+                if( File.Exists( path ) )
+                {
+                    File.Delete( path );
+                }
+            }
+            catch( Exception )
+            {
+                throw;
             }
         }
         public void DeleteFolderFile( string path )
         {
-            if( System.IO.Directory.Exists( path ) )
+            try
             {
-                System.IO.Directory.Delete( path, true );
+                if( System.IO.Directory.Exists( path ) )
+                {
+                    System.IO.Directory.Delete( path, true );
+                }
+            }
+            catch( Exception )
+            {
+                throw;
             }
         }
         /// <summary>
@@ -462,7 +480,6 @@ namespace BLL.YunFile
         /// </summary>
         public bool Delete( int delId )
         {
-
             Model.YUN_FileInfo F = GetModel( delId );
             F.FileState = false;
             F.FileDeleteTime = DateTime.Now;
@@ -540,14 +557,14 @@ namespace BLL.YunFile
             {
                 Db.YUN_FileInfo.Attach( F );
                 Db.Entry( F ).Property( x => x.IsShare ).IsModified = true;
-                
+
                 string StrFileId = FileId.ToString();
                 var File = from b in Db.ShareLinkInfo
                            where b.FileId == StrFileId
                            orderby b.FileId
                            select b;
                 Model.ShareLinkInfo FileModel = File.FirstOrDefault();
-                if( FileModel!=null )
+                if( FileModel != null )
                 {
                     Db.ShareLinkInfo.Remove( FileModel );
                 }
@@ -580,6 +597,7 @@ namespace BLL.YunFile
         /// </summary>
         public bool Reduction( int FileId )
         {
+
             Model.YUN_FileInfo FileInfo = GetModel( FileId );
             if( !string.IsNullOrEmpty( FileInfo.ParentFileId ) )
             {
@@ -605,20 +623,14 @@ namespace BLL.YunFile
             }
             else
             {
-                if( ReductionFlie( FileId ) )
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
+                ReductionFlie( FileId );
+                return true;
             }
         }
         /// <summary>
         /// 文件还原
         /// </summary>
-        public bool ReductionFlie( int FileId )
+        public void ReductionFlie( int FileId )
         {
             Model.YUN_FileInfo F = new Model.YUN_FileInfo() { FileId = FileId, FileState = true };
 
@@ -628,14 +640,7 @@ namespace BLL.YunFile
 
                 Db.Entry( F ).Property( x => x.FileState ).IsModified = true;
                 int rows = Db.SaveChanges();
-                if( rows > 0 )
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
+
             }
         }
         /// <summary>
@@ -931,109 +936,111 @@ namespace BLL.YunFile
         //清空回收站
         public bool ClearDel( string Code )
         {
-            //数据库访问模式
-            using( Model.NETDISKDBEntities Db = new Model.NETDISKDBEntities() )
+            Thread t = new Thread( new ThreadStart( () =>
             {
-                var filelist = from b in Db.YUN_FileInfo.ToList()
-                               where b.CreateId == Code && b.FileState == false
-                               select b;
-                var Filelist = filelist.ToList();
-
-                foreach( var item in Filelist )
+                //数据库访问模式
+                using( Model.NETDISKDBEntities Db = new Model.NETDISKDBEntities() )
                 {
-                    string WebUrl = HttpContext.Current.Server.MapPath( item.FileUrl );
-                    string FileName = System.IO.Path.GetFileNameWithoutExtension( WebUrl );
+                    var filelist = from b in Db.YUN_FileInfo.ToList()
+                                   where b.CreateId == Code && b.FileState == false
+                                   select b;
+                    var Filelist = filelist.ToList();
 
-                    switch( item.FileExtName )
+                    foreach( var item in Filelist )
                     {
-                        case ".docx":
-                        case ".doc":
-                        case ".dot":
-                        case ".docm":
-                        case ".xls":
-                        case ".xlsx":
-                        case ".ppt":
-                        case ".pptx":
-                        case ".pptm":
-                            string PDfFileUrl = System.IO.Path.GetDirectoryName( WebUrl ) + "\\" + FileName + ".pdf";
-                            if( FileHelper.ExitFile( PDfFileUrl ) )
-                            {
-                                DeleteFile( PDfFileUrl );
-                            }
-                            break;
-                       
-                        case ".mp4":
-                        case ".mkv":
-                        case ".rmvb":
-                        case ".avi":
-                        case ".swf":
-                        case ".wmv":
-                        case ".3gp":
-                        case ".mpeg":
-                        case ".mpg":
-                        case ".rm":
-                        case ".asf":
-                        case ".mov":
-                        case ".smi":
-                            string FlvFileUrl = System.IO.Path.GetDirectoryName( WebUrl ) + "\\" + FileName + ".flv";
-                            string jpgFileUrl = System.IO.Path.GetDirectoryName( WebUrl ) + "\\" + FileName + ".jpg";
+                        string WebUrl = str4 + "";
+                        if( !string.IsNullOrEmpty( item.FileUrl ) )
+                        {
+                            WebUrl += item.FileUrl.Substring( 1, item.FileUrl.Length - 1 ).Replace( "/", "\\" );
+                        }
+                        string FileName = System.IO.Path.GetFileNameWithoutExtension( WebUrl );
 
-                            if( FileHelper.ExitFile( FlvFileUrl ) )
-                            {
-                                DeleteFile( FlvFileUrl );
-                            }
-                            if( FileHelper.ExitFile( jpgFileUrl ) )
-                            {
-                                DeleteFile( jpgFileUrl );
-                            }
-                            break;
-                        default:
-                            break;
-                    }
-                    if( item.IsFolder == true )
-                    {
-                        string FileMapPath = "";
-                        GetFileMapPathByDel( item.FileId.ToString(), "", ref FileMapPath );
-                        DeleteFolderFile( HttpContext.Current.Server.MapPath( "/Upload/Yun/" + FileMapPath ) );
-                    }
-                    else
-                    {
-                        DeleteFile( WebUrl );
-                    }
-                    Db.YUN_FileInfo.Remove( item );
-                }
-                int rows = Db.SaveChanges();
-                if( rows == Filelist.Count() )
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
+                        switch( item.FileExtName )
+                        {
+                            case ".docx":
+                            case ".doc":
+                            case ".dot":
+                            case ".docm":
+                            case ".xls":
+                            case ".xlsx":
+                            case ".ppt":
+                            case ".pptx":
+                            case ".pptm":
+                                string PDfFileUrl = System.IO.Path.GetDirectoryName( WebUrl ) + "\\" + FileName + ".pdf";
+                                if( FileHelper.ExitFile( PDfFileUrl ) )
+                                {
+                                    DeleteFile( PDfFileUrl );
+                                }
+                                break;
 
-            }
+                            case ".mp4":
+                            case ".mkv":
+                            case ".rmvb":
+                            case ".avi":
+                            case ".swf":
+                            case ".wmv":
+                            case ".3gp":
+                            case ".mpeg":
+                            case ".mpg":
+                            case ".rm":
+                            case ".asf":
+                            case ".mov":
+                            case ".smi":
+                                string FlvFileUrl = System.IO.Path.GetDirectoryName( WebUrl ) + "\\" + FileName + ".flv";
+                                string jpgFileUrl = System.IO.Path.GetDirectoryName( WebUrl ) + "\\" + FileName + ".jpg";
+
+                                if( FileHelper.ExitFile( FlvFileUrl ) )
+                                {
+                                    DeleteFile( FlvFileUrl );
+                                }
+                                if( FileHelper.ExitFile( jpgFileUrl ) )
+                                {
+                                    DeleteFile( jpgFileUrl );
+                                }
+                                break;
+                            default:
+                                break;
+                        }
+                        if( item.IsFolder == true )
+                        {
+                            string FileMapPath = "";
+                            GetFileMapPathByDel( item.FileId.ToString(), Code, "", ref FileMapPath );
+                            string path = "/Upload/Yun/" + FileMapPath;
+                            DeleteFolderFile( str4 + path.Substring( 1, path.Length - 1 ).Replace( "/", "\\" ) );
+                        }
+                        else
+                        {
+                            DeleteFile( WebUrl );
+                        }
+                        Db.YUN_FileInfo.Remove( item );
+                    }
+                    Db.SaveChanges();
+                }
+            } ) );
+            t.Start();
+            return true;
 
         }
         //定时清理数据
         public bool ClearFile()
         {
-
-            string str4 = AppDomain.CurrentDomain.BaseDirectory;    //获取基目录，它由程序集冲突解决程序用来探测程序集。
-
+            KillEmptyDirectory( str4 + "\\Upload\\Yun" );
             string str7 = AppDomain.CurrentDomain.SetupInformation.ApplicationBase;
             //数据库访问模式
             using( Model.NETDISKDBEntities Db = new Model.NETDISKDBEntities() )
             {
                 var filelist = from b in Db.YUN_FileInfo.ToList()
-                               where b.FileDeleteTime < DateTime.Now.AddDays( -10 ) && b.FileState == false
+                               where b.FileDeleteTime < DateTime.Now.AddDays( -1 ) && b.FileState == false
                                select b;
                 var Filelist = filelist.ToList();
 
                 foreach( var item in Filelist )
                 {
-
-                    string WebUrl = str4 + item.FileUrl.Replace( "\\", "#$" ).Replace( "/", "\\" ).Replace( "#$", "\\" );
+                    string WebUrl = str4 + "";
+                    if( !string.IsNullOrEmpty( item.FileUrl ) )
+                    {
+                        WebUrl += item.FileUrl.Substring( 1, item.FileUrl.Length - 1 ).Replace( "/", "\\" );
+                    }
                     string FileName = System.IO.Path.GetFileNameWithoutExtension( WebUrl );
 
                     switch( item.FileExtName )
@@ -1053,7 +1060,7 @@ namespace BLL.YunFile
                                 DeleteFile( PDfFileUrl );
                             }
                             break;
-                      
+
                         case ".mp4":
                         case ".mkv":
                         case ".rmvb":
@@ -1085,8 +1092,9 @@ namespace BLL.YunFile
                     if( item.IsFolder == true )
                     {
                         string FileMapPath = "";
-                        GetFileMapPathByDel( item.FileId.ToString(), "", ref FileMapPath );
-                        DeleteFolderFile( HttpContext.Current.Server.MapPath( "/Upload/Yun/" + FileMapPath ) );
+                        GetFileMapPathByDel( item.FileId.ToString(), item.CreateId, "", ref FileMapPath );
+                        string path = "/Upload/Yun/" + FileMapPath;
+                        DeleteFolderFile( str4 + path.Substring( 1, path.Length - 1 ).Replace( "/", "\\" ) );
                     }
                     else
                     {
@@ -1120,7 +1128,11 @@ namespace BLL.YunFile
                            select b;
                 Model.YUN_FileInfo FileModel = File.FirstOrDefault();
 
-                string WebUrl = HttpContext.Current.Server.MapPath( FileModel.FileUrl );
+                string WebUrl = str4 + "";
+                if( !string.IsNullOrEmpty( FileModel.FileUrl ) )
+                {
+                    WebUrl += FileModel.FileUrl.Substring( 1, FileModel.FileUrl.Length - 1 ).Replace( "/", "\\" );
+                }
                 string FileName = System.IO.Path.GetFileNameWithoutExtension( WebUrl );
                 switch( FileModel.FileExtName )
                 {
@@ -1136,7 +1148,7 @@ namespace BLL.YunFile
                             DeleteFile( PDfFileUrl );
                         }
                         break;
-                  
+
                     case ".mp4":
                     case ".mkv":
                     case ".rmvb":
@@ -1167,11 +1179,11 @@ namespace BLL.YunFile
                 }
                 if( FileModel.IsFolder == true )
                 {
-                    string path="";
-                    GetFileMapPathByDel( FileModel.FileId.ToString(), FileModel.ShareTypeId,ref path );
-                    path = HttpContext.Current.Server.MapPath( "/Upload/Yun/" + path );
-                    DeleteFolderFile( path );
-                   
+                    string path = "";
+                    GetFileMapPathByDel( FileModel.FileId.ToString(), FileModel.CreateId, FileModel.ShareTypeId, ref path );
+                    path = "/Upload/Yun/" + path;
+                    DeleteFolderFile( str4 + path.Substring( 1, path.Length - 1 ).Replace( "/", "\\" ) );
+
                     List<Model.YUN_FileInfo> YunFileList = GetFileByDown( "ParentFileId", FileModel.FileId.ToString() );
                     for( var z = 0; z < YunFileList.Count; z++ )
                     {
@@ -1192,9 +1204,7 @@ namespace BLL.YunFile
                 {
                     return false;
                 }
-
             }
-
         }
         //分享删除数据
         public bool ShareTrueDel( int fileId )
@@ -1208,7 +1218,11 @@ namespace BLL.YunFile
                            select b;
                 Model.YUN_FileInfo FileModel = File.FirstOrDefault();
 
-                string WebUrl = HttpContext.Current.Server.MapPath( FileModel.FileUrl );
+                string WebUrl = str4 + "";
+                if( !string.IsNullOrEmpty( FileModel.FileUrl ) )
+                {
+                    WebUrl += FileModel.FileUrl.Substring( 1, FileModel.FileUrl.Length - 1 ).Replace( "/", "\\" );
+                }
                 string FileName = System.IO.Path.GetFileNameWithoutExtension( WebUrl );
                 switch( FileModel.FileExtName )
                 {
@@ -1228,7 +1242,7 @@ namespace BLL.YunFile
                             DeleteFile( PDfFileUrl );
                         }
                         break;
-                   
+
                     case ".mp4":
                     case ".mkv":
                     case ".rmvb":
@@ -1261,9 +1275,9 @@ namespace BLL.YunFile
                 if( FileModel.IsFolder == true )
                 {
                     string path = "";
-                    GetFileMapPathByDel( FileModel.FileId.ToString(), FileModel.ShareTypeId, ref path );
-                    path = HttpContext.Current.Server.MapPath( "/Upload/Yun/" + path );
-                    DeleteFolderFile( path );
+                    GetFileMapPathByDel( FileModel.FileId.ToString(), FileModel.CreateId, FileModel.ShareTypeId, ref path );
+                    path = "/Upload/Yun/" + path;
+                    DeleteFolderFile( str4 + path.Substring( 1, path.Length - 1 ).Replace( "/", "\\" ) );
 
                     List<Model.YUN_FileInfo> YunFileList = GetFileByDown( "ParentFileId", FileModel.FileId.ToString() );
                     for( var z = 0; z < YunFileList.Count; z++ )
@@ -1312,6 +1326,19 @@ namespace BLL.YunFile
                 return UserSize;
             }
 
+        }
+        public static void KillEmptyDirectory( String storagepath )
+        {
+            DirectoryInfo dir = new DirectoryInfo( storagepath );
+            DirectoryInfo[] subdirs = dir.GetDirectories( "*.*", SearchOption.AllDirectories );
+            foreach( DirectoryInfo subdir in subdirs )
+            {
+                FileSystemInfo[] subFiles = subdir.GetFileSystemInfos();
+                if( subFiles.Count() == 0 )
+                {
+                    subdir.Delete();
+                }
+            }
         }
     }
 }
