@@ -622,11 +622,7 @@ namespace EastElite.Controllers
                    {
                        if( YunFile.IsShare( int.Parse( array[i].ToString() ) ) )
                        {
-                           string ShareFileS = YunFile.GetModelByShareFileID( array[i].ToString() );
-                           if( ShareFileS != "" )
-                           {
-                               TrueDel( ShareFileS );
-                           }
+                           YunFile.GetModelByShareFileID( array[i].ToString() );
                        }
                    }
                }
@@ -634,11 +630,7 @@ namespace EastElite.Controllers
                {
                    if( YunFile.IsShare( int.Parse( FileId ) ) )
                    {
-                       string ShareFileS = YunFile.GetModelByShareFileID( FileId );
-                       if( ShareFileS != "" )
-                       {
-                           TrueDel( ShareFileS );
-                       }
+                       YunFile.GetModelByShareFileID( FileId );
                    }
                }
            } ) );
@@ -890,7 +882,7 @@ namespace EastElite.Controllers
                 FileIdList = FileIdList.Replace( "add", "" );
             }
             BLL.Cookie.TeUser U = GetCookie.GetUserCookie();
-             
+
             FileMoveTo( FileIdList.Trim( ',' ), WhereId, MoveType, Share, U.userCode );
 
             return "suc";
@@ -933,15 +925,15 @@ namespace EastElite.Controllers
                     string FileMapPath = "";
                     /// 递归向上 获取当前复制到的文件夹名
                     YunFile.GetFileMapPath( WhereId, Share, userCode, ref FileMapPath );
-                    FileMapPath = ( FileMapPath == userCode + "/" ? FileMapPath :( FileMapPath+"/") );//复制到的文件夹名
+                    FileMapPath = ( FileMapPath == userCode + "/" ? FileMapPath : ( FileMapPath + "/" ) );//复制到的文件夹名
 
                     //复制到的文件路径
-                    item.FileUrl = "/Upload/Yun/" +  FileMapPath  + Path.GetFileName( item.FileUrl );
+                    item.FileUrl = "/Upload/Yun/" + FileMapPath + Path.GetFileName( item.FileUrl );
 
                     //已有文件
                     if( FileHelper.ExitFile( Server.MapPath( item.FileUrl ) ) )
                     {
-                        item.FileUrl = "/Upload/Yun/" +  FileMapPath  + Guid.NewGuid() + Path.GetExtension( item.FileUrl );
+                        item.FileUrl = "/Upload/Yun/" + FileMapPath + Guid.NewGuid() + Path.GetExtension( item.FileUrl );
                         item.FileName = YunFile.FileReNameForExit( item.ParentFileId, userCode, item.FileName, 0, Share, "" );
                     }
                     int OldId = item.FileId;

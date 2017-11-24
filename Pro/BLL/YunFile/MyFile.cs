@@ -892,9 +892,8 @@ namespace BLL.YunFile
         /// </summary>
         /// <param name="FileId"></param>
         /// <returns></returns>
-        public string GetModelByShareFileID( string FileId )
+        public void GetModelByShareFileID( string FileId )
         {
-            string FileIds = "";
             using( Model.NETDISKDBEntities Db = new Model.NETDISKDBEntities() )
             {
                 var File = from b in Db.YUN_FileInfo
@@ -903,9 +902,9 @@ namespace BLL.YunFile
                            select b;
                 foreach( var item in File.ToList() )
                 {
-                    FileIds += item.FileId + ",";
+                    Db.YUN_FileInfo.Remove( item );
                 }
-                return FileIds.Length > 0 ? FileIds.Substring( 0, FileIds.Length - 1 ) : "";
+                Db.SaveChanges();
             }
         }
         /// <summary>
