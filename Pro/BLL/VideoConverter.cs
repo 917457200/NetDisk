@@ -73,22 +73,18 @@ namespace BLL
         /// <param name="playFile"></param>
         /// <param name="imgFile"></param>
         /// <returns></returns>
-        public string ChangeFile( string tempFilePath, string playFile, string imgFile )
+        public void ChangeFile( string tempFilePath, string playFile, string imgFile )
         {
             string m_strExtension = GetFileExtension( tempFilePath ).ToLower();
             string Extension = CheckExtension( m_strExtension );
 
             if( Extension == "ffmpeg" )
             {
-                return FChangeFilePhy( tempFilePath, playFile, imgFile );
+                 FChangeFilePhy( tempFilePath, playFile, imgFile );
             }
             else if( Extension == "mencoder" )
             {
-                return MChangeFilePhy( tempFilePath, playFile, imgFile );
-            }
-            else
-            {
-                return string.Empty;
+                 MChangeFilePhy( tempFilePath, playFile, imgFile );
             }
         }
         #endregion

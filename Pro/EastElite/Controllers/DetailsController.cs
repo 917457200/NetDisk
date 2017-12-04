@@ -7,6 +7,7 @@ using System.Web;
 using System.Web.Mvc;
 using Newtonsoft.Json;
 using Web.Core;
+using System.Threading;
 
 namespace EastElite.Controllers
 {
@@ -24,7 +25,7 @@ namespace EastElite.Controllers
         /// <param name="FileId"></param>
         /// <returns></returns>
         [LoginNeedsFilter( IsCheck = false )]
-      
+
         public ActionResult Img( int FileId, string ParentFileId )
         {
             Model.YUN_FileInfo FileInfo = GetFile.GetModel( FileId );
@@ -186,7 +187,7 @@ namespace EastElite.Controllers
                 ViewBag.CreateId = Cookie.GetUserCookie().userCode;
 
             }
-          
+
 
             if( !BLL.FileHelper.ExitFile( ToFileUrl + ".flv" ) )
             {
@@ -206,8 +207,11 @@ namespace EastElite.Controllers
                     case ".asf":
                     case ".mov":
                     case ".smi":
-                        Vi.ChangeFile( Server.MapPath( FileInfo.FileUrl ), ToFileUrl, ToFileUrl );
-
+                        Thread t = new Thread( new ThreadStart( () =>
+                            {
+                                Vi.ChangeFile( Server.MapPath( FileInfo.FileUrl ), ToFileUrl, ToFileUrl );
+                            } ) );
+                        t.Start();
                         break;
                     default:
                         break;
@@ -243,7 +247,7 @@ namespace EastElite.Controllers
         /// Mp3展示
         /// </summary>
         /// <returns></returns>
-        [LoginNeedsFilter( IsCheck = false )]        
+        [LoginNeedsFilter( IsCheck = false )]
         public ActionResult Audio( int FileId )
         {
             Model.YUN_FileInfo FileInfo = GetFile.GetModel( FileId );
@@ -278,11 +282,11 @@ namespace EastElite.Controllers
         {
             BLL.Cookie.TeUser U = Cookie.GetUserCookie();
 
-            DataTable FileInfo = GetFile.GetFileList( ParentFileId, U.userCode, Share,  GroupOrAgencyId );
+            DataTable FileInfo = GetFile.GetFileList( ParentFileId, U.userCode, Share, GroupOrAgencyId );
             string FileInfoStr = JsonConvert.SerializeObject( FileInfo );
             return FileInfoStr;
         }
-        public ActionResult FileExitForMove(  ) 
+        public ActionResult FileExitForMove()
         {
             return View();
         }
@@ -297,7 +301,7 @@ namespace EastElite.Controllers
         public ActionResult GetImgTitleInfo( string time )
         {
             var ImgTitleInfoList = ImgBll.ImgTitleInfoList( Cookie.GetUserCookie().userCode, time ).ToList();
-            return Json( new { ImgTitleInfoList}, JsonRequestBehavior.AllowGet );
+            return Json( new { ImgTitleInfoList }, JsonRequestBehavior.AllowGet );
         }
         public ActionResult GetImgListInfo( string time, int idenx )
         {

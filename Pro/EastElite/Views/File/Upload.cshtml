@@ -33,7 +33,7 @@
             // Setup html5 version
             $("#uploader").pluploadQueue({
                 // General settings
-                runtimes: 'html5,flash,html4',
+                runtimes: 'html5,flash,silverlight,html4', // 这里是说用什么技术引擎
                 url: '/File/UploadMethod',
                 chunk_size: '200kb',
                 unique_names: true, 	//是否自动生成唯一名称

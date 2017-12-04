@@ -14,6 +14,7 @@
         <EntityTypeShape EntityType="NETDISKDBModel.GroupInfo" Width="1.5" PointX="7.25" PointY="0.75" />
         <EntityTypeShape EntityType="NETDISKDBModel.MassgeInfo" Width="1.5" PointX="8.875" PointY="0.75" />
         <EntityTypeShape EntityType="NETDISKDBModel.ShareLinkInfo" Width="1.5" PointX="0.75" PointY="2.5" />
+        <EntityTypeShape EntityType="NETDISKDBModel.UploadFileInfo" Width="1.5" PointX="7.25" PointY="2.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

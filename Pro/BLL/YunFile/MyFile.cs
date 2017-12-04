@@ -481,20 +481,29 @@ namespace BLL.YunFile
         public bool Delete( int delId )
         {
             Model.YUN_FileInfo F = GetModel( delId );
-            F.FileState = false;
-            F.FileDeleteTime = DateTime.Now;
-            using( Model.NETDISKDBEntities Db = new Model.NETDISKDBEntities() )
+            if( F.FileUrl.IndexOf( "School" ) > -1 || F.FileUrl.IndexOf( "Department" ) > -1 || F.FileUrl.IndexOf( "Group" ) > -1 )
             {
-                DbEntityEntry<Model.YUN_FileInfo> entry = Db.Entry<Model.YUN_FileInfo>( F );
-                entry.State = System.Data.Entity.EntityState.Modified;
-                int rows = Db.SaveChanges();
-                if( rows > 0 )
+                return ShareTrueDel( delId );
+            }
+            else
+            {
+                F.FileState = false;
+                F.FileDeleteTime = DateTime.Now;
+                using( Model.NETDISKDBEntities Db = new Model.NETDISKDBEntities() )
                 {
-                    return true;
-                }
-                else
-                {
-                    return false;
+
+                    DbEntityEntry<Model.YUN_FileInfo> entry = Db.Entry<Model.YUN_FileInfo>( F );
+                    entry.State = System.Data.Entity.EntityState.Modified;
+
+                    int rows = Db.SaveChanges();
+                    if( rows > 0 )
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
                 }
             }
         }
@@ -563,25 +572,15 @@ namespace BLL.YunFile
                            where b.FileId == StrFileId
                            orderby b.FileId
                            select b;
-                Model.ShareLinkInfo FileModel = File.FirstOrDefault();
-                if( FileModel != null )
+                if( File.Count() > 0 )
                 {
-                    Db.ShareLinkInfo.Remove( FileModel );
+                    foreach( var item in File )
+                    {
+                        Db.ShareLinkInfo.Remove( item );
+                    }
                 }
                 int rows = Db.SaveChanges();
 
-                if( FileInfo.IsFolder.ToString() == "True" )
-                {
-                    string FileIdString = FileId.ToString();
-                    var NextFile = from B in Db.YUN_FileInfo
-                                   where B.ParentFileId == FileIdString
-                                   select B;
-
-                    foreach( var item in NextFile.ToList() )
-                    {
-                        IsShare( item.FileId );
-                    }
-                }
                 if( rows > 0 )
                 {
                     return true;
@@ -755,11 +754,35 @@ namespace BLL.YunFile
         {
             using( Model.NETDISKDBEntities Db = new Model.NETDISKDBEntities() )
             {
-                var File = from b in Db.YUN_FileInfo
-                           where b.FileName == FileName && b.ParentFileId == ParentFileId && b.CreateId == CreateId
-                           orderby b.FileId
-                           select b;
-                if( File.Count() > 0 )
+                System.Linq.IOrderedQueryable<Model.YUN_FileInfo> Filelist = null;
+                switch( Share )
+                {
+                    case "1001":
+                        Filelist = from b in Db.YUN_FileInfo
+                                   where b.FileName == FileName && b.ParentFileId == ParentFileId && ( b.CreateId == "Admin" || b.CreateId == "User" ) && b.FileState == true && b.ShareTypeId == "1001"
+                                   orderby b.FileId
+                                   select b;
+                        break;
+                    case "1002":
+                        Filelist = from b in Db.YUN_FileInfo
+                                   where b.FileName == FileName && b.ParentFileId == ParentFileId && ( b.CreateId == "User" || b.CreateId == "Admin" ) && b.FileState == true && b.ShareTypeId == "1002" && b.CreateUnitCode == GroupOrAgencyId
+                                   orderby b.FileId
+                                   select b;
+                        break;
+                    case "1003":
+                        Filelist = from b in Db.YUN_FileInfo
+                                   where b.FileName == FileName && b.ParentFileId == ParentFileId && ( b.CreateId == "User" || b.CreateId == "Admin" ) && b.FileState == true && b.ShareTypeId == "1003" && b.ShareGroupId == GroupOrAgencyId
+                                   orderby b.FileId
+                                   select b;
+                        break;
+                    default:
+                        Filelist = from b in Db.YUN_FileInfo
+                                    where b.FileName == FileName && b.ParentFileId == ParentFileId && b.CreateId == CreateId && b.FileState == true
+                                    orderby b.FileId
+                                    select b;
+                        break;
+                }
+                if( Filelist.Count() > 0 )
                 {
                     return FileReNameForExit( ParentFileId, CreateId, FileName, 0, Share, GroupOrAgencyId );
                 }
@@ -888,23 +911,46 @@ namespace BLL.YunFile
             }
         }
         /// <summary>
-        /// 获取一个对象
+        /// 已分享移除
         /// </summary>
         /// <param name="FileId"></param>
         /// <returns></returns>
-        public void GetModelByShareFileID( string FileId )
+        public void RemoveModelByShareFileID( string FileId )
         {
             using( Model.NETDISKDBEntities Db = new Model.NETDISKDBEntities() )
             {
                 var File = from b in Db.YUN_FileInfo
                            where b.ShareFileID == FileId
-                           orderby b.FileId
+                           orderby b.ParentFileId
                            select b;
-                foreach( var item in File.ToList() )
+                foreach( var item in File )
                 {
-                    Db.YUN_FileInfo.Remove( item );
+                    if( item.IsFolder == true )
+                    {
+                        ShareTrueDel( item.FileId );
+                    }
+                    else
+                    {
+                        Db.YUN_FileInfo.Remove( item );
+                        Db.SaveChanges();
+                    }
                 }
-                Db.SaveChanges();
+            }
+        }
+        /// <summary>
+        /// 递归删除文件夹下所有文件(数据库中的的文件)
+        /// </summary>
+        /// <param name="dir"></param>
+        public void DeleteFileDg( string Fileid )
+        {
+
+            List<Model.YUN_FileInfo> YunFileList = GetFileByDown( "ParentFileId", Fileid.ToString() );
+            var id = "";
+            for( var d = 0; d < YunFileList.Count; d++ )
+            {
+                id = YunFileList[d].FileId.ToString();
+                Delete( Convert.ToInt32( YunFileList[d].FileId ) );//删库中数据
+                DeleteFileDg( id );
             }
         }
         /// <summary>
@@ -1227,16 +1273,12 @@ namespace BLL.YunFile
                 {
                     case ".docx":
                     case ".doc":
-                    case ".dot":
-                    case ".docm":
                     case ".xls":
                     case ".xlsx":
                     case ".ppt":
                     case ".pptx":
-                    case ".pptm":
-
-                        string PDfFileUrl = System.IO.Path.GetDirectoryName( WebUrl ) + "\\" + FileModel.FileName + ".pdf";
-                        if( FileHelper.ExitFile( PDfFileUrl ) )
+                        string PDfFileUrl = System.IO.Path.GetDirectoryName( WebUrl ) + "\\" + FileName + ".pdf";
+                        if( FileHelper.ExitFile( PDfFileUrl ) && ( FileModel.FileUrl.IndexOf( "School" ) > -1 || FileModel.FileUrl.IndexOf( "Department" ) > -1 || FileModel.FileUrl.IndexOf( "Group" ) > -1 ) )
                         {
                             DeleteFile( PDfFileUrl );
                         }
@@ -1255,15 +1297,14 @@ namespace BLL.YunFile
                     case ".asf":
                     case ".mov":
                     case ".smi":
-
                         string FlvFileUrl = System.IO.Path.GetDirectoryName( WebUrl ) + "\\" + FileName + ".flv";
                         string jpgFileUrl = System.IO.Path.GetDirectoryName( WebUrl ) + "\\" + FileName + ".jpg";
 
-                        if( FileHelper.ExitFile( FlvFileUrl ) )
+                        if( FileHelper.ExitFile( FlvFileUrl ) && ( FileModel.FileUrl.IndexOf( "School" ) > -1 || FileModel.FileUrl.IndexOf( "Department" ) > -1 || FileModel.FileUrl.IndexOf( "Group" ) > -1 ) )
                         {
                             DeleteFile( FlvFileUrl );
                         }
-                        if( FileHelper.ExitFile( jpgFileUrl ) )
+                        if( FileHelper.ExitFile( jpgFileUrl ) && ( FileModel.FileUrl.IndexOf( "School" ) > -1 || FileModel.FileUrl.IndexOf( "Department" ) > -1 || FileModel.FileUrl.IndexOf( "Group" ) > -1 ) )
                         {
                             DeleteFile( jpgFileUrl );
                         }
@@ -1281,13 +1322,17 @@ namespace BLL.YunFile
                     List<Model.YUN_FileInfo> YunFileList = GetFileByDown( "ParentFileId", FileModel.FileId.ToString() );
                     for( var z = 0; z < YunFileList.Count; z++ )
                     {
-                        TrueDel( YunFileList[z].FileId );
+                        ShareTrueDel( YunFileList[z].FileId );
                     }
                 }
                 else
                 {
-                    DeleteFile( WebUrl );
+                    if( FileModel.FileUrl.IndexOf( "School" ) > -1 || FileModel.FileUrl.IndexOf( "Department" ) > -1 || FileModel.FileUrl.IndexOf( "Group" ) > -1 )
+                    {
+                        DeleteFile( WebUrl );
+                    }
                 }
+
                 Db.YUN_FileInfo.Remove( FileModel );
                 int rows = Db.SaveChanges();
                 if( rows > 0 )
@@ -1298,11 +1343,9 @@ namespace BLL.YunFile
                 {
                     return false;
                 }
-
             }
-
         }
-
+        //删除数据
         public decimal GetDiskSize( string userCode )
         {
             using( Model.NETDISKDBEntities Db = new Model.NETDISKDBEntities() )

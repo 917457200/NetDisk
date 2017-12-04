@@ -66,6 +66,19 @@
           <Property Name="ShareType" Type="nvarchar" MaxLength="10" />
           <Property Name="ShareTime" Type="datetime" />
         </EntityType>
+        <!--生成过程中发现错误:
+警告 6002: 表/视图“NETDISKDB2.dbo.UploadFileInfo”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
+        <EntityType Name="UploadFileInfo">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ParentFileId" Type="int" />
+          <Property Name="Filename" Type="nvarchar" MaxLength="200" />
+          <Property Name="FileUrl" Type="nvarchar(max)" />
+          <Property Name="Chunk" Type="int" />
+          <Property Name="UploadState" Type="bit" />
+        </EntityType>
         <EntityType Name="UserGroupInfo">
           <Key>
             <PropertyRef Name="Id" />
@@ -122,6 +135,16 @@
           <EntitySet Name="UserGroupInfo" EntityType="Self.UserGroupInfo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserRoleInfo" EntityType="Self.UserRoleInfo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="YUN_FileInfo" EntityType="Self.YUN_FileInfo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UploadFileInfo" EntityType="Self.UploadFileInfo" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [UploadFileInfo].[Id] AS [Id], 
+    [UploadFileInfo].[ParentFileId] AS [ParentFileId], 
+    [UploadFileInfo].[Filename] AS [Filename], 
+    [UploadFileInfo].[FileUrl] AS [FileUrl], 
+    [UploadFileInfo].[Chunk] AS [Chunk], 
+    [UploadFileInfo].[UploadState] AS [UploadState]
+    FROM [dbo].[UploadFileInfo] AS [UploadFileInfo]</DefiningQuery>
+          </EntitySet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -171,6 +194,7 @@
           <EntitySet Name="GroupInfo" EntityType="NETDISKDBModel.GroupInfo" />
           <EntitySet Name="MassgeInfo" EntityType="NETDISKDBModel.MassgeInfo" />
           <EntitySet Name="ShareLinkInfo" EntityType="NETDISKDBModel.ShareLinkInfo" />
+          <EntitySet Name="UploadFileInfo" EntityType="NETDISKDBModel.UploadFileInfo" />
         </EntityContainer>
         <EntityType Name="RoleInfo">
           <Key>
@@ -244,6 +268,17 @@
           <Property Name="ShareValidity" Type="Int32" />
           <Property Name="ShareType" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
           <Property Name="ShareTime" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="UploadFileInfo">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ParentFileId" Type="Int32" />
+          <Property Name="Filename" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="FileUrl" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Chunk" Type="Int32" />
+          <Property Name="UploadState" Type="Boolean" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -361,6 +396,18 @@
                 <ScalarProperty Name="ShareLinkKey" ColumnName="ShareLinkKey" />
                 <ScalarProperty Name="ShareLink" ColumnName="ShareLink" />
                 <ScalarProperty Name="FileId" ColumnName="FileId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UploadFileInfo">
+            <EntityTypeMapping TypeName="NETDISKDBModel.UploadFileInfo">
+              <MappingFragment StoreEntitySet="UploadFileInfo">
+                <ScalarProperty Name="UploadState" ColumnName="UploadState" />
+                <ScalarProperty Name="Chunk" ColumnName="Chunk" />
+                <ScalarProperty Name="FileUrl" ColumnName="FileUrl" />
+                <ScalarProperty Name="Filename" ColumnName="Filename" />
+                <ScalarProperty Name="ParentFileId" ColumnName="ParentFileId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

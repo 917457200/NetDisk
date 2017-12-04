@@ -89,6 +89,7 @@
     </Compile>
     <Compile Include="DataSetToList.cs" />
     <Compile Include="FileHelper.cs" />
+    <Compile Include="FileResult.cs" />
     <Compile Include="Image.cs" />
     <Compile Include="MD5.cs" />
     <Compile Include="Messger\Messger.cs" />
